@@ -1,21 +1,21 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
+import StackNavigation from './navigation/StackNavigation';
+import { NavigationContainer } from '@react-navigation/native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { ThemeProvider } from 'react-native-elements';
 
-export default function App() {
+const App: React.FC = () => {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <SafeAreaView style={{ flex: 1 }}>
+      <NavigationContainer>
+        <StatusBar style="auto" />
+        <ThemeProvider>
+          <StackNavigation />
+        </ThemeProvider>
+      </NavigationContainer>
+    </SafeAreaView>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
