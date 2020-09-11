@@ -60,7 +60,68 @@ const MainScreen: React.FC = () => {
         <Card.Title>Twój samochód</Card.Title>
         <Card.Divider />
         {car ? (
-          <Text>{car.brand}</Text>
+          <View style={style.container}>
+            <View style={style.row}>
+              <View style={style.column}>
+                <View style={style.row}>
+                  <Icon
+                    size={30}
+                    iconStyle={{ marginRight: 10 }}
+                    type="material-community"
+                    onPress={toggleDialog}
+                    color="#32a899"
+                    name="factory"
+                  />
+                  <Text style={style.textNormal}>Marka</Text>
+                </View>
+                <Text style={style.textNormal}>{car.brand}</Text>
+              </View>
+              <View style={style.column}>
+                <View style={style.row}>
+                  <Icon
+                    size={30}
+                    iconStyle={{ marginRight: 10 }}
+                    type="material-community"
+                    onPress={toggleDialog}
+                    color="#32a899"
+                    name="car"
+                  />
+                  <Text style={style.textNormal}>Model</Text>
+                </View>
+                <Text style={style.textNormal}>{car.model}</Text>
+              </View>
+            </View>
+            <View style={style.row}>
+              <View style={style.column}>
+                <View style={style.row}>
+                  <Icon
+                    size={30}
+                    iconStyle={{ marginRight: 10 }}
+                    type="material-community"
+                    onPress={toggleDialog}
+                    color="#32a899"
+                    name="engine-outline"
+                  />
+                  <Text style={style.textNormal}>Silnik</Text>
+                </View>
+                <Text style={style.textNormal}>{car.engine}</Text>
+              </View>
+              <View style={style.column}>
+                <View style={style.row}>
+                  <Icon
+                    size={30}
+                    iconStyle={{ marginRight: 10 }}
+                    type="material-community"
+                    onPress={toggleDialog}
+                    color="#32a899"
+                    name="map-marker-radius"
+                  />
+                  <Text style={style.textNormal}>Przebieg</Text>
+                </View>
+                <Text style={style.textNormal}>{car.mileage} km</Text>
+              </View>
+            </View>
+          </View>
         ) : (
           <>
             <Text style={{ marginBottom: 10 }}>Dodaj swój pojazd i zacznij śledzić spalanie!</Text>
@@ -115,6 +176,20 @@ const MainScreen: React.FC = () => {
 };
 
 const style = StyleSheet.create({
+  container: {
+    alignItems: 'center',
+  },
+  row: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    marginBottom: 10,
+  },
+  column: {
+    flex: 1,
+  },
+  textNormal: {
+    fontSize: 16,
+  },
   button: {
     backgroundColor: '#32a899',
   },
