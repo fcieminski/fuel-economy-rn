@@ -1,34 +1,10 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { Icon } from 'react-native-elements';
+import CarElement from './CarElement';
 
 interface Car {
   car: { brand: string; model: string; engine: number; mileage: number };
 }
-
-interface Props {
-  name: string;
-  value: string | number;
-  icon: string;
-}
-
-const CarElement: React.FC<Props> = ({ name, value, icon }) => {
-  return (
-    <View style={style.column}>
-      <View style={style.row}>
-        <Icon
-          size={30}
-          iconStyle={{ marginRight: 10 }}
-          type="material-community"
-          color="#32a899"
-          name={icon}
-        />
-        <Text style={style.textNormal}>{name}</Text>
-      </View>
-      <Text style={style.textNormal}>{value}</Text>
-    </View>
-  );
-};
 
 const CarInfo: React.FC<Car> = ({ car }) => {
   return (
