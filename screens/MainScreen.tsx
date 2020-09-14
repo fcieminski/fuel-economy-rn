@@ -4,6 +4,7 @@ import { Button, Card, Icon, Input, Overlay } from 'react-native-elements';
 import AsyncStorage from '@react-native-community/async-storage';
 import CarInfo from '../components/CarInfo';
 import CarFuelingHistory from '../components/CarFuelingHistory';
+import Modal from '../components/Modal';
 
 const deviceWidth = Dimensions.get('window').width;
 const deviceHeight = Dimensions.get('window').height;
@@ -17,11 +18,15 @@ interface Car {
 
 const MainScreen: React.FC = () => {
   const [car, setCar] = useState<Car | null>(null);
-  const [visible, setVisible] = useState(false);
   const [brand, setBrand] = useState('');
   const [model, setModel] = useState('');
   const [engine, setEngine] = useState('');
   const [mileage, setMileage] = useState('');
+  const [visible, setVisible] = useState(false);
+
+  const toggleDialog = () => {
+    setVisible(!visible);
+  };
 
   useEffect(() => {
     async function getCarData() {
@@ -36,10 +41,6 @@ const MainScreen: React.FC = () => {
     }
     void getCarData();
   }, []);
-
-  const toggleDialog = () => {
-    setVisible(!visible);
-  };
 
   const saveCarInfo = async () => {
     const car = {
@@ -77,43 +78,30 @@ const MainScreen: React.FC = () => {
         )}
       </Card>
       <CarFuelingHistory />
-      <Overlay isVisible={visible}>
-        <KeyboardAvoidingView behavior="padding">
-          <View style={style.modal}>
-            <View style={style.closeIcon}>
-              <Icon type="material-community" onPress={toggleDialog} color="#32a899" name="close" />
-            </View>
-            <View style={style.modalHeader}>
-              <Text style={style.modalHeaderText}>Dodaj samochód</Text>
-            </View>
-            <View>
-              <Input
-                label="Marka"
-                leftIcon={{ type: 'material-community', name: 'factory' }}
-                onChangeText={(value) => setBrand(value)}
-              />
-              <Input
-                label="Model"
-                leftIcon={{ type: 'material-community', name: 'car' }}
-                onChangeText={(value) => setModel(value)}
-              />
-              <Input
-                label="Silnik"
-                keyboardType="number-pad"
-                leftIcon={{ type: 'material-community', name: 'engine-outline' }}
-                onChangeText={(value) => setEngine(value)}
-              />
-              <Input
-                label="Przebieg"
-                keyboardType="number-pad"
-                leftIcon={{ type: 'material-community', name: 'map-marker-radius' }}
-                onChangeText={(value) => setMileage(value)}
-              />
-            </View>
-            <Button title="Zapisz" buttonStyle={style.button} onPress={saveCarInfo} />
-          </View>
-        </KeyboardAvoidingView>
-      </Overlay>
+      <Modal visible={visible} handleSave={saveCarInfo} toggle={toggleDialog}>
+        <Input
+          label="Marka"
+          leftIcon={{ type: 'material-community', name: 'factory' }}
+          onChangeText={(value) => setBrand(value)}
+        />
+        <Input
+          label="Model"
+          leftIcon={{ type: 'material-community', name: 'car' }}
+          onChangeText={(value) => setModel(value)}
+        />
+        <Input
+          label="Silnik"
+          keyboardType="number-pad"
+          leftIcon={{ type: 'material-community', name: 'engine-outline' }}
+          onChangeText={(value) => setEngine(value)}
+        />
+        <Input
+          label="Przebieg"
+          keyboardType="number-pad"
+          leftIcon={{ type: 'material-community', name: 'map-marker-radius' }}
+          onChangeText={(value) => setMileage(value)}
+        />
+      </Modal>
     </View>
   );
 };
@@ -145,20 +133,6 @@ const style = StyleSheet.create({
   },
   button: {
     backgroundColor: '#32a899',
-  },
-  modal: {
-    width: deviceWidth * 0.8,
-  },
-  modalHeader: {
-    flexDirection: 'row',
-    marginBottom: 20,
-    marginLeft: 10,
-  },
-  closeIcon: {
-    alignSelf: 'flex-end',
-  },
-  modalHeaderText: {
-    fontSize: 24,
   },
 });
 
