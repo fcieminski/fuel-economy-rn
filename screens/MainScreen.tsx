@@ -1,46 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Alert, Dimensions, KeyboardAvoidingView, StyleSheet, Text, View } from 'react-native';
-import { Button, Card, Icon, Input, Overlay, ListItem } from 'react-native-elements';
-import { FlatList } from 'react-native-gesture-handler';
+import { Button, Card, Icon, Input, Overlay } from 'react-native-elements';
 import AsyncStorage from '@react-native-community/async-storage';
 import CarInfo from '../components/CarInfo';
 import CarFuelingHistory from '../components/CarFuelingHistory';
 
 const deviceWidth = Dimensions.get('window').width;
 const deviceHeight = Dimensions.get('window').height;
-
-const list = [
-  {
-    distance: 456,
-    cost: 125.5,
-    fuelAmount: 40,
-    date: Date.now(),
-  },
-  {
-    distance: 1245,
-    cost: 1225.5,
-    fuelAmount: 340,
-    date: Date.now(),
-  },
-  {
-    distance: 123,
-    cost: 1253.5,
-    fuelAmount: 405,
-    date: Date.now(),
-  },
-  {
-    distance: 123,
-    cost: 1253.5,
-    fuelAmount: 405,
-    date: Date.now(),
-  },
-  {
-    distance: 123,
-    cost: 1253.5,
-    fuelAmount: 405,
-    date: Date.now(),
-  },
-];
 
 interface Car {
   brand: string;
@@ -91,8 +57,6 @@ const MainScreen: React.FC = () => {
     }
   };
 
-  const keyExtractor = (_, index: number) => index.toString();
-
   return (
     <View style={style.mainContainer}>
       <Card>
@@ -112,14 +76,7 @@ const MainScreen: React.FC = () => {
           </>
         )}
       </Card>
-      <Card containerStyle={style.listContainer}>
-        <FlatList
-          scrollEnabled={true}
-          keyExtractor={keyExtractor}
-          data={list}
-          renderItem={CarFuelingHistory}
-        />
-      </Card>
+      <CarFuelingHistory />
       <Overlay isVisible={visible}>
         <KeyboardAvoidingView behavior="padding">
           <View style={style.modal}>
@@ -202,10 +159,6 @@ const style = StyleSheet.create({
   },
   modalHeaderText: {
     fontSize: 24,
-  },
-  listContainer: {
-    marginBottom: 10,
-    flex: 1,
   },
 });
 

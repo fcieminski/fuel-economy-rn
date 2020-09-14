@@ -3,7 +3,12 @@ import { StyleSheet, Text, View } from 'react-native';
 import CarElement from './CarElement';
 
 interface Car {
-  car: { brand: string; model: string; engine: number; mileage: number };
+  car: {
+    brand: string;
+    model: string;
+    engine: number;
+    mileage: number;
+  };
 }
 
 const CarInfo: React.FC<Car> = ({ car }) => {
