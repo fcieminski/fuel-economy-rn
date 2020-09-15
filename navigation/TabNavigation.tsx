@@ -2,10 +2,14 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MainScreen from '../screens/MainScreen';
 import { Icon } from 'react-native-elements';
+import AddButton from '../components/AddButton';
 
 const Tab = createBottomTabNavigator();
 
 const TabNavigation: React.FC = () => {
+  const handlePress = () => {
+    console.log('press');
+  };
   return (
     <Tab.Navigator
       tabBarOptions={{
@@ -13,6 +17,9 @@ const TabNavigation: React.FC = () => {
         activeBackgroundColor: '#32a899',
         inactiveTintColor: '#346358',
         labelStyle: { fontSize: 14 },
+        style: {
+          backgroundColor: '#e3e3e3',
+        },
       }}
       initialRouteName="Main">
       <Tab.Screen
@@ -25,6 +32,7 @@ const TabNavigation: React.FC = () => {
         }}
         component={MainScreen}
       />
+
       <Tab.Screen
         name="Archive"
         options={{
@@ -36,6 +44,13 @@ const TabNavigation: React.FC = () => {
         component={MainScreen}
       />
       <Tab.Screen
+        name="Add"
+        component={AddButton}
+        options={{
+          tabBarButton: () => <AddButton addElement={handlePress} />,
+        }}
+      />
+      <Tab.Screen
         name="Notes"
         options={{
           tabBarLabel: 'Notatki',
@@ -45,7 +60,8 @@ const TabNavigation: React.FC = () => {
         }}
         component={MainScreen}
       />
-      <Tab.Screen
+
+      {/* <Tab.Screen
         name="CarChecks"
         options={{
           tabBarLabel: 'Przeglądy',
@@ -54,7 +70,7 @@ const TabNavigation: React.FC = () => {
           },
         }}
         component={MainScreen}
-      />
+      /> */}
       <Tab.Screen
         name="FixList"
         options={{
