@@ -1,4 +1,10 @@
-import { ADD_FUELING, OPEN_MODAL, FuellingTypes, Fuelling, FuellingState } from '../actions/types';
+import {
+  ADD_FUELING,
+  OPEN_MODAL,
+  FuellingTypes,
+  FuellingState,
+  REMOVE_FUELING,
+} from '../actions/types';
 
 const initialState: FuellingState = {
   fuellingList: [],
@@ -16,6 +22,11 @@ const fuellingReducer = (state = initialState, action: FuellingTypes): FuellingS
       return {
         ...state,
         modal: action.payload,
+      };
+    case REMOVE_FUELING:
+      return {
+        ...state,
+        fuellingList: state.fuellingList.filter((_, index) => index !== action.payload),
       };
     default:
       return state;

@@ -2,24 +2,20 @@ import React, { useState } from 'react';
 import { ListRenderItem, StyleSheet, View } from 'react-native';
 import { Card, Icon, ListItem } from 'react-native-elements';
 import { FlatList } from 'react-native-gesture-handler';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { removeFuelling } from '../store/actions/fuelling';
 import { RootState } from '../store/store';
+import { Fuelling } from '../types/fuellingHistoryTypes';
 import CarFuellingHistoryElement from './CarFuellingHistoryElement';
-
-interface Fuelling {
-  distance: number;
-  cost: number;
-  fuelAmount: number;
-  date: number;
-}
 
 const CarFuellingHistory: React.FC = () => {
   const fuelling = useSelector<RootState, Array<Fuelling>>(
     (state: RootState) => state.fuelling.fuellingList,
   );
+  const dispatch = useDispatch();
 
   const deleteFuellingRecord = (index: number) => {
-    // setList((prevList) => prevList.filter((_, ind) => index !== ind));
+    dispatch(removeFuelling(index));
   };
 
   const keyExtractor = (_: Fuelling, index: number) => index.toString();
@@ -33,7 +29,7 @@ const CarFuellingHistory: React.FC = () => {
             <ListItem.Title>
               średnie spalanie: {(item.distance / item.fuelAmount).toFixed(2)}l
             </ListItem.Title>
-            <ListItem.Title>{new Date(item.date).toLocaleDateString()}</ListItem.Title>
+            <ListItem.Title>{item.date}</ListItem.Title>
             <Icon
               onPress={() => deleteFuellingRecord(index)}
               type="material-community"

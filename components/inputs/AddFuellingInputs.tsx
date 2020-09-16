@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Button, Input } from 'react-native-elements';
-import { Fuelling } from '../../store/actions/types';
+import { Fuelling } from '../../types/fuellingHistoryTypes';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 
@@ -10,7 +10,7 @@ type Props = {
 };
 
 const AddFuellingInputs: React.FC<Props> = ({ handleSubmit }) => {
-  const fuelingSchema: Yup.ObjectSchema<Fuelling | undefined, object> = Yup.object<
+  const fuellingSchema: Yup.ObjectSchema<Fuelling | undefined, object> = Yup.object<
     Fuelling
   >().shape({
     distance: Yup.number().typeError('Wprowadź liczbę').required('Pole wymagane!'),
@@ -22,7 +22,7 @@ const AddFuellingInputs: React.FC<Props> = ({ handleSubmit }) => {
   return (
     <Formik
       initialValues={{ distance: '', cost: '', fuelAmount: '', date: '' }}
-      validationSchema={fuelingSchema}
+      validationSchema={fuellingSchema}
       onSubmit={handleSubmit}>
       {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
         <View>

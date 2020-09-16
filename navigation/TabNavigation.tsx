@@ -8,7 +8,7 @@ import MainScreen from '../screens/MainScreen';
 import AddButton from '../components/AddButton';
 import Modal from '../components/Modal';
 import AddFuellingInputs from '../components/inputs/AddFuellingInputs';
-import { Fuelling } from '../store/actions/types';
+import { Fuelling } from '../types/fuellingHistoryTypes';
 
 const Tab = createBottomTabNavigator();
 
