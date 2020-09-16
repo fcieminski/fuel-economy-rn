@@ -15,7 +15,7 @@ const fuelingReducer = (state = initialState, action: FuelingTypes): FuelingStat
     case OPEN_MODAL:
       return {
         ...state,
-        modal: state.modal,
+        modal: action.payload,
       };
     default:
       return state;

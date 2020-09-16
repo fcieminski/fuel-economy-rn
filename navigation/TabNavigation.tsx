@@ -1,15 +1,22 @@
-import React from 'react';
+import React, { Dispatch } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Icon } from 'react-native-elements';
+import { connect } from 'react-redux';
 import MainScreen from '../screens/MainScreen';
 import AddButton from '../components/AddButton';
+import { addFueling, openModal } from '../store/actions/fueling';
+import { Fueling } from '../store/actions/types';
+import { RootState } from '../store/store';
 
 const Tab = createBottomTabNavigator();
 
-const TabNavigation: React.FC = () => {
+const TabNavigation: React.FC = ({ visible, modal }) => {
   const handlePress = () => {
-    console.log('press');
+    console.log('modal');
+    modal(!visible);
+    //working
   };
+
   return (
     <Tab.Navigator
       tabBarOptions={{
@@ -32,17 +39,18 @@ const TabNavigation: React.FC = () => {
         }}
         component={MainScreen}
       />
-
-      <Tab.Screen
-        name="Archive"
-        options={{
-          tabBarLabel: 'Archiwum',
-          tabBarIcon({ color }) {
-            return <Icon color={color} type="material-community" name="archive" />;
-          },
-        }}
-        component={MainScreen}
-      />
+      {visible && (
+        <Tab.Screen
+          name="Archive"
+          options={{
+            tabBarLabel: 'Archiwum',
+            tabBarIcon({ color }) {
+              return <Icon color={color} type="material-community" name="archive" />;
+            },
+          }}
+          component={MainScreen}
+        />
+      )}
       <Tab.Screen
         name="Add"
         component={AddButton}
@@ -85,4 +93,19 @@ const TabNavigation: React.FC = () => {
   );
 };
 
-export default TabNavigation;
+const mapStateToProps = (state: RootState) => {
+  console.log(state);
+  return {
+    fueling: state.fueling.fuelingList,
+    visible: state.fueling.modal,
+  };
+};
+
+const mapDispatchToProps = (dispatch: any) => {
+  return {
+    add: (fueling: Fueling) => dispatch(addFueling(fueling)),
+    modal: (visible: boolean) => dispatch(openModal(visible)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(TabNavigation);
