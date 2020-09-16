@@ -1,17 +1,15 @@
 import React, { useState } from 'react';
 import { NativeSyntheticEvent, NativeTouchEvent, StyleSheet } from 'react-native';
-import { Button } from 'react-native-elements';
-import { Input } from 'react-native-elements';
+import { Button, Input } from 'react-native-elements';
 import { Fuelling } from '../../store/actions/types';
-
-const initState = { distance: 0, cost: 0, fuelAmount: 0, date: 0 };
+import ValidInput from './ValidInput';
 
 type Props = {
   handleSave: (fuelling: Fuelling) => void;
 };
 
 const AddFuellingInputs: React.FC<Props> = ({ handleSave }) => {
-  const [fuelling, setFuelling] = useState<Fuelling>(initState);
+  const [fuelling, setFuelling] = useState<Fuelling>({} as Fuelling);
 
   const handleChange = (value: string, key: string) => {
     setFuelling((prevFuelling) => ({ ...prevFuelling, [key]: value }));
@@ -19,17 +17,19 @@ const AddFuellingInputs: React.FC<Props> = ({ handleSave }) => {
 
   return (
     <>
-      <Input
+      <ValidInput
         label="Dystans"
         keyboardType="number-pad"
         leftIcon={{ type: 'material-community', name: 'map-marker-distance' }}
         onChangeText={(value) => handleChange(value, 'distance')}
+        validator="number"
       />
-      <Input
+      <ValidInput
         label="Koszt"
         keyboardType="number-pad"
         leftIcon={{ type: 'material-community', name: 'currency-usd' }}
         onChangeText={(value) => handleChange(value, 'cost')}
+        validator="number"
       />
       <Input
         label="Ilość benzyny"

@@ -6,12 +6,12 @@
         "isolatedModules": true,
         "jsx": "react",
         "lib": [
-            "es6"
+            "ESNext"
         ],
         "moduleResolution": "node",
         "noEmit": true,
         "strict": true,
-        "target": "esnext"
+        "target": "ESNext"
     },
     "exclude": [
         "node_modules",

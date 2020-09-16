@@ -21,7 +21,7 @@ const TabNavigation: React.FC = () => {
   };
 
   const saveElement = (fuelling: Fuelling) => {
-    console.log(fuelling);
+    Object.values(fuelling);
   };
 
   return (
