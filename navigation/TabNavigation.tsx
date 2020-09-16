@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Icon } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/store';
-import { openModal } from '../store/actions/fuelling';
+import { addFuelling, openModal } from '../store/actions/fuelling';
 import MainScreen from '../screens/MainScreen';
 import AddButton from '../components/AddButton';
 import Modal from '../components/Modal';
@@ -20,14 +20,15 @@ const TabNavigation: React.FC = () => {
     dispatch(openModal(!modalToggle));
   };
 
-  const saveElement = (fuelling: Fuelling) => {
-    Object.values(fuelling);
+  const saveFuelingElement = (fuelling: Fuelling) => {
+    dispatch(addFuelling(fuelling));
+    dispatch(openModal(!modalToggle));
   };
 
   return (
     <>
       <Modal visible={modalToggle} toggle={handlePress}>
-        <AddFuellingInputs handleSave={saveElement} />
+        <AddFuellingInputs handleSubmit={saveFuelingElement} />
       </Modal>
       <Tab.Navigator
         tabBarOptions={{

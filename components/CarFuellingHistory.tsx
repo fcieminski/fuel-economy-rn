@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { ListRenderItem, StyleSheet, View } from 'react-native';
 import { Card, Icon, ListItem } from 'react-native-elements';
 import { FlatList } from 'react-native-gesture-handler';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store/store';
 import CarFuellingHistoryElement from './CarFuellingHistoryElement';
 
 interface Fuelling {
@@ -12,41 +14,12 @@ interface Fuelling {
 }
 
 const CarFuellingHistory: React.FC = () => {
-  const [list, setList] = useState<Array<Fuelling>>([
-    {
-      distance: 456,
-      cost: 125.5,
-      fuelAmount: 40,
-      date: Date.now(),
-    },
-    {
-      distance: 1245,
-      cost: 1225.5,
-      fuelAmount: 340,
-      date: Date.now(),
-    },
-    {
-      distance: 123,
-      cost: 1253.5,
-      fuelAmount: 405,
-      date: Date.now(),
-    },
-    {
-      distance: 123,
-      cost: 1253.5,
-      fuelAmount: 405,
-      date: Date.now(),
-    },
-    {
-      distance: 123,
-      cost: 1253.5,
-      fuelAmount: 405,
-      date: Date.now(),
-    },
-  ]);
+  const fuelling = useSelector<RootState, Array<Fuelling>>(
+    (state: RootState) => state.fuelling.fuellingList,
+  );
 
   const deleteFuellingRecord = (index: number) => {
-    setList((prevList) => prevList.filter((_, ind) => index !== ind));
+    // setList((prevList) => prevList.filter((_, ind) => index !== ind));
   };
 
   const keyExtractor = (_: Fuelling, index: number) => index.toString();
@@ -78,7 +51,7 @@ const CarFuellingHistory: React.FC = () => {
       <FlatList
         scrollEnabled={true}
         keyExtractor={keyExtractor}
-        data={list}
+        data={fuelling}
         renderItem={renderItem}
       />
     </Card>
