@@ -1,20 +1,21 @@
-import React, { Dispatch } from 'react';
+import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Icon } from 'react-native-elements';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import MainScreen from '../screens/MainScreen';
 import AddButton from '../components/AddButton';
-import { addFueling, openModal } from '../store/actions/fueling';
-import { Fueling } from '../store/actions/types';
 import { RootState } from '../store/store';
+import { openModal } from '../store/actions/fueling';
 
 const Tab = createBottomTabNavigator();
 
-const TabNavigation: React.FC = ({ visible, modal }) => {
+const TabNavigation: React.FC = () => {
+  const modal = useSelector<RootState, boolean>((state: RootState) => state.fueling.modal);
+  const dispatch = useDispatch();
+
   const handlePress = () => {
-    console.log('modal');
-    modal(!visible);
-    //working
+    dispatch(openModal(!modal));
+    console.log(modal);
   };
 
   return (
@@ -39,7 +40,7 @@ const TabNavigation: React.FC = ({ visible, modal }) => {
         }}
         component={MainScreen}
       />
-      {visible && (
+      {modal && (
         <Tab.Screen
           name="Archive"
           options={{
@@ -93,19 +94,4 @@ const TabNavigation: React.FC = ({ visible, modal }) => {
   );
 };
 
-const mapStateToProps = (state: RootState) => {
-  console.log(state);
-  return {
-    fueling: state.fueling.fuelingList,
-    visible: state.fueling.modal,
-  };
-};
-
-const mapDispatchToProps = (dispatch: any) => {
-  return {
-    add: (fueling: Fueling) => dispatch(addFueling(fueling)),
-    modal: (visible: boolean) => dispatch(openModal(visible)),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(TabNavigation);
+export default TabNavigation;
