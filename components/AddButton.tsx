@@ -49,7 +49,7 @@ const AddButton: React.FC<Props> = ({ addElement }) => {
       <View
         style={{
           borderColor: 'white',
-          borderWidth: 3,
+          borderWidth: 2,
           width: '100%',
           height: '100%',
           borderRadius: 58,

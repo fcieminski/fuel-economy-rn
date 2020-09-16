@@ -1,7 +1,7 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import MainScreen from '../screens/MainScreen';
 import { Icon } from 'react-native-elements';
+import MainScreen from '../screens/MainScreen';
 import AddButton from '../components/AddButton';
 
 const Tab = createBottomTabNavigator();
