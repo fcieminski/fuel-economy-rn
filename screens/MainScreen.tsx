@@ -3,7 +3,7 @@ import { Alert, Dimensions, KeyboardAvoidingView, StyleSheet, Text, View } from 
 import { Button, Card, Icon, Input, Overlay } from 'react-native-elements';
 import AsyncStorage from '@react-native-community/async-storage';
 import CarInfo from '../components/CarInfo';
-import CarFuelingHistory from '../components/CarFuelingHistory';
+import CarFuellingHistory from '../components/CarFuellingHistory';
 import Modal from '../components/Modal';
 
 const deviceWidth = Dimensions.get('window').width;
@@ -77,7 +77,7 @@ const MainScreen: React.FC = () => {
           </>
         )}
       </Card>
-      <CarFuelingHistory />
+      <CarFuellingHistory />
       <Modal visible={visible} handleSave={saveCarInfo} toggle={toggleDialog}>
         <Input
           label="Marka"

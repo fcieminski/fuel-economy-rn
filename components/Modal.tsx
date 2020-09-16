@@ -1,27 +1,23 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
-  Button,
   Dimensions,
   GestureResponderEvent,
   KeyboardAvoidingView,
-  NativeSyntheticEvent,
-  NativeTouchEvent,
   StyleSheet,
   Text,
   View,
 } from 'react-native';
-import { Icon, Input, Overlay } from 'react-native-elements';
+import { Icon, Overlay } from 'react-native-elements';
 
 const deviceWidth = Dimensions.get('window').width;
 
 interface ModalDialog {
   visible: boolean;
-  handleSave: (ev: NativeSyntheticEvent<NativeTouchEvent>) => void;
   toggle: (event: GestureResponderEvent) => void;
   children: React.ReactNode;
 }
 
-const Modal: React.FC<ModalDialog> = ({ visible, handleSave, toggle, children }) => {
+const Modal: React.FC<ModalDialog> = ({ visible, toggle, children }) => {
   return (
     <Overlay isVisible={visible}>
       <KeyboardAvoidingView behavior="padding">
@@ -33,7 +29,6 @@ const Modal: React.FC<ModalDialog> = ({ visible, handleSave, toggle, children })
             <Text style={style.modalHeaderText}>Dodaj samochód</Text>
           </View>
           <View>{children}</View>
-          <Button title="Zapisz" buttonStyle={style.button} onPress={handleSave} />
         </View>
       </KeyboardAvoidingView>
     </Overlay>

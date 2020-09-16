@@ -2,45 +2,54 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Icon } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../store/store';
+import { openModal } from '../store/actions/fuelling';
 import MainScreen from '../screens/MainScreen';
 import AddButton from '../components/AddButton';
-import { RootState } from '../store/store';
-import { openModal } from '../store/actions/fueling';
+import Modal from '../components/Modal';
+import AddFuellingInputs from '../components/inputs/AddFuellingInputs';
+import { Fuelling } from '../store/actions/types';
 
 const Tab = createBottomTabNavigator();
 
 const TabNavigation: React.FC = () => {
-  const modal = useSelector<RootState, boolean>((state: RootState) => state.fueling.modal);
+  const modalToggle = useSelector<RootState, boolean>((state: RootState) => state.fuelling.modal);
   const dispatch = useDispatch();
 
   const handlePress = () => {
-    dispatch(openModal(!modal));
-    console.log(modal);
+    dispatch(openModal(!modalToggle));
+  };
+
+  const saveElement = (fuelling: Fuelling) => {
+    console.log(fuelling);
   };
 
   return (
-    <Tab.Navigator
-      tabBarOptions={{
-        activeTintColor: 'white',
-        activeBackgroundColor: '#32a899',
-        inactiveTintColor: '#346358',
-        labelStyle: { fontSize: 14 },
-        style: {
-          backgroundColor: '#e3e3e3',
-        },
-      }}
-      initialRouteName="Main">
-      <Tab.Screen
-        name="Main"
-        options={{
-          tabBarLabel: 'Spalanie',
-          tabBarIcon({ color }) {
-            return <Icon color={color} type="material-community" name="gas-station" />;
+    <>
+      <Modal visible={modalToggle} toggle={handlePress}>
+        <AddFuellingInputs handleSave={saveElement} />
+      </Modal>
+      <Tab.Navigator
+        tabBarOptions={{
+          activeTintColor: 'white',
+          activeBackgroundColor: '#32a899',
+          inactiveTintColor: '#346358',
+          labelStyle: { fontSize: 14 },
+          style: {
+            backgroundColor: '#e3e3e3',
           },
         }}
-        component={MainScreen}
-      />
-      {modal && (
+        initialRouteName="Main">
+        <Tab.Screen
+          name="Main"
+          options={{
+            tabBarLabel: 'Spalanie',
+            tabBarIcon({ color }) {
+              return <Icon color={color} type="material-community" name="gas-station" />;
+            },
+          }}
+          component={MainScreen}
+        />
         <Tab.Screen
           name="Archive"
           options={{
@@ -51,26 +60,25 @@ const TabNavigation: React.FC = () => {
           }}
           component={MainScreen}
         />
-      )}
-      <Tab.Screen
-        name="Add"
-        component={AddButton}
-        options={{
-          tabBarButton: () => <AddButton addElement={handlePress} />,
-        }}
-      />
-      <Tab.Screen
-        name="Notes"
-        options={{
-          tabBarLabel: 'Notatki',
-          tabBarIcon({ color }) {
-            return <Icon color={color} type="material-community" name="note-text" />;
-          },
-        }}
-        component={MainScreen}
-      />
+        <Tab.Screen
+          name="Add"
+          component={AddButton}
+          options={{
+            tabBarButton: () => <AddButton addElement={handlePress} />,
+          }}
+        />
+        <Tab.Screen
+          name="Notes"
+          options={{
+            tabBarLabel: 'Notatki',
+            tabBarIcon({ color }) {
+              return <Icon color={color} type="material-community" name="note-text" />;
+            },
+          }}
+          component={MainScreen}
+        />
 
-      {/* <Tab.Screen
+        {/* <Tab.Screen
         name="CarChecks"
         options={{
           tabBarLabel: 'Przeglądy',
@@ -80,17 +88,18 @@ const TabNavigation: React.FC = () => {
         }}
         component={MainScreen}
       /> */}
-      <Tab.Screen
-        name="FixList"
-        options={{
-          tabBarLabel: 'Wymiany',
-          tabBarIcon({ color }) {
-            return <Icon color={color} type="material-community" name="wrench" />;
-          },
-        }}
-        component={MainScreen}
-      />
-    </Tab.Navigator>
+        <Tab.Screen
+          name="FixList"
+          options={{
+            tabBarLabel: 'Wymiany',
+            tabBarIcon({ color }) {
+              return <Icon color={color} type="material-community" name="wrench" />;
+            },
+          }}
+          component={MainScreen}
+        />
+      </Tab.Navigator>
+    </>
   );
 };
 

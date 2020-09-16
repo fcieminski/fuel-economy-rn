@@ -1,8 +1,8 @@
 import { createStore, combineReducers } from 'redux';
-import fuelingReducer from './reducers/fuelingReducer';
+import fuellingReducer from './reducers/fuellingReducer';
 
 const rootReducer = combineReducers({
-  fueling: fuelingReducer,
+  fuelling: fuellingReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

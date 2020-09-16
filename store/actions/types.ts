@@ -1,20 +1,20 @@
 export const ADD_FUELING = 'ADD_FUELING';
 
-export type FuelingState = {
-  fuelingList: Array<Fueling>;
+export type FuellingState = {
+  fuellingList: Array<Fuelling>;
   modal: boolean;
 };
 
-export type Fueling = {
+export type Fuelling = {
   distance: number;
   cost: number;
   fuelAmount: number;
   date: number;
 };
 
-interface AddFuelingAction {
+interface AddFuellingAction {
   type: typeof ADD_FUELING;
-  payload: Fueling;
+  payload: Fuelling;
 }
 
 export const OPEN_MODAL = 'OPEN_MODAL';
@@ -24,4 +24,4 @@ interface OpenModal {
   payload: boolean;
 }
 
-export type FuelingTypes = AddFuelingAction | OpenModal;
+export type FuellingTypes = AddFuellingAction | OpenModal;

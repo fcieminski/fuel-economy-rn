@@ -2,17 +2,17 @@ import React, { useState } from 'react';
 import { ListRenderItem, StyleSheet, View } from 'react-native';
 import { Card, Icon, ListItem } from 'react-native-elements';
 import { FlatList } from 'react-native-gesture-handler';
-import CarFuelingHistoryElement from './CarFuelingHistoryElement';
+import CarFuellingHistoryElement from './CarFuellingHistoryElement';
 
-interface Fueling {
+interface Fuelling {
   distance: number;
   cost: number;
   fuelAmount: number;
   date: number;
 }
 
-const CarFuelingHistory: React.FC = () => {
-  const [list, setList] = useState<Array<Fueling>>([
+const CarFuellingHistory: React.FC = () => {
+  const [list, setList] = useState<Array<Fuelling>>([
     {
       distance: 456,
       cost: 125.5,
@@ -45,13 +45,13 @@ const CarFuelingHistory: React.FC = () => {
     },
   ]);
 
-  const deleteFuelingRecord = (index: number) => {
+  const deleteFuellingRecord = (index: number) => {
     setList((prevList) => prevList.filter((_, ind) => index !== ind));
   };
 
-  const keyExtractor = (_: Fueling, index: number) => index.toString();
+  const keyExtractor = (_: Fuelling, index: number) => index.toString();
 
-  const renderItem: ListRenderItem<Fueling> = ({ item, index, separators }) => {
+  const renderItem: ListRenderItem<Fuelling> = ({ item, index, separators }) => {
     return (
       <ListItem bottomDivider>
         <ListItem.Content>
@@ -62,12 +62,12 @@ const CarFuelingHistory: React.FC = () => {
             </ListItem.Title>
             <ListItem.Title>{new Date(item.date).toLocaleDateString()}</ListItem.Title>
             <Icon
-              onPress={() => deleteFuelingRecord(index)}
+              onPress={() => deleteFuellingRecord(index)}
               type="material-community"
               name="delete"
             />
           </View>
-          <CarFuelingHistoryElement item={item} index={index} separators={separators} />
+          <CarFuellingHistoryElement item={item} index={index} separators={separators} />
         </ListItem.Content>
       </ListItem>
     );
@@ -99,4 +99,4 @@ const style = StyleSheet.create({
   },
 });
 
-export default CarFuelingHistory;
+export default CarFuellingHistory;

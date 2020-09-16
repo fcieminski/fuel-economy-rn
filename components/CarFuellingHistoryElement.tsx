@@ -2,14 +2,14 @@ import React from 'react';
 import { ListRenderItem, StyleSheet, View } from 'react-native';
 import { ListItem } from 'react-native-elements';
 
-interface Fueling {
+interface Fuelling {
   distance: number;
   cost: number;
   fuelAmount: number;
   date: number;
 }
 
-const CarFuelingHistoryElement: ListRenderItem<Fueling> = ({ item, index, separators }) => {
+const CarFuellingHistoryElement: ListRenderItem<Fuelling> = ({ item, index, separators }) => {
   return (
     <View style={style.row}>
       <View style={style.column}>
@@ -54,4 +54,4 @@ const style = StyleSheet.create({
   },
 });
 
-export default CarFuelingHistoryElement;
+export default CarFuellingHistoryElement;
