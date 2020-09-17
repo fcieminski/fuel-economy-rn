@@ -1,37 +1,22 @@
-import { BottomTabBarButtonProps } from '@react-navigation/bottom-tabs';
 import React from 'react';
-import { View, Animated } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import { Icon } from 'react-native-elements';
-import { TouchableHighlight } from 'react-native-gesture-handler';
 
 type Props = {
   addElement: () => void;
 };
 
 const AddButton: React.FC<Props> = ({ addElement }) => {
-  const buttonSize = new Animated.Value(1);
-
   const handlePress = () => {
-    Animated.sequence([
-      Animated.timing(buttonSize, {
-        toValue: 0.9,
-        duration: 100,
-        useNativeDriver: true,
-      }),
-      Animated.timing(buttonSize, {
-        toValue: 1,
-        useNativeDriver: true,
-      }),
-    ]).start();
     addElement();
   };
 
   return (
-    <TouchableHighlight
-      underlayColor="#32a899"
+    <TouchableOpacity
+      activeOpacity={0.8}
       style={{
-        bottom: 30,
         height: 60,
+        bottom: 30,
         width: 60,
         borderRadius: 58,
         backgroundColor: '#32a899',
@@ -43,7 +28,6 @@ const AddButton: React.FC<Props> = ({ addElement }) => {
         shadowOpacity: 0.25,
         shadowRadius: 4,
         elevation: 10,
-        transform: [{ scale: buttonSize }],
       }}
       onPress={handlePress}>
       <View
@@ -58,7 +42,7 @@ const AddButton: React.FC<Props> = ({ addElement }) => {
         }}>
         <Icon size={35} type="material-community" name="plus" color="white" />
       </View>
-    </TouchableHighlight>
+    </TouchableOpacity>
   );
 };
 

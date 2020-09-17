@@ -11,6 +11,10 @@ import AddFuellingInputs from '../components/inputs/AddFuellingInputs';
 import { Fuelling } from '../types/fuellingHistoryTypes';
 import { readStorage, saveToStorage } from '../components/utils/storageUtils';
 import AsyncStorage from '@react-native-community/async-storage';
+import ArchiveScreen from '../screens/ArchiveScreen';
+import FixListScreen from '../screens/FixListScreen';
+import NotesScreen from '../screens/NotesScreen';
+import { View } from 'react-native';
 
 const Tab = createBottomTabNavigator();
 
@@ -56,6 +60,7 @@ const TabNavigation: React.FC = () => {
           labelStyle: { fontSize: 14 },
           style: {
             backgroundColor: '#e3e3e3',
+            zIndex: 10,
           },
         }}
         initialRouteName="Main">
@@ -77,7 +82,7 @@ const TabNavigation: React.FC = () => {
               return <Icon color={color} type="material-community" name="archive" />;
             },
           }}
-          component={MainScreen}
+          component={ArchiveScreen}
         />
         <Tab.Screen
           name="Add"
@@ -94,7 +99,7 @@ const TabNavigation: React.FC = () => {
               return <Icon color={color} type="material-community" name="note-text" />;
             },
           }}
-          component={MainScreen}
+          component={NotesScreen}
         />
 
         {/* <Tab.Screen
@@ -115,7 +120,7 @@ const TabNavigation: React.FC = () => {
               return <Icon color={color} type="material-community" name="wrench" />;
             },
           }}
-          component={MainScreen}
+          component={FixListScreen}
         />
       </Tab.Navigator>
     </>

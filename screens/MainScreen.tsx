@@ -45,7 +45,7 @@ const MainScreen: React.FC = () => {
     void getAppData();
   }, []);
 
-  const saveCarInfo = async () => {
+  const saveCarData = async () => {
     const car = {
       brand,
       model,
@@ -61,10 +61,29 @@ const MainScreen: React.FC = () => {
     }
   };
 
+  const removeCarData = async () => {
+    await AsyncStorage.removeItem('@car');
+    setCar(null);
+  };
+
   return (
     <View style={style.mainContainer}>
       <Card>
-        <Card.Title>{car ? `${car.brand} ${car.model}` : 'Twój samochód'}</Card.Title>
+        <View style={style.cardTitle}>
+          <Text style={style.textHeader}>
+            {car ? `${car.brand} ${car.model}` : 'Twój samochód'}
+          </Text>
+          {car && (
+            <Icon
+              size={25}
+              iconStyle={{ marginLeft: 10 }}
+              type="material-community"
+              color="#32a899"
+              name="delete"
+              onPress={removeCarData}
+            />
+          )}
+        </View>
         <Card.Divider />
         {car ? (
           <CarInfo car={car} />
@@ -81,7 +100,7 @@ const MainScreen: React.FC = () => {
         )}
       </Card>
       <CarFuellingHistory />
-      <Modal visible={visible} handleSave={saveCarInfo} toggle={toggleDialog}>
+      <Modal visible={visible} handleSave={saveCarData} toggle={toggleDialog}>
         <Input
           label="Marka"
           leftIcon={{ type: 'material-community', name: 'factory' }}
@@ -134,8 +153,17 @@ const style = StyleSheet.create({
   textNormal: {
     fontSize: 16,
   },
+  textHeader: {
+    fontWeight: 'bold',
+    fontSize: 20,
+  },
   button: {
     backgroundColor: '#32a899',
+  },
+  cardTitle: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 
