@@ -16,7 +16,7 @@ const fuellingReducer = (state = initialState, action: FuellingTypes): FuellingS
     case ADD_FUELING:
       return {
         ...state,
-        fuellingList: [...state.fuellingList, action.payload],
+        fuellingList: state.fuellingList.concat(action.payload),
       };
     case OPEN_MODAL:
       return {

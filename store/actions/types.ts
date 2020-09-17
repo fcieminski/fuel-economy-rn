@@ -22,4 +22,8 @@ interface OpenModal {
   payload: boolean;
 }
 
-export type FuellingTypes = AddFuellingAction | OpenModal | RemoveFuellingAction;
+export type FuellingTypes =
+  | AddFuellingAction
+  | OpenModal
+  | RemoveFuellingAction
+  | AddInitialFuellingAction;

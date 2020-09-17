@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
-import { ListRenderItem, StyleSheet, View } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
+import React from 'react';
+import { ListRenderItem, StyleSheet, Text, View } from 'react-native';
 import { Card, Icon, ListItem } from 'react-native-elements';
 import { FlatList } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
 import { removeFuelling } from '../store/actions/fuelling';
 import { RootState } from '../store/store';
 import { Fuelling } from '../types/fuellingHistoryTypes';
+import { removeOneFromManyElements } from './utils/storageUtils';
 import CarFuellingHistoryElement from './CarFuellingHistoryElement';
 
 const CarFuellingHistory: React.FC = () => {
@@ -14,7 +16,8 @@ const CarFuellingHistory: React.FC = () => {
   );
   const dispatch = useDispatch();
 
-  const deleteFuellingRecord = (index: number) => {
+  const deleteFuellingRecord = async (index: number) => {
+    await removeOneFromManyElements('@fuelling', index);
     dispatch(removeFuelling(index));
   };
 
@@ -48,6 +51,9 @@ const CarFuellingHistory: React.FC = () => {
         scrollEnabled={true}
         keyExtractor={keyExtractor}
         data={fuelling}
+        ListEmptyComponent={() => {
+          return <Text>Dodaj pierwsze tankowanie!</Text>;
+        }}
         renderItem={renderItem}
       />
     </Card>

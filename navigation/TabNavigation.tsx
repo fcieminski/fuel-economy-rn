@@ -9,6 +9,8 @@ import AddButton from '../components/AddButton';
 import Modal from '../components/Modal';
 import AddFuellingInputs from '../components/inputs/AddFuellingInputs';
 import { Fuelling } from '../types/fuellingHistoryTypes';
+import { readStorage, saveToStorage } from '../components/utils/storageUtils';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const Tab = createBottomTabNavigator();
 
@@ -20,29 +22,31 @@ const TabNavigation: React.FC = () => {
     dispatch(openModal(!modalToggle));
   };
 
-  const saveFuelingElement = (fuelling: {
-    cost: string;
-    distance: string;
-    fuelAmount: string;
-    date: string;
-  }) => {
-    const cost = parseFloat(fuelling.cost);
-    const distance = parseFloat(fuelling.distance);
-    const fuelAmount = parseFloat(fuelling.fuelAmount);
-    const parsedFuelling: Fuelling = {
-      ...fuelling,
-      cost,
-      distance,
-      fuelAmount,
-    };
+  const saveFuellingElement = async (fuelling: Record<string, string>) => {
+    const parsedFuelling: Fuelling = parseFuellingElement(fuelling);
+    const storageData = await readStorage('@fuelling');
+    const mergedData = storageData ? [...storageData, parsedFuelling] : [parsedFuelling];
+    await saveToStorage('@fuelling', mergedData);
     dispatch(addFuelling(parsedFuelling));
     dispatch(openModal(!modalToggle));
   };
 
+  const parseFuellingElement = (fuelling: Record<string, string>): Fuelling => {
+    const cost = parseFloat(fuelling.cost);
+    const distance = parseFloat(fuelling.distance);
+    const fuelAmount = parseFloat(fuelling.fuelAmount);
+    return {
+      cost,
+      distance,
+      fuelAmount,
+      date: fuelling.date,
+    };
+  };
+
   return (
     <>
-      <Modal visible={modalToggle} toggle={handlePress}>
-        <AddFuellingInputs handleSubmit={saveFuelingElement} />
+      <Modal visible={modalToggle} toggle={handlePress} title="Dodaj ostatnie tankowanie">
+        <AddFuellingInputs handleSubmit={saveFuellingElement} />
       </Modal>
       <Tab.Navigator
         tabBarOptions={{

@@ -3,12 +3,12 @@ import { StyleSheet, View, TouchableWithoutFeedback } from 'react-native';
 import { Button, Input } from 'react-native-elements';
 import { Fuelling } from '../../types/fuellingHistoryTypes';
 import { Formik } from 'formik';
-import DateTimePicker from '@react-native-community/datetimepicker';
 import { dateFormat, initialDate } from '../utils/dateUtils';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import * as Yup from 'yup';
 
 type Props = {
-  handleSubmit: (fuelling: Fuelling) => void;
+  handleSubmit: (fuelling: Record<string, string>) => void;
 };
 
 const AddFuellingInputs: React.FC<Props> = ({ handleSubmit }) => {
@@ -23,7 +23,14 @@ const AddFuellingInputs: React.FC<Props> = ({ handleSubmit }) => {
     date: Yup.string().typeError('Wprowadź datę').required('Pole wymagane!'),
   });
 
-  const handleDatePickerDate = (e, formikValue) => {
+  const handleDatePickerDate = (
+    e: Event,
+    formikValue: (
+      field: string,
+      value: number | string,
+      shouldValidate?: boolean | undefined,
+    ) => void,
+  ) => {
     setShowDate(false);
     const { timestamp } = e.nativeEvent;
     console.log('change');

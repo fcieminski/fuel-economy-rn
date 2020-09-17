@@ -5,6 +5,9 @@ import AsyncStorage from '@react-native-community/async-storage';
 import CarInfo from '../components/CarInfo';
 import CarFuellingHistory from '../components/CarFuellingHistory';
 import Modal from '../components/Modal';
+import { multiReadStorage, readStorage } from '../components/utils/storageUtils';
+import { useDispatch } from 'react-redux';
+import { addFuelling } from '../store/actions/fuelling';
 
 const deviceWidth = Dimensions.get('window').width;
 const deviceHeight = Dimensions.get('window').height;
@@ -17,6 +20,7 @@ interface Car {
 }
 
 const MainScreen: React.FC = () => {
+  const dispatch = useDispatch();
   const [car, setCar] = useState<Car | null>(null);
   const [brand, setBrand] = useState('');
   const [model, setModel] = useState('');
@@ -29,17 +33,16 @@ const MainScreen: React.FC = () => {
   };
 
   useEffect(() => {
-    async function getCarData() {
-      try {
-        const value = await AsyncStorage.getItem('@car');
-        if (value) {
-          setCar(JSON.parse(value));
-        }
-      } catch {
-        Alert.alert('Alert Title', 'My Alert Msg');
+    async function getAppData() {
+      const data = await multiReadStorage(['@car', '@fuelling']);
+      if (data) {
+        const carData = data[0][1];
+        const fuellingData = data[1][1];
+        setCar(carData ? JSON.parse(carData) : null);
+        dispatch(addFuelling(fuellingData ? JSON.parse(fuellingData) : []));
       }
     }
-    void getCarData();
+    void getAppData();
   }, []);
 
   const saveCarInfo = async () => {

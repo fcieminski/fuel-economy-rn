@@ -15,9 +15,10 @@ interface ModalDialog {
   visible: boolean;
   toggle: (event: GestureResponderEvent) => void;
   children: React.ReactNode;
+  title?: string;
 }
 
-const Modal: React.FC<ModalDialog> = ({ visible, toggle, children }) => {
+const Modal: React.FC<ModalDialog> = ({ visible, toggle, children, title }) => {
   return (
     <Overlay isVisible={visible}>
       <KeyboardAvoidingView behavior="padding">
@@ -26,7 +27,7 @@ const Modal: React.FC<ModalDialog> = ({ visible, toggle, children }) => {
             <Icon type="material-community" onPress={toggle} color="#32a899" name="close" />
           </View>
           <View style={style.modalHeader}>
-            <Text style={style.modalHeaderText}>Dodaj samochód</Text>
+            <Text style={style.modalHeaderText}>{title}</Text>
           </View>
           <View>{children}</View>
         </View>
