@@ -1,8 +1,10 @@
-import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, View, TouchableWithoutFeedback } from 'react-native';
 import { Button, Input } from 'react-native-elements';
 import { Fuelling } from '../../types/fuellingHistoryTypes';
 import { Formik } from 'formik';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import { dateFormat, initialDate } from '../utils/dateUtils';
 import * as Yup from 'yup';
 
 type Props = {
@@ -10,21 +12,33 @@ type Props = {
 };
 
 const AddFuellingInputs: React.FC<Props> = ({ handleSubmit }) => {
+  const [showDate, setShowDate] = useState(false);
+
   const fuellingSchema: Yup.ObjectSchema<Fuelling | undefined, object> = Yup.object<
     Fuelling
   >().shape({
     distance: Yup.number().typeError('Wprowadź liczbę').required('Pole wymagane!'),
     cost: Yup.number().typeError('Wprowadź liczbę').required('Pole wymagane!'),
     fuelAmount: Yup.number().typeError('Wprowadź liczbę').required('Pole wymagane!'),
-    date: Yup.number().typeError('Wprowadź liczbę').required('Pole wymagane!'),
+    date: Yup.string().typeError('Wprowadź datę').required('Pole wymagane!'),
   });
+
+  const handleDatePickerDate = (e, formikValue) => {
+    setShowDate(false);
+    const { timestamp } = e.nativeEvent;
+    console.log('change');
+    if (timestamp) {
+      const date = dateFormat(timestamp);
+      formikValue('date', date);
+    }
+  };
 
   return (
     <Formik
-      initialValues={{ distance: '', cost: '', fuelAmount: '', date: '' }}
+      initialValues={{ distance: '', cost: '', fuelAmount: '', date: initialDate }}
       validationSchema={fuellingSchema}
       onSubmit={handleSubmit}>
-      {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
+      {({ handleChange, handleBlur, handleSubmit, values, errors, touched, setFieldValue }) => (
         <View>
           <Input
             label="Dystans"
@@ -53,15 +67,31 @@ const AddFuellingInputs: React.FC<Props> = ({ handleSubmit }) => {
             value={values.fuelAmount}
             errorMessage={errors.fuelAmount && touched.fuelAmount ? errors.fuelAmount : undefined}
           />
-          <Input
-            label="Data"
-            keyboardType="number-pad"
-            leftIcon={{ type: 'material-community', name: 'calendar-range' }}
-            onChangeText={handleChange('date')}
-            onBlur={handleBlur('date')}
-            value={values.date}
-            errorMessage={errors.date && touched.date ? errors.date : undefined}
-          />
+          <TouchableWithoutFeedback onPress={() => setShowDate(true)}>
+            <View>
+              <Input
+                label="Data"
+                keyboardType="number-pad"
+                leftIcon={{
+                  type: 'material-community',
+                  name: 'calendar-range',
+                }}
+                onBlur={handleBlur('date')}
+                editable={false}
+                value={values.date}
+                errorMessage={errors.date && touched.date ? errors.date : undefined}
+              />
+            </View>
+          </TouchableWithoutFeedback>
+          {showDate && (
+            <DateTimePicker
+              testID="dateTimePicker"
+              value={new Date()}
+              is24Hour={true}
+              display="default"
+              onChange={(e) => handleDatePickerDate(e, setFieldValue)}
+            />
+          )}
           <Button title="Zapisz" buttonStyle={style.button} onPress={handleSubmit} />
         </View>
       )}

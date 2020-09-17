@@ -27,7 +27,7 @@ const CarFuellingHistory: React.FC = () => {
           <View style={style.rowSpace}>
             <Icon color="#32a899" type="material-community" name="gas-station" />
             <ListItem.Title>
-              średnie spalanie: {(item.distance / item.fuelAmount).toFixed(2)}l
+              Spalanie: {(item.distance / item.fuelAmount).toFixed(2)}l
             </ListItem.Title>
             <ListItem.Title>{item.date}</ListItem.Title>
             <Icon

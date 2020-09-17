@@ -20,8 +20,22 @@ const TabNavigation: React.FC = () => {
     dispatch(openModal(!modalToggle));
   };
 
-  const saveFuelingElement = (fuelling: Fuelling) => {
-    dispatch(addFuelling(fuelling));
+  const saveFuelingElement = (fuelling: {
+    cost: string;
+    distance: string;
+    fuelAmount: string;
+    date: string;
+  }) => {
+    const cost = parseFloat(fuelling.cost);
+    const distance = parseFloat(fuelling.distance);
+    const fuelAmount = parseFloat(fuelling.fuelAmount);
+    const parsedFuelling: Fuelling = {
+      ...fuelling,
+      cost,
+      distance,
+      fuelAmount,
+    };
+    dispatch(addFuelling(parsedFuelling));
     dispatch(openModal(!modalToggle));
   };
 
