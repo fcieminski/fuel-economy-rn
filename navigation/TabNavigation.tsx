@@ -10,11 +10,9 @@ import Modal from '../components/Modal';
 import AddFuellingInputs from '../components/inputs/AddFuellingInputs';
 import { Fuelling } from '../types/fuellingHistoryTypes';
 import { readStorage, saveToStorage } from '../components/utils/storageUtils';
-import AsyncStorage from '@react-native-community/async-storage';
 import ArchiveScreen from '../screens/ArchiveScreen';
 import FixListScreen from '../screens/FixListScreen';
 import NotesScreen from '../screens/NotesScreen';
-import { View } from 'react-native';
 
 const Tab = createBottomTabNavigator();
 
@@ -44,6 +42,7 @@ const TabNavigation: React.FC = () => {
       distance,
       fuelAmount,
       date: fuelling.date,
+      createdAt: Date.now(),
     };
   };
 

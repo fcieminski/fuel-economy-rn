@@ -37,7 +37,7 @@ const ArchiveScreen: React.FC = () => {
   );
 
   const handlePress = (e) => {
-    console.log(e);
+    setDate(e);
   };
 
   return (
@@ -51,7 +51,7 @@ const ArchiveScreen: React.FC = () => {
           })}
         </ScrollView>
       </View>
-      <CarFuellingHistory />
+      <CarFuellingHistory filterBy={date} />
     </View>
   );
 };

@@ -1,5 +1,4 @@
-import { Alert } from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
+import { Alert, AsyncStorage } from 'react-native';
 
 export const saveToStorage = async (
   storage: string,

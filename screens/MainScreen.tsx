@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Alert, Dimensions, KeyboardAvoidingView, StyleSheet, Text, View } from 'react-native';
+import {
+  Alert,
+  Dimensions,
+  KeyboardAvoidingView,
+  StyleSheet,
+  Text,
+  View,
+  AsyncStorage,
+} from 'react-native';
 import { Button, Card, Icon, Input, Overlay } from 'react-native-elements';
-import AsyncStorage from '@react-native-community/async-storage';
 import CarInfo from '../components/CarInfo';
 import CarFuellingHistory from '../components/CarFuellingHistory';
 import Modal from '../components/Modal';
@@ -33,16 +40,13 @@ const MainScreen: React.FC = () => {
   };
 
   useEffect(() => {
-    async function getAppData() {
-      const data = await multiReadStorage(['@car', '@fuelling']);
+    async function getCardData() {
+      const data = await readStorage('@car');
       if (data) {
-        const carData = data[0][1];
-        const fuellingData = data[1][1];
-        setCar(carData ? JSON.parse(carData) : null);
-        dispatch(addFuelling(fuellingData ? JSON.parse(fuellingData) : []));
+        setCar(data ? JSON.parse(data) : null);
       }
     }
-    void getAppData();
+    void getCardData();
   }, []);
 
   const saveCarData = async () => {
