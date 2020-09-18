@@ -1,58 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Icon } from 'react-native-elements';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../store/store';
-import { addFuelling, openModal } from '../store/actions/fuelling';
 import MainScreen from '../screens/MainScreen';
 import AddButton from '../components/AddButton';
-import Modal from '../components/Modal';
-import AddFuellingInputs from '../components/inputs/AddFuellingInputs';
-import { Fuelling } from '../types/allTypes';
-import { readStorage, saveToStorage } from '../components/utils/storageUtils';
 import ArchiveScreen from '../screens/ArchiveScreen';
 import FixListScreen from '../screens/FixListScreen';
 import NotesScreen from '../screens/NotesScreen';
+import AddFuelling from '../components/AddFuelling';
 
 const Tab = createBottomTabNavigator();
 
 const TabNavigation: React.FC = () => {
-  const modalToggle = useSelector<RootState, boolean>((state: RootState) => state.fuelling.modal);
-  const dispatch = useDispatch();
+  const [visible, setVisible] = useState(false);
 
-  const handlePress = () => {
-    dispatch(openModal(!modalToggle));
-  };
-
-  const saveFuellingElement = async (fuelling: Record<string, string>) => {
-    const parsedFuelling: Fuelling = parseFuellingElement(fuelling);
-    const storageData = await readStorage('@fuelling');
-    const mergedData = storageData ? [...storageData, parsedFuelling] : [parsedFuelling];
-    await saveToStorage('@fuelling', mergedData);
-    dispatch(addFuelling(parsedFuelling));
-    dispatch(openModal(!modalToggle));
-  };
-
-  const parseFuellingElement = (fuelling: Record<string, string>): Fuelling => {
-    const cost = parseFloat(fuelling.cost);
-    const distance = parseFloat(fuelling.distance);
-    const fuelAmount = parseFloat(fuelling.fuelAmount);
-    const timestamp = parseFloat(fuelling.timestamp);
-    console.log(timestamp, 'save');
-    return {
-      cost,
-      distance,
-      fuelAmount,
-      date: fuelling.date,
-      timestamp,
-    };
+  const toggleModal = () => {
+    setVisible(!visible);
   };
 
   return (
     <>
-      <Modal visible={modalToggle} toggle={handlePress} title="Dodaj ostatnie tankowanie">
-        <AddFuellingInputs handleSubmit={saveFuellingElement} />
-      </Modal>
+      <AddFuelling toggleModal={toggleModal} visible={visible} />
       <Tab.Navigator
         tabBarOptions={{
           activeTintColor: 'white',
@@ -89,7 +56,7 @@ const TabNavigation: React.FC = () => {
           name="Add"
           component={AddButton}
           options={{
-            tabBarButton: () => <AddButton addElement={handlePress} />,
+            tabBarButton: () => <AddButton addElement={toggleModal} />,
           }}
         />
         <Tab.Screen
