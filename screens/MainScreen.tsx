@@ -15,6 +15,7 @@ import Modal from '../components/Modal';
 import { multiReadStorage, readStorage } from '../components/utils/storageUtils';
 import { useDispatch } from 'react-redux';
 import { addFuelling } from '../store/actions/fuelling';
+import AddCarInfo from '../components/AddCarInfo';
 
 const deviceWidth = Dimensions.get('window').width;
 const deviceHeight = Dimensions.get('window').height;
@@ -72,37 +73,11 @@ const MainScreen: React.FC = () => {
 
   return (
     <View style={style.mainContainer}>
-      <Card>
-        <View style={style.cardTitle}>
-          <Text style={style.textHeader}>
-            {car ? `${car.brand} ${car.model}` : 'Twój samochód'}
-          </Text>
-          {car && (
-            <Icon
-              size={25}
-              iconStyle={{ marginLeft: 10 }}
-              type="material-community"
-              color="#32a899"
-              name="delete"
-              onPress={removeCarData}
-            />
-          )}
-        </View>
-        <Card.Divider />
-        {car ? (
-          <CarInfo car={car} />
-        ) : (
-          <>
-            <Text style={{ marginBottom: 10 }}>Dodaj swój pojazd i zacznij śledzić spalanie!</Text>
-            <Card.Divider />
-            <Button
-              icon={<Icon name="add" color="#ffffff" />}
-              buttonStyle={style.button}
-              onPress={toggleDialog}
-            />
-          </>
-        )}
-      </Card>
+      {car ? (
+        <CarInfo removeCarData={removeCarData} car={car} />
+      ) : (
+        <AddCarInfo toggleDialog={toggleDialog} />
+      )}
       <CarFuellingHistory />
       <Modal visible={visible} handleSave={saveCarData} toggle={toggleDialog}>
         <Input
