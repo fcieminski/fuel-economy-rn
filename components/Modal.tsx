@@ -1,24 +1,12 @@
 import React from 'react';
-import {
-  Dimensions,
-  GestureResponderEvent,
-  KeyboardAvoidingView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import { Dimensions, KeyboardAvoidingView, StyleSheet, Text, View } from 'react-native';
 import { Icon, Overlay } from 'react-native-elements';
+import { ModalDialog } from '../types/allTypes';
 
 const deviceWidth = Dimensions.get('window').width;
 
-interface ModalDialog {
-  visible: boolean;
-  toggle: (event: GestureResponderEvent) => void;
-  children: React.ReactNode;
-  title?: string;
-}
-
-const Modal: React.FC<ModalDialog> = ({ visible, toggle, children, title }) => {
+const Modal: React.FC<ModalDialog> = ({ visible, toggle, children, title, type }) => {
+  const iconColor = type === 'warning' ? '#ffb726' : type === 'error' ? '#db291d' : 'white';
   return (
     <Overlay isVisible={visible}>
       <KeyboardAvoidingView behavior="padding">
@@ -27,6 +15,7 @@ const Modal: React.FC<ModalDialog> = ({ visible, toggle, children, title }) => {
             <Icon type="material-community" onPress={toggle} color="#32a899" name="close" />
           </View>
           <View style={style.modalHeader}>
+            {type && <Icon name="warning" style={style.icon} color={iconColor} />}
             <Text style={style.modalHeaderText}>{title}</Text>
           </View>
           <View>{children}</View>
@@ -47,9 +36,13 @@ const style = StyleSheet.create({
     flexDirection: 'row',
     marginBottom: 20,
     marginLeft: 10,
+    alignItems: 'center',
   },
   closeIcon: {
     alignSelf: 'flex-end',
+  },
+  icon: {
+    marginRight: 10,
   },
   modalHeaderText: {
     fontSize: 24,

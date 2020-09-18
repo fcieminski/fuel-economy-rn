@@ -1,3 +1,5 @@
+import { GestureResponderEvent } from 'react-native';
+
 export type Fuelling = {
   distance: number;
   cost: number;
@@ -12,3 +14,10 @@ export type Car = {
   engine: string;
   mileage: number;
 };
+export interface ModalDialog {
+  visible: boolean;
+  toggle: (event: GestureResponderEvent) => void;
+  children?: React.ReactNode;
+  title?: string;
+  type?: string;
+}

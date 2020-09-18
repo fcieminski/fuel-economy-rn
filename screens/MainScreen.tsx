@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, View, AsyncStorage } from 'react-native';
 import { addCar, removeCar } from '../store/actions/car';
 import { Car } from '../types/allTypes';
-import { readStorage, saveToStorage } from '../components/utils/storageUtils';
+import { saveToStorage } from '../components/utils/storageUtils';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 import AddCarInfo from '../components/AddCarInfo';
@@ -34,11 +34,7 @@ const MainScreen: React.FC = () => {
 
   return (
     <View style={style.mainContainer}>
-      {car ? (
-        <CarInfo removeCarData={removeCarData} car={car} />
-      ) : (
-        <AddCarInfo toggleDialog={toggleDialog} />
-      )}
+      {car ? <CarInfo car={car} /> : <AddCarInfo toggleDialog={toggleDialog} />}
       <CarFuellingHistory />
       <Modal visible={visible} title="Dodaj samochód" toggle={toggleDialog}>
         <AddCarInfoInputs handleSubmit={saveCarData} />

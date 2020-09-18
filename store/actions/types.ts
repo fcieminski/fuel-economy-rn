@@ -1,6 +1,7 @@
 import { Car, Fuelling } from '../../types/allTypes';
 export const ADD_FUELING = 'ADD_FUELING';
 export const REMOVE_FUELING = 'REMOVE_FUELING';
+export const CLEAR_FUELING = 'CLEAR_FUELING';
 export const OPEN_MODAL = 'OPEN_MODAL';
 
 export const ADD_CAR = 'ADD_CAR';
@@ -19,13 +20,20 @@ interface RemoveFuellingAction {
   type: typeof REMOVE_FUELING;
   payload: number;
 }
+interface ClearFuellingAction {
+  type: typeof CLEAR_FUELING;
+}
 
 interface OpenModal {
   type: typeof OPEN_MODAL;
   payload: boolean;
 }
 
-export type FuellingTypes = AddFuellingAction | OpenModal | RemoveFuellingAction;
+export type FuellingTypes =
+  | AddFuellingAction
+  | OpenModal
+  | RemoveFuellingAction
+  | ClearFuellingAction;
 
 export type CarState = {
   car: Car | null;

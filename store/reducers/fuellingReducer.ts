@@ -4,6 +4,7 @@ import {
   FuellingTypes,
   FuellingState,
   REMOVE_FUELING,
+  CLEAR_FUELING,
 } from '../actions/types';
 
 const initialState: FuellingState = {
@@ -27,6 +28,11 @@ const fuellingReducer = (state = initialState, action: FuellingTypes): FuellingS
       return {
         ...state,
         fuellingList: state.fuellingList.filter((_, index) => index !== action.payload),
+      };
+    case CLEAR_FUELING:
+      return {
+        ...state,
+        fuellingList: [],
       };
     default:
       return state;
