@@ -1,25 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import TabNavigation from './navigation/TabNavigation';
 import { NavigationContainer } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ThemeProvider } from 'react-native-elements';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
 import { addFuelling } from './store/actions/fuelling';
-import { readStorage } from './components/utils/storageUtils';
+import { multiReadStorage } from './components/utils/storageUtils';
+import { addCar } from './store/actions/car';
+import TabNavigation from './navigation/TabNavigation';
 import LoadingApp from './components/LoadingApp';
 
 const App: React.FC = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    async function getFuellingData() {
+    async function getMainAppData() {
       setLoading(true);
       try {
-        const data = await readStorage('@fuelling');
+        const data = await multiReadStorage(['@car', '@fuelling']);
         if (data) {
-          store.dispatch(addFuelling(data));
+          const carData = data[0][1];
+          const fuellingData = data[1][1];
+          store.dispatch(addFuelling(fuellingData ? JSON.parse(fuellingData) : []));
+          store.dispatch(addCar(carData ? JSON.parse(carData) : null));
         }
       } catch (e) {
         console.log(e);
@@ -27,7 +31,7 @@ const App: React.FC = () => {
         setLoading(false);
       }
     }
-    void getFuellingData();
+    void getMainAppData();
   }, []);
 
   return (

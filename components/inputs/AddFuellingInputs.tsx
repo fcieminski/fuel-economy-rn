@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, TouchableWithoutFeedback } from 'react-native';
 import { Button, Input } from 'react-native-elements';
-import { Fuelling } from '../../types/fuellingHistoryTypes';
+import { Fuelling } from '../../types/allTypes';
 import { Formik } from 'formik';
 import { dateFormat, initialDate } from '../utils/dateUtils';
 import DateTimePicker from '@react-native-community/datetimepicker';

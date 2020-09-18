@@ -1,19 +1,15 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Card, Icon } from 'react-native-elements';
+import { Car } from '../types/allTypes';
 import CarElement from './CarElement';
 
-interface Car {
-  car: {
-    brand: string;
-    model: string;
-    engine: number;
-    mileage: number;
-  };
+interface Props {
+  car: Car;
   removeCarData: () => void;
 }
 
-const CarInfo: React.FC<Car> = ({ car, removeCarData }) => {
+const CarInfo: React.FC<Props> = ({ car, removeCarData }) => {
   return (
     <Card>
       <View style={style.cardTitle}>

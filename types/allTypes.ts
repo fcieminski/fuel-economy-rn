@@ -5,3 +5,10 @@ export type Fuelling = {
   date: string;
   timestamp: number;
 };
+
+export type Car = {
+  brand: string;
+  model: string;
+  engine: string;
+  mileage: number;
+};

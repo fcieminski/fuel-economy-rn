@@ -1,4 +1,4 @@
-import { Fuelling } from '../../types/fuellingHistoryTypes';
+import { Fuelling } from '../../types/allTypes';
 import { ADD_FUELING, OPEN_MODAL, FuellingTypes, REMOVE_FUELING } from './types';
 
 export const addFuelling = (fuelling: Fuelling): FuellingTypes => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { ListRenderItem, StyleSheet, View } from 'react-native';
 import { ListItem } from 'react-native-elements';
-import { Fuelling } from '../types/fuellingHistoryTypes';
+import { Fuelling } from '../types/allTypes';
 
 const CarFuellingHistoryElement: ListRenderItem<Fuelling> = ({ item, index, separators }) => {
   return (
