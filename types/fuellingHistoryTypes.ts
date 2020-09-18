@@ -3,5 +3,5 @@ export type Fuelling = {
   cost: number;
   fuelAmount: number;
   date: string;
-  createdAt: number;
+  timestamp: number;
 };

@@ -11,6 +11,8 @@ type Props = {
   handleSubmit: (fuelling: Record<string, string>) => void;
 };
 
+const timestamp = Date.now().toString();
+
 const AddFuellingInputs: React.FC<Props> = ({ handleSubmit }) => {
   const [showDate, setShowDate] = useState(false);
 
@@ -33,16 +35,22 @@ const AddFuellingInputs: React.FC<Props> = ({ handleSubmit }) => {
   ) => {
     setShowDate(false);
     const { timestamp } = e.nativeEvent;
-    console.log('change');
     if (timestamp) {
       const date = dateFormat(timestamp);
       formikValue('date', date);
+      formikValue('timestamp', timestamp);
     }
   };
 
   return (
     <Formik
-      initialValues={{ distance: '', cost: '', fuelAmount: '', date: initialDate }}
+      initialValues={{
+        distance: '',
+        cost: '',
+        fuelAmount: '',
+        date: initialDate,
+        timestamp,
+      }}
       validationSchema={fuellingSchema}
       onSubmit={handleSubmit}>
       {({ handleChange, handleBlur, handleSubmit, values, errors, touched, setFieldValue }) => (

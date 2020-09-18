@@ -57,7 +57,7 @@ const CarFuellingHistory: React.FC<Props> = ({ filterBy }) => {
         keyExtractor={keyExtractor}
         data={
           filterBy
-            ? fuelling.filter((element) => getMonth(element.createdAt) === filterBy)
+            ? fuelling.filter((element) => getMonth(element.timestamp) === filterBy)
             : fuelling
         }
         ListEmptyComponent={() => {

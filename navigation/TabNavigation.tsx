@@ -37,12 +37,14 @@ const TabNavigation: React.FC = () => {
     const cost = parseFloat(fuelling.cost);
     const distance = parseFloat(fuelling.distance);
     const fuelAmount = parseFloat(fuelling.fuelAmount);
+    const timestamp = parseFloat(fuelling.timestamp);
+    console.log(timestamp, 'save');
     return {
       cost,
       distance,
       fuelAmount,
       date: fuelling.date,
-      createdAt: Date.now(),
+      timestamp,
     };
   };
 

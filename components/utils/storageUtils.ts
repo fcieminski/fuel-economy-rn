@@ -45,7 +45,6 @@ export const removeOneFromManyElements = async (key: string, index: number): Pro
       await AsyncStorage.setItem(key, JSON.stringify(initialData));
     }
   } catch (e) {
-    console.log(e);
     Alert.alert('Błąd!', 'Nie udało się usunąć danych');
   }
 };

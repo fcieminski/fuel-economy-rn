@@ -1,6 +1,6 @@
 import { useFocusEffect } from '@react-navigation/native';
 import React, { RefObject, useCallback, useEffect, useRef, useState } from 'react';
-import { View, ScrollView } from 'react-native';
+import { View, ScrollView, GestureResponderEvent } from 'react-native';
 import ArchiveButton from '../components/ArchiveButton';
 import CarFuellingHistory from '../components/CarFuellingHistory';
 
@@ -18,26 +18,24 @@ const months = [
   { title: 'Listopad', id: 10 },
   { title: 'Grudzień', id: 11 },
 ];
-const ArchiveScreen: React.FC = () => {
-  const [date, setDate] = useState<number | string>(0);
-  const scroll = useRef<RefObject<ScrollView>>(null);
 
-  useEffect(() => {
-    const today = new Date();
-    const currentMonth = today.getMonth();
-    setDate(currentMonth);
-  }, []);
+const ArchiveScreen: React.FC = () => {
+  const [date, setDate] = useState<number>(0);
+  const scroll = useRef<RefObject<ScrollView>>(null);
 
   useFocusEffect(
     useCallback(() => {
+      const today = new Date();
+      const currentMonth = today.getMonth();
+      setDate(currentMonth);
       if (scroll) {
-        scroll.current.scrollTo({ x: 110 * (date - 1) });
+        scroll.current.scrollTo({ x: (date - 1) * 110 });
       }
-    }, []),
+    }, [scroll]),
   );
 
-  const handlePress = (e) => {
-    setDate(e);
+  const handlePress = (month: number) => {
+    setDate(month);
   };
 
   return (
@@ -46,7 +44,12 @@ const ArchiveScreen: React.FC = () => {
         <ScrollView ref={scroll} horizontal style={{ flexDirection: 'row' }}>
           {months.map((month, index) => {
             return (
-              <ArchiveButton onPress={handlePress} title={month.title} id={month.id} key={index} />
+              <ArchiveButton
+                onPress={(e) => handlePress(e)}
+                title={month.title}
+                id={month.id}
+                key={index}
+              />
             );
           })}
         </ScrollView>
