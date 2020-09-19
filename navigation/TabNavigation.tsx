@@ -6,23 +6,12 @@ import AddButton from '../components/AddButton';
 import ArchiveScreen from '../screens/ArchiveScreen';
 import FixListScreen from '../screens/FixListScreen';
 import NotesScreen from '../screens/NotesScreen';
-import AddFuelling from '../components/AddFuelling';
-import { useNavigation } from '@react-navigation/native';
 
 const Tab = createBottomTabNavigator();
 
 const TabNavigation: React.FC = () => {
-  const [visible, setVisible] = useState(false);
-
-  const toggleModal = () => {
-    setVisible(!visible);
-  };
-
-  let currentRoute;
-  console.log(currentRoute);
   return (
     <>
-      <AddFuelling toggleModal={toggleModal} visible={visible} />
       <Tab.Navigator
         tabBarOptions={{
           activeTintColor: 'white',
@@ -33,11 +22,6 @@ const TabNavigation: React.FC = () => {
             backgroundColor: '#e3e3e3',
             zIndex: 10,
           },
-        }}
-        screenOptions={({ navigation, route }) => {
-          if ((route?.name === 'Main' || route?.name === 'Archive') && navigation?.isFocused()) {
-            currentRoute = route.name;
-          }
         }}
         initialRouteName="Main">
         <Tab.Screen
@@ -64,7 +48,7 @@ const TabNavigation: React.FC = () => {
           name="Add"
           component={AddButton}
           options={{
-            tabBarButton: () => <AddButton addElement={toggleModal} />,
+            tabBarButton: () => <AddButton />,
           }}
         />
         <Tab.Screen
