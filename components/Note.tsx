@@ -17,7 +17,7 @@ interface Props {
   note: Note;
 }
 
-const Note: React.FC<Props> = ({ note, deleteNote }) => {
+const Note: React.FC<Props> = ({ note, deleteNote, editNote }) => {
   const [visible, setVisible] = useState(false);
   const [focusedImage, setFocusedImage] = useState('');
 
@@ -54,7 +54,12 @@ const Note: React.FC<Props> = ({ note, deleteNote }) => {
             type="material-community"
             name="delete"
           />
-          <Icon color="black" type="material-community" name="pencil" />
+          <Icon
+            onPress={() => editNote(note)}
+            color="black"
+            type="material-community"
+            name="pencil"
+          />
         </View>
       </View>
       <Card.Divider />
