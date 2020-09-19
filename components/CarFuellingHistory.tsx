@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { ListRenderItem, StyleSheet, Text, View, AsyncStorage } from 'react-native';
 import { Card, Icon, ListItem } from 'react-native-elements';
 import { FlatList } from 'react-native-gesture-handler';
@@ -26,9 +26,9 @@ const CarFuellingHistory: React.FC<Props> = ({ filterBy }) => {
     dispatch(removeFuelling(index));
   };
 
-  const keyExtractor = (_: Fuelling, index: number) => index.toString();
+  const keyExtractor = useCallback((_: Fuelling, index: number) => index.toString(), []);
 
-  const renderItem: ListRenderItem<Fuelling> = ({ item, index, separators }) => {
+  const renderItem: ListRenderItem<Fuelling> = useCallback(({ item, index, separators }) => {
     return (
       <ListItem bottomDivider>
         <ListItem.Content>
@@ -48,7 +48,9 @@ const CarFuellingHistory: React.FC<Props> = ({ filterBy }) => {
         </ListItem.Content>
       </ListItem>
     );
-  };
+  }, []);
+
+  const emptyData = () => <Text>Dodaj pierwsze tankowanie!</Text>;
 
   return (
     <Card containerStyle={style.listContainer}>
@@ -60,9 +62,7 @@ const CarFuellingHistory: React.FC<Props> = ({ filterBy }) => {
             ? fuelling.filter((element) => getMonth(element.timestamp) === filterBy)
             : fuelling
         }
-        ListEmptyComponent={() => {
-          return <Text>Dodaj pierwsze tankowanie!</Text>;
-        }}
+        ListEmptyComponent={emptyData}
         renderItem={renderItem}
       />
     </Card>

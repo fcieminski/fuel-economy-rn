@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { ListRenderItem, StyleSheet, View } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import { Fuelling } from '../types/allTypes';
@@ -48,4 +48,4 @@ const style = StyleSheet.create({
   },
 });
 
-export default CarFuellingHistoryElement;
+export default memo(CarFuellingHistoryElement);

@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { FlatList, ListRenderItem, Text, View } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
 import Note from '../components/Note';
 
 const notes = [
@@ -86,17 +85,17 @@ const notes = [
 ];
 
 const NotesScreen: React.FC = () => {
-  const keyExtractor = (_: Note, index: number) => index.toString();
+  const keyExtractor = useCallback((_: Note, index: number) => index.toString(), []);
 
-  const renderNotes: ListRenderItem<Note> = ({ item, separators, index }) => {
+  const renderNotes: ListRenderItem<Note> = useCallback(({ item, separators, index }) => {
     return <Note note={item} />;
-  };
+  }, []);
 
   return (
     <FlatList
       scrollEnabled={true}
       keyExtractor={keyExtractor}
-      data={notes}
+      data={notes.sort((a, b) => b.timestamp - a.timestamp)}
       ListEmptyComponent={() => {
         return <Text>Brak notatek</Text>;
       }}

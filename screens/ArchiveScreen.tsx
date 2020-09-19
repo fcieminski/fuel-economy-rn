@@ -1,6 +1,7 @@
 import { useFocusEffect } from '@react-navigation/native';
 import React, { RefObject, useCallback, useEffect, useRef, useState } from 'react';
-import { View, ScrollView, GestureResponderEvent } from 'react-native';
+import { View, ScrollView, GestureResponderEvent, Text } from 'react-native';
+import { Card } from 'react-native-elements';
 import ArchiveButton from '../components/ArchiveButton';
 import CarFuellingHistory from '../components/CarFuellingHistory';
 
@@ -38,6 +39,8 @@ const ArchiveScreen: React.FC = () => {
     setDate(month);
   };
 
+  const monthName = months.find((ele) => ele.id === date);
+
   return (
     <View style={{ flex: 1 }}>
       <View style={{ marginTop: 10 }}>
@@ -54,6 +57,9 @@ const ArchiveScreen: React.FC = () => {
           })}
         </ScrollView>
       </View>
+      <Card>
+        <Text>{monthName?.title}</Text>
+      </Card>
       <CarFuellingHistory filterBy={date} />
     </View>
   );
