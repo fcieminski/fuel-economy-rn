@@ -21,3 +21,9 @@ export interface ModalDialog {
   title?: string;
   type?: string;
 }
+
+export type Note = {
+  text: string;
+  timestamp: number;
+  isImportant: boolean;
+};

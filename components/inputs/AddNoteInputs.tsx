@@ -4,13 +4,16 @@ import { StyleSheet, View } from 'react-native';
 import { Button, Input } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
 import * as Yup from 'yup';
+import { Note } from '../../types/allTypes';
 
-const AddNoteInputs = () => {
-  const noteSchema: Yup.ObjectSchema<Fuelling | undefined, object> = Yup.object<Fuelling>().shape({
-    text: Yup.string().typeError('Wprowadź liczbę').required('Pole wymagane!'),
+type Props = {
+  handleSubmit: (notes: Record<string, string>) => void;
+};
+
+const AddNoteInputs: React.FC<Props> = ({ handleSubmit }) => {
+  const noteSchema: Yup.ObjectSchema<Note | undefined, object> = Yup.object<Note>().shape({
+    text: Yup.string().required('Pole wymagane!'),
   });
-
-  const handleSubmit = () => {};
 
   return (
     <Formik

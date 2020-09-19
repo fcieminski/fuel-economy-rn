@@ -1,4 +1,4 @@
-import { Car, Fuelling } from '../../types/allTypes';
+import { Car, Fuelling, Note } from '../../types/allTypes';
 export const ADD_FUELING = 'ADD_FUELING';
 export const REMOVE_FUELING = 'REMOVE_FUELING';
 export const CLEAR_FUELING = 'CLEAR_FUELING';
@@ -6,6 +6,10 @@ export const OPEN_MODAL = 'OPEN_MODAL';
 
 export const ADD_CAR = 'ADD_CAR';
 export const REMOVE_CAR = 'REMOVE_CAR';
+
+export const ADD_NOTE = 'ADD_NOTE';
+export const REMOVE_NOTE = 'REMOVE_NOTE';
+export const EDIT_NOTE = 'EDIT_NOTE';
 
 export type FuellingState = {
   fuellingList: Array<Fuelling>;
@@ -48,3 +52,24 @@ interface RemoveCarAction {
 }
 
 export type CarTypes = AddCarAction | RemoveCarAction;
+
+export type NoteState = {
+  notes: Array<Note>;
+};
+
+interface AddNoteAction {
+  type: typeof ADD_NOTE;
+  payload: Note;
+}
+
+interface RemoveNoteAction {
+  type: typeof REMOVE_NOTE;
+  payload: number;
+}
+
+interface EditNoteAction {
+  type: typeof EDIT_NOTE;
+  payload: Note;
+}
+
+export type NoteTypes = AddNoteAction | RemoveNoteAction | EditNoteAction;

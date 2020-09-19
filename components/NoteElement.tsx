@@ -2,22 +2,15 @@ import React, { memo, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Card, Icon, Image, Overlay } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
+import { Note } from '../types/allTypes';
 import ImageAutoSize from './ImageAutoSize';
 import { dateFormat } from './utils/dateUtils';
-
-type Note = {
-  text: string;
-  id: number;
-  important: boolean;
-  image: string;
-  timestamp: number;
-};
 
 interface Props {
   note: Note;
 }
 
-const Note: React.FC<Props> = ({ note, deleteNote, editNote }) => {
+const NoteElement: React.FC<Props> = ({ note, deleteNote, editNote }) => {
   const [visible, setVisible] = useState(false);
   const [focusedImage, setFocusedImage] = useState('');
 
@@ -103,4 +96,4 @@ const style = StyleSheet.create({
   },
 });
 
-export default memo(Note);
+export default memo(NoteElement);
