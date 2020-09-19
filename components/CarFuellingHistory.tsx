@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { ListRenderItem, StyleSheet, Text, View, AsyncStorage } from 'react-native';
 import { Card, Icon, ListItem } from 'react-native-elements';
 import { FlatList } from 'react-native-gesture-handler';
@@ -13,13 +13,17 @@ interface Props {
   filterBy?: string | number;
 }
 
+const getMonth = (date: number) => new Date(date).getMonth();
+
 const CarFuellingHistory: React.FC<Props> = ({ filterBy }) => {
   const fuelling = useSelector<RootState, Array<Fuelling>>(
     (state: RootState) => state.fuelling.fuellingList,
   );
+  const filteredFuelling = useMemo(() => {
+    return fuelling.filter((element) => getMonth(element.timestamp) === filterBy);
+  }, [fuelling, filterBy]);
   const dispatch = useDispatch();
 
-  const getMonth = (date: number) => new Date(date).getMonth();
 
   const deleteFuellingRecord = async (index: number) => {
     await removeOneFromManyElements('@fuelling', index);
@@ -57,11 +61,7 @@ const CarFuellingHistory: React.FC<Props> = ({ filterBy }) => {
       <FlatList
         scrollEnabled={true}
         keyExtractor={keyExtractor}
-        data={
-          filterBy
-            ? fuelling.filter((element) => getMonth(element.timestamp) === filterBy)
-            : fuelling
-        }
+        data={filterBy ? filteredFuelling : fuelling}
         ListEmptyComponent={emptyData}
         renderItem={renderItem}
       />
