@@ -88,8 +88,13 @@ const NotesScreen: React.FC = () => {
   const keyExtractor = useCallback((_: Note, index: number) => index.toString(), []);
 
   const renderNotes: ListRenderItem<Note> = useCallback(({ item, separators, index }) => {
-    return <Note note={item} />;
+    return <Note note={item} deleteNote={deleteNote} />;
   }, []);
+
+  const deleteNote = (id: number) => {
+    const index = notes.findIndex((note) => note.id === id);
+    notes.splice(index, 1);
+  };
 
   return (
     <FlatList

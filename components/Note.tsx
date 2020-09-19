@@ -17,9 +17,19 @@ interface Props {
   note: Note;
 }
 
-const Note: React.FC<Props> = ({ note }) => {
+const Note: React.FC<Props> = ({ note, deleteNote }) => {
   const [visible, setVisible] = useState(false);
   const [focusedImage, setFocusedImage] = useState('');
+
+  const showImage = (uri: string) => {
+    setFocusedImage(uri);
+    setVisible(true);
+  };
+
+  const closeImageModal = () => {
+    setVisible(false);
+    setFocusedImage('');
+  };
 
   return (
     <Card>
@@ -37,19 +47,27 @@ const Note: React.FC<Props> = ({ note }) => {
         ) : (
           <View />
         )}
-        <Icon color="black" type="material-community" name="delete" />
+        <View style={style.row}>
+          <Icon
+            onPress={() => deleteNote(note.id)}
+            color="black"
+            type="material-community"
+            name="delete"
+          />
+          <Icon color="black" type="material-community" name="pencil" />
+        </View>
       </View>
       <Card.Divider />
       <Text>{note.text}</Text>
       {note.image && (
         <ScrollView horizontal style={{ marginTop: 5 }}>
-          <ImageAutoSize onPress={() => setVisible(true)} uri={note.image} />
+          <ImageAutoSize onPress={() => showImage(note.image)} uri={note.image} />
         </ScrollView>
       )}
       <Card.Divider />
       <Text>{dateFormat(note.timestamp)}</Text>
-      <Overlay onBackdropPress={() => setVisible(false)} isVisible={visible}>
-        <Image source={{ uri: note.image }} style={style.modalImage} />
+      <Overlay onBackdropPress={closeImageModal} isVisible={visible}>
+        <Image source={{ uri: focusedImage }} style={style.modalImage} />
       </Overlay>
     </Card>
   );
@@ -74,7 +92,8 @@ const style = StyleSheet.create({
     marginRight: 5,
   },
   modalImage: {
-    width: 200,
+    maxWidth: '100%',
+    width: '100%',
     height: '100%',
   },
 });
