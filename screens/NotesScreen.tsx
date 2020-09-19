@@ -12,60 +12,20 @@ import { removeNote, saveEditedNote } from '../store/actions/notes';
 
 const NotesScreen: React.FC = () => {
   const notes = useSelector<RootState, Array<Note>>((state: RootState) => state.notesState.notes);
-  const [editCurrentNote, setEditCurrentNote] = useState<{ visible: boolean; note: Note | null }>({
-    visible: false,
-    note: null,
-  });
   const dispatch = useDispatch();
 
   const keyExtractor = useCallback((_: Note, index: number) => index.toString(), []);
 
   const renderNotes: ListRenderItem<Note> = useCallback(({ item, separators, index }) => {
-    return <NoteElement note={item} deleteNote={deleteNote} editNote={editNote} index={index} />;
+    return <NoteElement note={item} deleteNote={deleteNote} saveNote={saveNote} index={index} />;
   }, []);
 
   const deleteNote = (index: number) => {
     dispatch(removeNote(index));
   };
 
-  const editNote = (note: Note) => {
-    setEditCurrentNote({
-      visible: true,
-      note: { ...note },
-    });
-  };
-
-  const toggleModal = () => {
-    setEditCurrentNote({
-      visible: false,
-      note: null,
-    });
-  };
-
-  const saveNote = () => {
-    const current: Note | undefined = notes.find(
-      (note) => note.timestamp === editCurrentNote.note?.timestamp,
-    );
-    if (current) {
-      current.text = editCurrentNote.note?.text;
-      dispatch(saveEditedNote(current));
-      setEditCurrentNote({
-        visible: false,
-        note: null,
-      });
-    }
-  };
-
-  const handleUpdate = (value: string) => {
-    setEditCurrentNote((prevEditCurrent) => {
-      return {
-        ...prevEditCurrent,
-        note: {
-          ...prevEditCurrent.note,
-          text: value,
-        },
-      };
-    });
+  const saveNote = (editedNote: Note) => {
+    dispatch(saveEditedNote(editedNote));
   };
 
   return (
@@ -77,7 +37,7 @@ const NotesScreen: React.FC = () => {
         ListEmptyComponent={() => <EmptyData text="Brak notatek" />}
         renderItem={renderNotes}
       />
-      {editCurrentNote.visible && (
+      {/* {editCurrentNote.visible && (
         <Modal toggle={toggleModal} visible={editCurrentNote.visible} title="Edytuj notatkę">
           <View style={style.editNoteContainer}>
             <ScrollView>
@@ -97,7 +57,7 @@ const NotesScreen: React.FC = () => {
             />
           </View>
         </Modal>
-      )}
+      )} */}
     </>
   );
 };

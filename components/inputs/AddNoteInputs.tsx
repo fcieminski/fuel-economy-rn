@@ -1,7 +1,7 @@
 import { Formik } from 'formik';
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { Button, Input } from 'react-native-elements';
+import { Button, CheckBox, Input } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
 import * as Yup from 'yup';
 import { Note } from '../../types/allTypes';
@@ -24,7 +24,7 @@ const AddNoteInputs: React.FC<Props> = ({ handleSubmit }) => {
       }}
       validationSchema={noteSchema}
       onSubmit={handleSubmit}>
-      {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
+      {({ handleChange, handleBlur, handleSubmit, values, errors, touched, setFieldValue }) => (
         <>
           <ScrollView style={{ height: 300 }}>
             <Input
@@ -38,6 +38,12 @@ const AddNoteInputs: React.FC<Props> = ({ handleSubmit }) => {
               errorMessage={errors.text && touched.text ? errors.text : undefined}
             />
           </ScrollView>
+          <CheckBox
+            title="Ważna?"
+            onPress={() => setFieldValue('isImportant', !values.isImportant)}
+            checked={values.isImportant}
+            checkedColor="#32a899"
+          />
           <Button title="Zapisz" buttonStyle={style.button} onPress={handleSubmit} />
         </>
       )}
