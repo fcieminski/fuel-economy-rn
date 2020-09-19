@@ -5,29 +5,27 @@ import { ScrollView } from 'react-native-gesture-handler';
 import Modal from '../components/Modal';
 import { Note } from '../types/allTypes';
 import NoteElement from '../components/NoteElement';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 import EmptyData from '../components/EmptyData';
+import { removeNote, saveEditedNote } from '../store/actions/notes';
 
 const NotesScreen: React.FC = () => {
   const notes = useSelector<RootState, Array<Note>>((state: RootState) => state.notesState.notes);
-  const [editCurrentNote, setEditCurrentNote] = useState<Record<string, boolean>>({
+  const [editCurrentNote, setEditCurrentNote] = useState<{ visible: boolean; note: Note | null }>({
     visible: false,
     note: null,
   });
+  const dispatch = useDispatch();
 
   const keyExtractor = useCallback((_: Note, index: number) => index.toString(), []);
 
   const renderNotes: ListRenderItem<Note> = useCallback(({ item, separators, index }) => {
-    return <NoteElement note={item} deleteNote={deleteNote} editNote={editNote} />;
+    return <NoteElement note={item} deleteNote={deleteNote} editNote={editNote} index={index} />;
   }, []);
 
-  const getIndex = (id) => {
-    return notes.findIndex((note) => note.id === id);
-  };
-
-  const deleteNote = (id: number) => {
-    notes.splice(getIndex(id), 1);
+  const deleteNote = (index: number) => {
+    dispatch(removeNote(index));
   };
 
   const editNote = (note: Note) => {
@@ -45,20 +43,25 @@ const NotesScreen: React.FC = () => {
   };
 
   const saveNote = () => {
-    const current = notes.find((note) => note.id === editCurrentNote.note.id);
-    current.text = editCurrentNote.note.text;
-    setEditCurrentNote({
-      visible: false,
-      note: null,
-    });
+    const current: Note | undefined = notes.find(
+      (note) => note.timestamp === editCurrentNote.note?.timestamp,
+    );
+    if (current) {
+      current.text = editCurrentNote.note?.text;
+      dispatch(saveEditedNote(current));
+      setEditCurrentNote({
+        visible: false,
+        note: null,
+      });
+    }
   };
 
-  const handleUpdate = (value) => {
-    setEditCurrentNote((prevValue) => {
+  const handleUpdate = (value: string) => {
+    setEditCurrentNote((prevEditCurrent) => {
       return {
-        ...prevValue,
+        ...prevEditCurrent,
         note: {
-          ...prevValue.note,
+          ...prevEditCurrent.note,
           text: value,
         },
       };

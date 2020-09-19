@@ -14,9 +14,9 @@ const AddNote: React.FC<Props> = ({ visible, toggleModal }) => {
   const dispatch = useDispatch();
 
   const saveNoteElement = (note: Note) => {
+    console.log(note);
     dispatch(addNote(note));
     toggleModal();
-    console.log(note);
   };
 
   return (

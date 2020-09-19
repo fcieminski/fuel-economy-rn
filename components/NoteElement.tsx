@@ -8,9 +8,12 @@ import { dateFormat } from './utils/dateUtils';
 
 interface Props {
   note: Note;
+  deleteNote: (index: number) => void;
+  editNote: (note: Note) => void;
+  index: number;
 }
 
-const NoteElement: React.FC<Props> = ({ note, deleteNote, editNote }) => {
+const NoteElement: React.FC<Props> = ({ note, deleteNote, editNote, index }) => {
   const [visible, setVisible] = useState(false);
   const [focusedImage, setFocusedImage] = useState('');
 
@@ -27,7 +30,7 @@ const NoteElement: React.FC<Props> = ({ note, deleteNote, editNote }) => {
   return (
     <Card>
       <View style={style.noteHeader}>
-        {note.important ? (
+        {note.isImportant ? (
           <View style={style.row}>
             <Icon
               color="#ffb726"
@@ -42,7 +45,7 @@ const NoteElement: React.FC<Props> = ({ note, deleteNote, editNote }) => {
         )}
         <View style={style.row}>
           <Icon
-            onPress={() => deleteNote(note.id)}
+            onPress={() => deleteNote(index)}
             color="black"
             type="material-community"
             name="delete"

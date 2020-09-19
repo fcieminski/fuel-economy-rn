@@ -1,17 +1,17 @@
 import { Formik } from 'formik';
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { Button, Input } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
 import * as Yup from 'yup';
 import { Note } from '../../types/allTypes';
 
 type Props = {
-  handleSubmit: (notes: Record<string, string>) => void;
+  handleSubmit: (note: Note) => void;
 };
 
 const AddNoteInputs: React.FC<Props> = ({ handleSubmit }) => {
-  const noteSchema: Yup.ObjectSchema<Note | undefined, object> = Yup.object<Note>().shape({
+  const noteSchema: Yup.ObjectSchema<Note | undefined> = Yup.object<Note>().shape({
     text: Yup.string().required('Pole wymagane!'),
   });
 
@@ -19,6 +19,8 @@ const AddNoteInputs: React.FC<Props> = ({ handleSubmit }) => {
     <Formik
       initialValues={{
         text: '',
+        timestamp: Date.now(),
+        isImportant: false,
       }}
       validationSchema={noteSchema}
       onSubmit={handleSubmit}>

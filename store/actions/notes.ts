@@ -15,7 +15,7 @@ export const removeNote = (index: number): NoteTypes => {
   };
 };
 
-export const editNote = (note: Note): NoteTypes => {
+export const saveEditedNote = (note: Note): NoteTypes => {
   return {
     type: EDIT_NOTE,
     payload: note,
