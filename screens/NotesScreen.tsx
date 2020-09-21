@@ -9,6 +9,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 import EmptyData from '../components/EmptyData';
 import { removeNote, saveEditedNote } from '../store/actions/notes';
+import {
+  removeOneFromManyElements,
+  saveToStorage,
+  updateOneFromManyElementsById,
+} from '../components/utils/storageUtils';
 
 const NotesScreen: React.FC = () => {
   const notes = useSelector<RootState, Array<Note>>((state: RootState) => state.notesState.notes);
@@ -17,14 +22,18 @@ const NotesScreen: React.FC = () => {
   const keyExtractor = useCallback((_: Note, index: number) => index.toString(), []);
 
   const renderNotes: ListRenderItem<Note> = useCallback(({ item, separators, index }) => {
-    return <NoteElement note={item} deleteNote={deleteNote} saveNote={saveNote} index={index} />;
+    return (
+      <NoteElement note={item} deleteNote={deleteNote} updateNote={updateNote} index={index} />
+    );
   }, []);
 
-  const deleteNote = (index: number) => {
+  const deleteNote = async (index: number) => {
+    await removeOneFromManyElements('@notes', index);
     dispatch(removeNote(index));
   };
 
-  const saveNote = (editedNote: Note) => {
+  const updateNote = async (editedNote: Note) => {
+    await updateOneFromManyElementsById('@notes', editedNote);
     dispatch(saveEditedNote(editedNote));
   };
 
@@ -37,47 +46,8 @@ const NotesScreen: React.FC = () => {
         ListEmptyComponent={() => <EmptyData text="Brak notatek" />}
         renderItem={renderNotes}
       />
-      {/* {editCurrentNote.visible && (
-        <Modal toggle={toggleModal} visible={editCurrentNote.visible} title="Edytuj notatkę">
-          <View style={style.editNoteContainer}>
-            <ScrollView>
-              <Input multiline value={editCurrentNote.note.text} onChangeText={handleUpdate} />
-            </ScrollView>
-          </View>
-          <View style={style.actions}>
-            <Button
-              buttonStyle={[style.button, { backgroundColor: '#32a899' }]}
-              onPress={toggleModal}
-              title="Anuluj"
-            />
-            <Button
-              buttonStyle={[style.button, { backgroundColor: '#32a899' }]}
-              onPress={saveNote}
-              title="Zapisz"
-            />
-          </View>
-        </Modal>
-      )} */}
     </>
   );
 };
-
-const style = StyleSheet.create({
-  editNoteContainer: {
-    width: Dimensions.get('window').width * 0.8,
-  },
-  actions: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    marginTop: 10,
-    marginLeft: -10,
-    marginRight: -10,
-  },
-  button: {
-    width: 100,
-    marginLeft: 10,
-    marginRight: 10,
-  },
-});
 
 export default NotesScreen;

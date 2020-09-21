@@ -5,6 +5,7 @@ import { Button, CheckBox, Input } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
 import * as Yup from 'yup';
 import { Note } from '../../types/allTypes';
+import { generateId } from '../utils/idUtils';
 
 type Props = {
   handleSubmit: (note: Note) => void;
@@ -21,6 +22,7 @@ const AddNoteInputs: React.FC<Props> = ({ handleSubmit }) => {
         text: '',
         timestamp: Date.now(),
         isImportant: false,
+        id: generateId(),
       }}
       validationSchema={noteSchema}
       onSubmit={handleSubmit}>

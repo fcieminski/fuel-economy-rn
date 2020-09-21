@@ -26,4 +26,5 @@ export type Note = {
   text: string;
   timestamp: number;
   isImportant: boolean;
+  id: string;
 };

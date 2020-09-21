@@ -20,8 +20,8 @@ const noteReducer = (state = initialState, action: NoteTypes): NoteState => {
       return {
         ...state,
         notes: state.notes.map((note) => {
-          if (note.timestamp === action.payload.timestamp) {
-            return { ...note, text: action.payload.text };
+          if (note.id === action.payload.id) {
+            return { ...note, text: action.payload.text, timestamp: Date.now() };
           }
           return note;
         }),

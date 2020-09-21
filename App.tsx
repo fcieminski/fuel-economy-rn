@@ -10,6 +10,7 @@ import { multiReadStorage } from './components/utils/storageUtils';
 import { addCar } from './store/actions/car';
 import TabNavigation from './navigation/TabNavigation';
 import LoadingApp from './components/LoadingApp';
+import { addNote } from './store/actions/notes';
 
 const App: React.FC = () => {
   const [loading, setLoading] = useState(false);
@@ -18,12 +19,14 @@ const App: React.FC = () => {
     async function getMainAppData() {
       setLoading(true);
       try {
-        const data = await multiReadStorage(['@car', '@fuelling']);
+        const data = await multiReadStorage(['@car', '@fuelling', '@notes']);
         if (data) {
           const carData = data[0][1];
           const fuellingData = data[1][1];
+          const notesData = data[2][1];
           store.dispatch(addFuelling(fuellingData ? JSON.parse(fuellingData) : []));
           store.dispatch(addCar(carData ? JSON.parse(carData) : null));
+          store.dispatch(addNote(notesData ? JSON.parse(notesData) : []));
         }
       } catch (e) {
         console.log(e);

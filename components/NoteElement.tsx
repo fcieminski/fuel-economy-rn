@@ -11,11 +11,11 @@ import WarningModal from './WarningModal';
 interface Props {
   note: Note;
   deleteNote: (index: number) => void;
-  saveNote: (note: Note) => void;
+  updateNote: (note: Note) => void;
   index: number;
 }
 
-const NoteElement: React.FC<Props> = ({ note, deleteNote, saveNote, index }) => {
+const NoteElement: React.FC<Props> = ({ note, deleteNote, updateNote, index }) => {
   const [visible, setVisible] = useState(false);
   const [editModal, setEditModal] = useState(false);
   const [noteNewContent, setNoteNewContent] = useState('');
@@ -57,7 +57,8 @@ const NoteElement: React.FC<Props> = ({ note, deleteNote, saveNote, index }) => 
   const updateNoteText = () => {
     const newNote = { ...note };
     newNote.text = noteNewContent;
-    saveNote(newNote);
+    newNote.timestamp = Date.now();
+    updateNote(newNote);
     setEditModal(false);
   };
 

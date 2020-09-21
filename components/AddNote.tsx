@@ -1,9 +1,11 @@
+import AsyncStorage from '@react-native-community/async-storage';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { addNote } from '../store/actions/notes';
 import { Note } from '../types/allTypes';
 import AddNoteInputs from './inputs/AddNoteInputs';
 import Modal from './Modal';
+import { readStorage, saveToStorage } from './utils/storageUtils';
 
 interface Props {
   visible: boolean;
@@ -13,8 +15,10 @@ interface Props {
 const AddNote: React.FC<Props> = ({ visible, toggleModal }) => {
   const dispatch = useDispatch();
 
-  const saveNoteElement = (note: Note) => {
-    console.log(note);
+  const saveNoteElement = async (note: Note) => {
+    const storageData = await readStorage('@notes');
+    const mergedData = storageData ? [...storageData, note] : [note];
+    await saveToStorage('@notes', mergedData);
     dispatch(addNote(note));
     toggleModal();
   };

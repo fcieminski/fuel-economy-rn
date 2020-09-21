@@ -1,4 +1,5 @@
 import { Alert, AsyncStorage } from 'react-native';
+import { Note } from '../../types/allTypes';
 
 export const saveToStorage = async (
   storage: string,
@@ -12,13 +13,15 @@ export const saveToStorage = async (
   }
 };
 
+export const multiSaveToStorage = async () => {};
+
 export const readStorage = async (
   storage: string,
-): Promise<string | Record<string, any> | Array<Record<string, any>> | null | undefined> => {
+): Promise<Record<string, unknown> | Array<Record<string, unknown>> | null | undefined> => {
   try {
     const data: string | null = await AsyncStorage.getItem(storage);
     if (data) {
-      const jsonValue: string | Record<string, any> | Array<Record<string, any>> = JSON.parse(data);
+      const jsonValue: Record<string, unknown> | Array<Record<string, unknown>> = JSON.parse(data);
       return jsonValue;
     }
     return null;
@@ -46,5 +49,22 @@ export const removeOneFromManyElements = async (key: string, index: number): Pro
     }
   } catch (e) {
     Alert.alert('Błąd!', 'Nie udało się usunąć danych');
+  }
+};
+
+export const updateOneFromManyElementsById = async (key: string, newValue: any): Promise<void> => {
+  try {
+    const currentData = await readStorage(key);
+    if (currentData) {
+      const updatedElements: Array<Note> = currentData.map((element: Note) => {
+        if (element.id === newValue.id) {
+          return newValue;
+        }
+        return element;
+      });
+      await saveToStorage(key, updatedElements);
+    }
+  } catch (e) {
+    Alert.alert('Błąd!', 'Nie udało się zaktualizować danych');
   }
 };
