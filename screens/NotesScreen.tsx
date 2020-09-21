@@ -1,19 +1,15 @@
-import React, { useCallback, useState } from 'react';
-import { Dimensions, FlatList, ListRenderItem, StyleSheet, Text, View } from 'react-native';
-import { Button, Card, Input } from 'react-native-elements';
-import { ScrollView } from 'react-native-gesture-handler';
-import Modal from '../components/Modal';
+import React, { useCallback } from 'react';
+import { FlatList, ListRenderItem } from 'react-native';
 import { Note } from '../types/allTypes';
-import NoteElement from '../components/NoteElement';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/store';
-import EmptyData from '../components/EmptyData';
 import { removeNote, saveEditedNote } from '../store/actions/notes';
 import {
   removeOneFromManyElements,
-  saveToStorage,
   updateOneFromManyElementsById,
 } from '../components/utils/storageUtils';
+import NoteElement from '../components/NoteElement';
+import EmptyData from '../components/EmptyData';
 
 const NotesScreen: React.FC = () => {
   const notes = useSelector<RootState, Array<Note>>((state: RootState) => state.notesState.notes);

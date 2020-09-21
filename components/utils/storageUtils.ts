@@ -13,8 +13,6 @@ export const saveToStorage = async (
   }
 };
 
-export const multiSaveToStorage = async () => {};
-
 export const readStorage = async (
   storage: string,
 ): Promise<Record<string, unknown> | Array<Record<string, unknown>> | null | undefined> => {

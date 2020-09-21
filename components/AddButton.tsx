@@ -2,6 +2,7 @@ import { useNavigation, useNavigationState, useRoute } from '@react-navigation/n
 import React, { Component, useState } from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { Icon } from 'react-native-elements';
+import AddFixElement from './AddFixElement';
 import AddFuelling from './AddFuelling';
 import AddNote from './AddNote';
 
@@ -17,7 +18,7 @@ const AddButton: React.FC = () => {
     0: AddFuelling,
     1: AddFuelling,
     3: AddNote,
-    4: AddNote,
+    4: AddFixElement,
   };
 
   const AddComponent = mappedComponents[currentNavIndex];
