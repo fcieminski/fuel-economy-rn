@@ -34,5 +34,6 @@ export type FixItem = {
   timestamp: number;
   kmRemaining: number;
   cost: number;
+  description?: string;
   item: string;
 };

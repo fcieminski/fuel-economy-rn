@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-community/async-storage';
 import { parse } from 'date-fns/esm';
 import React, { useState } from 'react';
 import { FixItem } from '../types/allTypes';

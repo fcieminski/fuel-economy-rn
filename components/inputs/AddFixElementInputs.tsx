@@ -28,6 +28,7 @@ const AddFixElementInputs: React.FC<Props> = ({ handleSubmit }) => {
         cost: '',
         kmRemaining: '',
         timestamp: Date.now(),
+        description: '',
       }}
       validationSchema={fixSchema}
       onSubmit={handleSubmit}>
@@ -39,8 +40,18 @@ const AddFixElementInputs: React.FC<Props> = ({ handleSubmit }) => {
             onChangeText={handleChange('item')}
             onBlur={handleBlur('item')}
             value={values.item}
-            multiline
             errorMessage={errors.item && touched.item ? errors.item : undefined}
+          />
+          <Input
+            label="Opis"
+            leftIcon={{ type: 'material-community', name: 'notebook' }}
+            onChangeText={handleChange('description')}
+            onBlur={handleBlur('description')}
+            value={values.description}
+            multiline
+            errorMessage={
+              errors.description && touched.description ? errors.description : undefined
+            }
           />
           <Input
             label="Koszt wymiany"
