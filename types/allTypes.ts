@@ -28,3 +28,11 @@ export type Note = {
   isImportant: boolean;
   id: string;
 };
+
+export type FixItem = {
+  id: string;
+  timestamp: number;
+  kmRemaining: number;
+  cost: number;
+  item: string;
+};
