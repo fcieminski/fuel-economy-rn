@@ -1,9 +1,7 @@
 import React from 'react';
-import { StyleSheet, View, AsyncStorage, Text } from 'react-native';
-import { addCar, removeCar } from '../store/actions/car';
+import { StyleSheet, View, Text } from 'react-native';
 import { Car } from '../types/allTypes';
-import { saveToStorage } from '../components/utils/storageUtils';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 import { Card } from 'react-native-elements';
 import AddCarInfo from '../components/AddCarInfo';

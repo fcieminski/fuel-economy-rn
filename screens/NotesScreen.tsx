@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { FlatList, ListRenderItem } from 'react-native';
 import { Note } from '../types/allTypes';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,6 +13,9 @@ import EmptyData from '../components/EmptyData';
 
 const NotesScreen: React.FC = () => {
   const notes = useSelector<RootState, Array<Note>>((state: RootState) => state.notesState.notes);
+  const sortedNotes = useMemo(() => {
+    return notes.sort((a, b) => b.timestamp - a.timestamp);
+  }, [notes]);
   const dispatch = useDispatch();
 
   const keyExtractor = useCallback((_: Note, index: number) => index.toString(), []);
@@ -38,7 +41,8 @@ const NotesScreen: React.FC = () => {
       <FlatList
         scrollEnabled={true}
         keyExtractor={keyExtractor}
-        data={notes.sort((a, b) => b.timestamp - a.timestamp)}
+        windowSize={5}
+        data={sortedNotes}
         ListEmptyComponent={() => <EmptyData text="Brak notatek" />}
         renderItem={renderNotes}
       />

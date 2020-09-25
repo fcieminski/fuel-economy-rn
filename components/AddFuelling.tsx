@@ -28,7 +28,6 @@ const AddFuelling: React.FC<Props> = ({ visible, toggleModal }) => {
     const distance = parseFloat(fuelling.distance);
     const fuelAmount = parseFloat(fuelling.fuelAmount);
     const timestamp = parseFloat(fuelling.timestamp);
-    console.log(timestamp, 'save');
     return {
       cost,
       distance,

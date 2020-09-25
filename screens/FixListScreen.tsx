@@ -49,6 +49,7 @@ const FixListScreen: React.FC = () => {
         scrollEnabled={true}
         keyExtractor={keyExtractor}
         data={fixList}
+        windowSize={5}
         ListEmptyComponent={() => <EmptyData text="Brak najbliższych napraw" />}
         renderItem={rederFixList}
       />

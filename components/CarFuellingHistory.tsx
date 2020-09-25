@@ -43,6 +43,7 @@ const CarFuellingHistory: React.FC<Props> = ({ filterBy }) => {
       <FlatList
         scrollEnabled={true}
         keyExtractor={keyExtractor}
+        windowSize={5}
         data={filterBy ? filteredFuelling : fuelling}
         ListEmptyComponent={() => <EmptyData text="Dodaj pierwsze tankowanie!" />}
         renderItem={renderItem}
