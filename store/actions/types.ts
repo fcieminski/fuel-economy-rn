@@ -1,4 +1,4 @@
-import { Car, Fuelling, Note } from '../../types/allTypes';
+import { Car, FixElement, Fuelling, Note } from '../../types/allTypes';
 export const ADD_FUELING = 'ADD_FUELING';
 export const REMOVE_FUELING = 'REMOVE_FUELING';
 export const CLEAR_FUELING = 'CLEAR_FUELING';
@@ -10,6 +10,10 @@ export const REMOVE_CAR = 'REMOVE_CAR';
 export const ADD_NOTE = 'ADD_NOTE';
 export const REMOVE_NOTE = 'REMOVE_NOTE';
 export const EDIT_NOTE = 'EDIT_NOTE';
+
+export const ADD_FIXELEMENT = 'ADD_FIXELEMENT';
+export const REMOVE_FIXELEMENT = 'REMOVE_FIXELEMENT';
+export const EDIT_FIXELEMENT = 'EDIT_FIXELEMENT';
 
 export type FuellingState = {
   fuellingList: Array<Fuelling>;
@@ -73,3 +77,27 @@ interface EditNoteAction {
 }
 
 export type NoteTypes = AddNoteAction | RemoveNoteAction | EditNoteAction;
+
+export type FixListState = {
+  fixList: FixElement[];
+};
+
+interface AddFixListElementAction {
+  type: typeof ADD_FIXELEMENT;
+  payload: FixElement;
+}
+
+interface RemoveFixListElementAction {
+  type: typeof REMOVE_FIXELEMENT;
+  payload: string;
+}
+
+interface EditFixListElementAction {
+  type: typeof EDIT_FIXELEMENT;
+  payload: FixElement;
+}
+
+export type FixListTypes =
+  | AddFixListElementAction
+  | RemoveFixListElementAction
+  | EditFixListElementAction;

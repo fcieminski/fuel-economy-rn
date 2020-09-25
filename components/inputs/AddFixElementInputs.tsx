@@ -2,18 +2,18 @@ import { Formik } from 'formik';
 import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Input } from 'react-native-elements';
-import { FixItem } from '../../types/allTypes';
+import { FixElement } from '../../types/allTypes';
 import { generateId } from '../utils/idUtils';
 import { Button } from 'react-native-elements';
 import * as Yup from 'yup';
 
 interface Props {
-  handleSubmit: (fixItem: unknown) => Promise<void>;
+  handleSubmit: (fixElement: unknown) => Promise<void>;
 }
 
 const AddFixElementInputs: React.FC<Props> = ({ handleSubmit }) => {
-  const fixSchema: Yup.ObjectSchema<FixItem | undefined, Record<string, string>> = Yup.object<
-    FixItem
+  const fixSchema: Yup.ObjectSchema<FixElement | undefined, Record<string, string>> = Yup.object<
+    FixElement
   >().shape({
     item: Yup.string().required('Pole wymagane!'),
     cost: Yup.number().typeError('Wprowadź liczbę').required('Pole wymagane!'),

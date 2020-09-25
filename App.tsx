@@ -11,6 +11,7 @@ import { addCar } from './store/actions/car';
 import TabNavigation from './navigation/TabNavigation';
 import LoadingApp from './components/LoadingApp';
 import { addNote } from './store/actions/notes';
+import { addFixListElement } from './store/actions/fixList';
 
 const App: React.FC = () => {
   const [loading, setLoading] = useState(false);
@@ -19,14 +20,16 @@ const App: React.FC = () => {
     async function getMainAppData() {
       setLoading(true);
       try {
-        const data = await multiReadStorage(['@car', '@fuelling', '@notes']);
+        const data = await multiReadStorage(['@car', '@fuelling', '@notes', '@fixList']);
         if (data) {
           const carData = data[0][1];
           const fuellingData = data[1][1];
           const notesData = data[2][1];
+          const fixListData = data[3][1];
           store.dispatch(addFuelling(fuellingData ? JSON.parse(fuellingData) : []));
           store.dispatch(addCar(carData ? JSON.parse(carData) : null));
           store.dispatch(addNote(notesData ? JSON.parse(notesData) : []));
+          store.dispatch(addFixListElement(fixListData ? JSON.parse(fixListData) : []));
         }
       } catch (e) {
         console.log(e);

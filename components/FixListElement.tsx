@@ -1,10 +1,10 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Card, Icon, ListItem } from 'react-native-elements';
-import { FixItem } from '../types/allTypes';
+import { FixElement } from '../types/allTypes';
 
 interface Props {
-  fixElement: FixItem;
+  fixElement: FixElement;
   index: number;
 }
 

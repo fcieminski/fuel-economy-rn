@@ -29,7 +29,7 @@ export type Note = {
   id: string;
 };
 
-export type FixItem = {
+export type FixElement = {
   id: string;
   timestamp: number;
   kmRemaining: number;
