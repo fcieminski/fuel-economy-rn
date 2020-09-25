@@ -42,14 +42,14 @@ const FixListScreen: React.FC = () => {
     await updateOneFromManyElementsById('@fixList', element);
     dispatch(updateFixListElement(index, element));
   };
-
+  
   return (
     <View>
       <FlatList
         scrollEnabled={true}
         keyExtractor={keyExtractor}
         data={fixList}
-        ListEmptyComponent={() => <EmptyData text="Brak notatek" />}
+        ListEmptyComponent={() => <EmptyData text="Brak najbliższych napraw" />}
         renderItem={rederFixList}
       />
     </View>

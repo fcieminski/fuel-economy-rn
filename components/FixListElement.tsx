@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { memo, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Button, Card, CheckBox, Icon, Input, ListItem } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -17,7 +17,7 @@ const FixListElement: React.FC<Props> = ({ fixElement, index, deleteElement, upd
   const [warningModal, setWarningModal] = useState(false);
 
   const toggleWarningModal = () => {
-    setWarningModal(true);
+    setWarningModal(!warningModal);
   };
 
   const handleNo = () => {
@@ -34,20 +34,20 @@ const FixListElement: React.FC<Props> = ({ fixElement, index, deleteElement, upd
   };
 
   return (
-    <Card>
+    <Card
+      containerStyle={{
+        borderTopWidth: 3,
+        borderTopColor: fixElement.isDone ? '#32a899' : 'white',
+        paddingTop: -3,
+        borderTopLeftRadius: 10,
+        borderTopRightRadius: 10,
+      }}>
       <ListItem>
         <ListItem.Content>
           <ListItem.Title style={style.textHeader}>{fixElement.item}</ListItem.Title>
         </ListItem.Content>
-        <CheckBox
-          title="Zrobione?"
-          onPress={handlePress}
-          checked={fixElement.isDone}
-          checkedColor="#32a899"
-        />
         <Icon
           size={25}
-          iconStyle={{ marginLeft: 10 }}
           type="material-community"
           color="black"
           name="delete"
@@ -77,7 +77,12 @@ const FixListElement: React.FC<Props> = ({ fixElement, index, deleteElement, upd
           </ListItem.Title>
         </ListItem.Content>
       </ListItem>
-      <Card.Divider />
+      <CheckBox
+        title="Zrobione?"
+        onPress={handlePress}
+        checked={fixElement.isDone}
+        checkedColor="#32a899"
+      />
       <WarningModal
         toggle={toggleWarningModal}
         visible={warningModal}
@@ -118,4 +123,4 @@ const style = StyleSheet.create({
   },
 });
 
-export default FixListElement;
+export default memo(FixListElement);
