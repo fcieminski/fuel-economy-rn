@@ -42,7 +42,7 @@ const FixListScreen: React.FC = () => {
     await updateOneFromManyElementsById('@fixList', element);
     dispatch(updateFixListElement(index, element));
   };
-  
+
   return (
     <View>
       <FlatList

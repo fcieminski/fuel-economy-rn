@@ -1,13 +1,14 @@
-import React, { useCallback, useEffect, useMemo } from 'react';
-import { ListRenderItem, StyleSheet, Text, View, AsyncStorage } from 'react-native';
-import { Card, Icon, ListItem } from 'react-native-elements';
+import React, { useCallback, useMemo } from 'react';
+import { ListRenderItem, StyleSheet } from 'react-native';
+import { Card } from 'react-native-elements';
 import { FlatList } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
-import { addFuelling, removeFuelling } from '../store/actions/fuelling';
+import { removeFuelling } from '../store/actions/fuelling';
 import { RootState } from '../store/store';
 import { Fuelling } from '../types/allTypes';
 import { removeOneFromManyElements } from './utils/storageUtils';
 import CarFuellingHistoryElement from './CarFuellingHistoryElement';
+import EmptyData from './EmptyData';
 
 interface Props {
   filterBy?: string | number;
@@ -16,14 +17,13 @@ interface Props {
 const getMonth = (date: number) => new Date(date).getMonth();
 
 const CarFuellingHistory: React.FC<Props> = ({ filterBy }) => {
-  const fuelling = useSelector<RootState, Array<Fuelling>>(
+  const fuelling = useSelector<RootState, Fuelling[]>(
     (state: RootState) => state.fuelling.fuellingList,
   );
   const filteredFuelling = useMemo(() => {
     return fuelling.filter((element) => getMonth(element.timestamp) === filterBy);
   }, [fuelling, filterBy]);
   const dispatch = useDispatch();
-
 
   const deleteFuellingRecord = async (index: number) => {
     await removeOneFromManyElements('@fuelling', index);
@@ -32,29 +32,11 @@ const CarFuellingHistory: React.FC<Props> = ({ filterBy }) => {
 
   const keyExtractor = useCallback((_: Fuelling, index: number) => index.toString(), []);
 
-  const renderItem: ListRenderItem<Fuelling> = useCallback(({ item, index, separators }) => {
+  const renderItem: ListRenderItem<Fuelling> = useCallback(({ item, index }) => {
     return (
-      <ListItem bottomDivider>
-        <ListItem.Content>
-          <View style={style.rowSpace}>
-            <Icon color="#32a899" type="material-community" name="gas-station" />
-            <ListItem.Title>
-              Spalanie: {(item.distance / item.fuelAmount).toFixed(2)}l
-            </ListItem.Title>
-            <ListItem.Title>{item.date}</ListItem.Title>
-            <Icon
-              onPress={() => deleteFuellingRecord(index)}
-              type="material-community"
-              name="delete"
-            />
-          </View>
-          <CarFuellingHistoryElement item={item} index={index} separators={separators} />
-        </ListItem.Content>
-      </ListItem>
+      <CarFuellingHistoryElement deleteElement={deleteFuellingRecord} item={item} index={index} />
     );
   }, []);
-
-  const emptyData = () => <Text>Dodaj pierwsze tankowanie!</Text>;
 
   return (
     <Card containerStyle={style.listContainer}>
@@ -62,7 +44,7 @@ const CarFuellingHistory: React.FC<Props> = ({ filterBy }) => {
         scrollEnabled={true}
         keyExtractor={keyExtractor}
         data={filterBy ? filteredFuelling : fuelling}
-        ListEmptyComponent={emptyData}
+        ListEmptyComponent={() => <EmptyData text="Dodaj pierwsze tankowanie!" />}
         renderItem={renderItem}
       />
     </Card>

@@ -96,16 +96,7 @@ const NoteElement: React.FC<Props> = ({ note, deleteNote, updateNote, index }) =
       </View>
       <Card.Divider />
       <Text style={style.content}>{note.text}</Text>
-      {note.image && (
-        <ScrollView horizontal style={{ marginTop: 5 }}>
-          <ImageAutoSize onPress={() => showImage(note.image)} uri={note.image} />
-        </ScrollView>
-      )}
-      <Card.Divider />
-      <Text>{dateFormat(note.timestamp)}</Text>
-      <Overlay onBackdropPress={closeImageModal} isVisible={visible}>
-        <Image source={{ uri: focusedImage }} style={style.modalImage} />
-      </Overlay>
+      <Text style={{ color: '#919191', fontSize: 16 }}>{dateFormat(note.timestamp)}</Text>
       <WarningModal
         toggle={toggleWarningModal}
         visible={warningModal}
@@ -168,6 +159,7 @@ const style = StyleSheet.create({
   },
   content: {
     fontSize: 18,
+    marginBottom: 20,
   },
   editNoteContainer: {
     width: Dimensions.get('window').width * 0.8,

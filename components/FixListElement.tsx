@@ -1,9 +1,7 @@
 import React, { memo, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { Button, Card, CheckBox, Icon, Input, ListItem } from 'react-native-elements';
-import { ScrollView } from 'react-native-gesture-handler';
+import { Card, CheckBox, Icon, ListItem } from 'react-native-elements';
 import { FixElement } from '../types/allTypes';
-import Modal from './Modal';
 import WarningModal from './WarningModal';
 
 interface Props {
@@ -54,31 +52,60 @@ const FixListElement: React.FC<Props> = ({ fixElement, index, deleteElement, upd
           onPress={toggleWarningModal}
         />
       </ListItem>
-      <ListItem bottomDivider>
-        <Icon name="currency-usd" type="material-community" color="#32a899" />
-        <ListItem.Content>
-          <ListItem.Title style={style.cost}>{fixElement.cost} zł</ListItem.Title>
-        </ListItem.Content>
-      </ListItem>
+      <View style={{ marginBottom: 5 }} />
+      <View style={style.row}>
+        <Icon
+          color="#32a899"
+          type="material-community"
+          name="currency-usd"
+          size={20}
+          style={{ marginRight: 10 }}
+        />
+        <View style={style.rowSpace}>
+          <Text style={{ fontSize: 16 }}>Koszt</Text>
+          <View style={style.row}>
+            <Text style={{ fontSize: 18, marginRight: 10 }}>{fixElement.cost}</Text>
+            <Text style={{ color: '#919191', fontSize: 16 }}>zł</Text>
+          </View>
+        </View>
+      </View>
+      <View style={{ marginBottom: 5 }} />
       {fixElement.description && (
-        <ListItem bottomDivider>
-          <Icon name="wrench" type="material-community" color="#32a899" />
-          <ListItem.Content>
-            <ListItem.Title>{fixElement.description}</ListItem.Title>
-          </ListItem.Content>
-        </ListItem>
+        <View style={style.row}>
+          <Icon
+            color="#32a899"
+            type="material-community"
+            name="wrench"
+            size={20}
+            style={{ marginRight: 10 }}
+          />
+          <View style={style.rowSpace}>
+            <View style={style.row}>
+              <Text style={{ fontSize: 16, marginRight: 10 }}>{fixElement.description}</Text>
+            </View>
+          </View>
+        </View>
       )}
-      <ListItem bottomDivider>
-        <Icon name="map-marker-distance" type="material-community" color="#32a899" />
-        <ListItem.Content>
-          <ListItem.Title>
-            Pozostało kilometrów:
-            <Text style={style.remaining}> {fixElement.kmRemaining} km</Text>
-          </ListItem.Title>
-        </ListItem.Content>
-      </ListItem>
+      <View style={{ marginBottom: 5 }} />
+      <View style={style.row}>
+        <Icon
+          color="#32a899"
+          type="material-community"
+          name="map-marker-distance"
+          size={20}
+          style={{ marginRight: 10 }}
+        />
+        <View style={style.rowSpace}>
+          <Text style={{ fontSize: 16 }}>Pozostało kilometrów</Text>
+          <View style={style.row}>
+            <Text style={{ fontSize: 18, marginRight: 10 }}>{fixElement.kmRemaining}</Text>
+            <Text style={{ color: '#919191', fontSize: 16 }}>km</Text>
+          </View>
+        </View>
+      </View>
       <CheckBox
-        title="Zrobione?"
+        center
+        title="Wymienione?"
         onPress={handlePress}
         checked={fixElement.isDone}
         checkedColor="#32a899"
@@ -102,11 +129,11 @@ const style = StyleSheet.create({
     fontSize: 20,
   },
   cost: {
-    fontSize: 20,
+    fontSize: 18,
     color: '#32a899',
   },
   remaining: {
-    fontSize: 20,
+    fontSize: 18,
     color: '#ffb726',
   },
   button: {
@@ -120,6 +147,17 @@ const style = StyleSheet.create({
     marginTop: 10,
     marginLeft: -10,
     marginRight: -10,
+  },
+  rowSpace: {
+    width: '100%',
+    flex: 1,
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  row: {
+    alignItems: 'center',
+    flexDirection: 'row',
   },
 });
 
