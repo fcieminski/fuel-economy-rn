@@ -19,8 +19,8 @@ const noteReducer = (state = initialState, action: NoteTypes): NoteState => {
     case EDIT_NOTE:
       return {
         ...state,
-        notes: state.notes.map((note) => {
-          if (note.id === action.payload.id) {
+        notes: state.notes.map((note, index) => {
+          if (index === action.payload.index) {
             return { ...note, text: action.payload.text, timestamp: Date.now() };
           }
           return note;

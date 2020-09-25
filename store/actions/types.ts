@@ -13,10 +13,10 @@ export const EDIT_NOTE = 'EDIT_NOTE';
 
 export const ADD_FIXELEMENT = 'ADD_FIXELEMENT';
 export const REMOVE_FIXELEMENT = 'REMOVE_FIXELEMENT';
-export const EDIT_FIXELEMENT = 'EDIT_FIXELEMENT';
+export const UPDATE_FIXELEMENT = 'UPDATE_FIXELEMENT';
 
 export type FuellingState = {
-  fuellingList: Array<Fuelling>;
+  fuellingList: Fuelling[];
   modal: boolean;
 };
 
@@ -24,10 +24,12 @@ interface AddFuellingAction {
   type: typeof ADD_FUELING;
   payload: Fuelling;
 }
+
 interface RemoveFuellingAction {
   type: typeof REMOVE_FUELING;
   payload: number;
 }
+
 interface ClearFuellingAction {
   type: typeof CLEAR_FUELING;
 }
@@ -58,7 +60,7 @@ interface RemoveCarAction {
 export type CarTypes = AddCarAction | RemoveCarAction;
 
 export type NoteState = {
-  notes: Array<Note>;
+  notes: Note[];
 };
 
 interface AddNoteAction {
@@ -73,7 +75,10 @@ interface RemoveNoteAction {
 
 interface EditNoteAction {
   type: typeof EDIT_NOTE;
-  payload: Note;
+  payload: {
+    index: number;
+    element: Note;
+  };
 }
 
 export type NoteTypes = AddNoteAction | RemoveNoteAction | EditNoteAction;
@@ -89,15 +94,18 @@ interface AddFixListElementAction {
 
 interface RemoveFixListElementAction {
   type: typeof REMOVE_FIXELEMENT;
-  payload: string;
+  payload: number;
 }
 
-interface EditFixListElementAction {
-  type: typeof EDIT_FIXELEMENT;
-  payload: FixElement;
+interface UpdateFixListElementAction {
+  type: typeof UPDATE_FIXELEMENT;
+  payload: {
+    index: number;
+    element: FixElement;
+  };
 }
 
 export type FixListTypes =
   | AddFixListElementAction
   | RemoveFixListElementAction
-  | EditFixListElementAction;
+  | UpdateFixListElementAction;

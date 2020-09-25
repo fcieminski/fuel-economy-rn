@@ -5,8 +5,12 @@ import { FlatList } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
 import EmptyData from '../components/EmptyData';
 import FixListElement from '../components/FixListElement';
-import { readStorage } from '../components/utils/storageUtils';
-import { removeFixListElement } from '../store/actions/fixList';
+import {
+  readStorage,
+  removeOneFromManyElements,
+  updateOneFromManyElementsById,
+} from '../components/utils/storageUtils';
+import { removeFixListElement, updateFixListElement } from '../store/actions/fixList';
 import { RootState } from '../store/store';
 import { FixElement } from '../types/allTypes';
 
@@ -19,11 +23,24 @@ const FixListScreen: React.FC = () => {
   const keyExtractor = useCallback((_: FixElement, index: number) => index.toString(), []);
 
   const rederFixList: ListRenderItem<FixElement> = useCallback(({ item, separators, index }) => {
-    return <FixListElement deleteElement={deleteElement} fixElement={item} index={index} />;
+    return (
+      <FixListElement
+        updateElement={updateElement}
+        deleteElement={deleteElement}
+        fixElement={item}
+        index={index}
+      />
+    );
   }, []);
 
-  const deleteElement = (id: string) => {
-    dispatch(removeFixListElement(id));
+  const deleteElement = async (index: number) => {
+    await removeOneFromManyElements('@fixList', index);
+    dispatch(removeFixListElement(index));
+  };
+
+  const updateElement = async (index: number, element: FixElement) => {
+    await updateOneFromManyElementsById('@fixList', element);
+    dispatch(updateFixListElement(index, element));
   };
 
   return (

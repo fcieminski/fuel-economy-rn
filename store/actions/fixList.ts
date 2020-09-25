@@ -1,5 +1,5 @@
 import { FixElement } from '../../types/allTypes';
-import { ADD_FIXELEMENT, REMOVE_FIXELEMENT, EDIT_FIXELEMENT, FixListTypes } from './types';
+import { ADD_FIXELEMENT, REMOVE_FIXELEMENT, UPDATE_FIXELEMENT, FixListTypes } from './types';
 
 export const addFixListElement = (fixElement: FixElement): FixListTypes => {
   return {
@@ -8,16 +8,19 @@ export const addFixListElement = (fixElement: FixElement): FixListTypes => {
   };
 };
 
-export const removeFixListElement = (id: string): FixListTypes => {
+export const removeFixListElement = (index: number): FixListTypes => {
   return {
     type: REMOVE_FIXELEMENT,
-    payload: id,
+    payload: index,
   };
 };
 
-export const saveEditedFixListElement = (fixElement: FixElement): FixListTypes => {
+export const updateFixListElement = (index: number, element: FixElement): FixListTypes => {
   return {
-    type: EDIT_FIXELEMENT,
-    payload: fixElement,
+    type: UPDATE_FIXELEMENT,
+    payload: {
+      index,
+      element,
+    },
   };
 };

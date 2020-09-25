@@ -11,7 +11,7 @@ import WarningModal from './WarningModal';
 interface Props {
   note: Note;
   deleteNote: (index: number) => void;
-  updateNote: (note: Note) => void;
+  updateNote: (index: number, note: Note) => void;
   index: number;
 }
 
@@ -58,7 +58,7 @@ const NoteElement: React.FC<Props> = ({ note, deleteNote, updateNote, index }) =
     const newNote = { ...note };
     newNote.text = noteNewContent;
     newNote.timestamp = Date.now();
-    updateNote(newNote);
+    updateNote(index, newNote);
     setEditModal(false);
   };
 

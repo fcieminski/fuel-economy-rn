@@ -1,6 +1,6 @@
 import {
   ADD_FIXELEMENT,
-  EDIT_FIXELEMENT,
+  UPDATE_FIXELEMENT,
   FixListState,
   FixListTypes,
   REMOVE_FIXELEMENT,
@@ -20,14 +20,14 @@ const fixListReducer = (state = initialState, action: FixListTypes): FixListStat
     case REMOVE_FIXELEMENT:
       return {
         ...state,
-        fixList: state.fixList.filter((fixElement) => fixElement.id !== action.payload),
+        fixList: state.fixList.filter((_, index) => index !== action.payload),
       };
-    case EDIT_FIXELEMENT:
+    case UPDATE_FIXELEMENT:
       return {
         ...state,
-        fixList: state.fixList.map((fixElement) => {
-          if (fixElement.id === action.payload.id) {
-            return { ...fixElement, ...action.payload, timestamp: Date.now() };
+        fixList: state.fixList.map((fixElement, index) => {
+          if (index === action.payload.index) {
+            return { ...fixElement, isDone: action.payload.element.isDone, timestamp: Date.now() };
           }
           return fixElement;
         }),

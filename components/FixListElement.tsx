@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { Button, Card, Icon, Input, ListItem } from 'react-native-elements';
+import { Button, Card, CheckBox, Icon, Input, ListItem } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
 import { FixElement } from '../types/allTypes';
 import Modal from './Modal';
@@ -9,10 +9,11 @@ import WarningModal from './WarningModal';
 interface Props {
   fixElement: FixElement;
   index: number;
-  deleteElement: (id: string) => void;
+  deleteElement: (index: number) => void;
+  updateElement: (index: number, element: FixElement) => void;
 }
 
-const FixListElement: React.FC<Props> = ({ fixElement, index, deleteElement }) => {
+const FixListElement: React.FC<Props> = ({ fixElement, index, deleteElement, updateElement }) => {
   const [warningModal, setWarningModal] = useState(false);
 
   const toggleWarningModal = () => {
@@ -24,8 +25,12 @@ const FixListElement: React.FC<Props> = ({ fixElement, index, deleteElement }) =
   };
 
   const handleYes = () => {
-    deleteElement(fixElement.id);
+    deleteElement(index);
     setWarningModal(false);
+  };
+
+  const handlePress = () => {
+    updateElement(index, { ...fixElement, isDone: !fixElement.isDone });
   };
 
   return (
@@ -34,6 +39,12 @@ const FixListElement: React.FC<Props> = ({ fixElement, index, deleteElement }) =
         <ListItem.Content>
           <ListItem.Title style={style.textHeader}>{fixElement.item}</ListItem.Title>
         </ListItem.Content>
+        <CheckBox
+          title="Zrobione?"
+          onPress={handlePress}
+          checked={fixElement.isDone}
+          checkedColor="#32a899"
+        />
         <Icon
           size={25}
           iconStyle={{ marginLeft: 10 }}

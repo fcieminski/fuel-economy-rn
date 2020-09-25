@@ -36,4 +36,5 @@ export type FixElement = {
   cost: number;
   description?: string;
   item: string;
+  isDone: boolean;
 };

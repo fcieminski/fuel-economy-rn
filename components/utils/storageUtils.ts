@@ -50,11 +50,11 @@ export const removeOneFromManyElements = async (key: string, index: number): Pro
   }
 };
 
-export const updateOneFromManyElementsById = async (key: string, newValue: any): Promise<void> => {
+export const updateOneFromManyElementsById = async (key: string, newValue: {}): Promise<void> => {
   try {
     const currentData = await readStorage(key);
     if (currentData) {
-      const updatedElements: Array<Note> = currentData.map((element: Note) => {
+      const updatedElements = currentData.map((element) => {
         if (element.id === newValue.id) {
           return newValue;
         }

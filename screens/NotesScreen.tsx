@@ -28,9 +28,9 @@ const NotesScreen: React.FC = () => {
     dispatch(removeNote(index));
   };
 
-  const updateNote = async (editedNote: Note) => {
-    await updateOneFromManyElementsById('@notes', editedNote);
-    dispatch(saveEditedNote(editedNote));
+  const updateNote = async (index: number, element: Note) => {
+    await updateOneFromManyElementsById('@notes', element);
+    dispatch(saveEditedNote(index, element));
   };
 
   return (
