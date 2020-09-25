@@ -1,14 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { Card, Icon, ListItem } from 'react-native-elements';
+import { Button, Card, Icon, Input, ListItem } from 'react-native-elements';
+import { ScrollView } from 'react-native-gesture-handler';
 import { FixElement } from '../types/allTypes';
+import Modal from './Modal';
+import WarningModal from './WarningModal';
 
 interface Props {
   fixElement: FixElement;
   index: number;
+  deleteElement: (id: string) => void;
 }
 
-const FixListElement: React.FC<Props> = ({ fixElement, index }) => {
+const FixListElement: React.FC<Props> = ({ fixElement, index, deleteElement }) => {
+  const [warningModal, setWarningModal] = useState(false);
+
+  const toggleWarningModal = () => {
+    setWarningModal(true);
+  };
+
+  const handleNo = () => {
+    setWarningModal(false);
+  };
+
+  const handleYes = () => {
+    deleteElement(fixElement.id);
+    setWarningModal(false);
+  };
+
   return (
     <Card>
       <ListItem>
@@ -21,6 +40,7 @@ const FixListElement: React.FC<Props> = ({ fixElement, index }) => {
           type="material-community"
           color="black"
           name="delete"
+          onPress={toggleWarningModal}
         />
       </ListItem>
       <ListItem bottomDivider>
@@ -47,6 +67,15 @@ const FixListElement: React.FC<Props> = ({ fixElement, index }) => {
         </ListItem.Content>
       </ListItem>
       <Card.Divider />
+      <WarningModal
+        toggle={toggleWarningModal}
+        visible={warningModal}
+        yes={handleYes}
+        no={handleNo}
+        title="Uwaga!"
+        type="warning"
+        warningText={'Czy na pewno chcesz usunąć element z listy?'}
+      />
     </Card>
   );
 };
@@ -63,6 +92,18 @@ const style = StyleSheet.create({
   remaining: {
     fontSize: 20,
     color: '#ffb726',
+  },
+  button: {
+    width: 100,
+    marginLeft: 10,
+    marginRight: 10,
+  },
+  actions: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    marginTop: 10,
+    marginLeft: -10,
+    marginRight: -10,
   },
 });
 
