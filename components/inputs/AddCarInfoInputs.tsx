@@ -1,20 +1,16 @@
-import React, { useState } from 'react';
-import { StyleSheet, View, TouchableWithoutFeedback } from 'react-native';
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
 import { Button, Input } from 'react-native-elements';
-import { Fuelling } from '../../types/allTypes';
+import { Car, Fuelling } from '../../types/allTypes';
 import { Formik } from 'formik';
-import { dateFormat, initialDate } from '../utils/dateUtils';
-import DateTimePicker from '@react-native-community/datetimepicker';
 import * as Yup from 'yup';
 
 type Props = {
-  handleSubmit: (car: Record<string, string>) => void;
+  handleSubmit: (car: Car) => void;
 };
 
 const AddCarInfoInputs: React.FC<Props> = ({ handleSubmit }) => {
-  const fuellingSchema: Yup.ObjectSchema<Fuelling | undefined, object> = Yup.object<
-    Fuelling
-  >().shape({
+  const carSchema: Yup.ObjectSchema<Car | undefined, Car> = Yup.object<Car>().shape({
     brand: Yup.string().required('Pole wymagane!'),
     model: Yup.string().required('Pole wymagane!'),
     engine: Yup.string().required('Pole wymagane!'),
@@ -29,7 +25,7 @@ const AddCarInfoInputs: React.FC<Props> = ({ handleSubmit }) => {
         engine: '',
         mileage: '',
       }}
-      validationSchema={fuellingSchema}
+      validationSchema={carSchema}
       onSubmit={handleSubmit}>
       {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
         <View>

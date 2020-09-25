@@ -5,7 +5,7 @@ import { Card } from 'react-native-elements';
 const EmptyData: React.FC<{ text: string }> = ({ text }) => {
   return (
     <Card>
-      <Text>{text}</Text>
+      <Text style={{ fontSize: 16 }}>{text}</Text>
     </Card>
   );
 };

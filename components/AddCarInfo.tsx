@@ -1,12 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Card, Icon, Button } from 'react-native-elements';
+import { useDispatch } from 'react-redux';
+import { addCar } from '../store/actions/car';
+import { Car } from '../types/allTypes';
+import AddCarInfoInputs from './inputs/AddCarInfoInputs';
+import Modal from './Modal';
+import { saveToStorage } from './utils/storageUtils';
 
-interface Props {
-  toggleDialog: () => void;
-}
+const AddCarInfo: React.FC = () => {
+  const dispatch = useDispatch();
+  const [visible, setVisible] = useState(false);
 
-const AddCarInfo: React.FC<Props> = ({ toggleDialog }) => {
+  const toggleDialog = () => {
+    setVisible(!visible);
+  };
+
+  const saveCarData = async (car: Car) => {
+    car.mileage = Number(car.mileage);
+    await saveToStorage('@car', car);
+    dispatch(addCar(car));
+  };
   return (
     <Card>
       <View style={style.cardTitle}>
@@ -20,6 +34,9 @@ const AddCarInfo: React.FC<Props> = ({ toggleDialog }) => {
         buttonStyle={style.button}
         onPress={toggleDialog}
       />
+      <Modal visible={visible} title="Dodaj samochód" toggle={toggleDialog}>
+        <AddCarInfoInputs handleSubmit={saveCarData} />
+      </Modal>
     </Card>
   );
 };

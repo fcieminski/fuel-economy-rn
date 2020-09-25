@@ -1,44 +1,28 @@
-import React, { useState } from 'react';
-import { StyleSheet, View, AsyncStorage } from 'react-native';
+import React from 'react';
+import { StyleSheet, View, AsyncStorage, Text } from 'react-native';
 import { addCar, removeCar } from '../store/actions/car';
 import { Car } from '../types/allTypes';
 import { saveToStorage } from '../components/utils/storageUtils';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/store';
+import { Card } from 'react-native-elements';
 import AddCarInfo from '../components/AddCarInfo';
-import AddCarInfoInputs from '../components/inputs/AddCarInfoInputs';
 import CarInfo from '../components/CarInfo';
 import CarFuellingHistory from '../components/CarFuellingHistory';
-import Modal from '../components/Modal';
 
 const MainScreen: React.FC = () => {
   const car = useSelector<RootState, Car | null>((state: RootState) => state.carInfo.car);
-  const [visible, setVisible] = useState(false);
-  const dispatch = useDispatch();
-
-  const toggleDialog = () => {
-    setVisible(!visible);
-  };
-
-  const saveCarData = async (car: Car) => {
-    car.mileage = parseFloat(car.mileage);
-    await saveToStorage('@car', car);
-    dispatch(addCar(car));
-    setVisible(false);
-  };
-
-  const removeCarData = async () => {
-    await AsyncStorage.removeItem('@car');
-    dispatch(removeCar());
-  };
 
   return (
     <View style={style.mainContainer}>
-      {car ? <CarInfo car={car} /> : <AddCarInfo toggleDialog={toggleDialog} />}
-      <CarFuellingHistory />
-      <Modal visible={visible} title="Dodaj samochód" toggle={toggleDialog}>
-        <AddCarInfoInputs handleSubmit={saveCarData} />
-      </Modal>
+      {car ? <CarInfo car={car} /> : <AddCarInfo />}
+      {car ? (
+        <CarFuellingHistory />
+      ) : (
+        <Card>
+          <Text style={style.textNormal}>Najpierw dodaj informacje o swoim aucie</Text>
+        </Card>
+      )}
     </View>
   );
 };
