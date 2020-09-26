@@ -14,7 +14,9 @@ const AddButton: React.FC = () => {
   };
   const currentNavIndex = useNavigationState((state) => state.index);
 
-  const mappedComponents = {
+  const mappedComponents: {
+    [key: number]: React.FC<{ toggleModal: () => void; visible: boolean }>;
+  } = {
     0: AddFuelling,
     1: AddFuelling,
     3: AddNote,

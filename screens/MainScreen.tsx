@@ -18,7 +18,9 @@ const MainScreen: React.FC = () => {
         <CarFuellingHistory />
       ) : (
         <Card>
-          <Text style={style.textNormal}>Najpierw dodaj informacje o swoim aucie</Text>
+          <Text style={style.textNormal}>
+            Aby dodać nowe tankowanie, najpierw dodaj informacje o swoim aucie
+          </Text>
         </Card>
       )}
     </View>

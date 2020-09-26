@@ -1,10 +1,11 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addFuelling } from '../store/actions/fuelling';
-import { Fuelling } from '../types/allTypes';
+import { Car, Fuelling } from '../types/allTypes';
 import { readStorage, saveToStorage } from './utils/storageUtils';
 import AddFuellingInputs from './inputs/AddFuellingInputs';
 import Modal from './Modal';
+import { RootState } from '../store/store';
 
 interface Props {
   visible: boolean;
@@ -12,6 +13,7 @@ interface Props {
 }
 
 const AddFuelling: React.FC<Props> = ({ visible, toggleModal }) => {
+  const car = useSelector<RootState, Car | null>((state: RootState) => state.carInfo.car);
   const dispatch = useDispatch();
 
   const saveFuellingElement = async (fuelling: Record<string, string>) => {
@@ -38,9 +40,13 @@ const AddFuelling: React.FC<Props> = ({ visible, toggleModal }) => {
   };
 
   return (
-    <Modal visible={visible} toggle={toggleModal} title="Dodaj ostatnie tankowanie">
-      <AddFuellingInputs handleSubmit={saveFuellingElement} />
-    </Modal>
+    <>
+      {car && (
+        <Modal visible={visible} toggle={toggleModal} title="Dodaj ostatnie tankowanie">
+          <AddFuellingInputs handleSubmit={saveFuellingElement} />
+        </Modal>
+      )}
+    </>
   );
 };
 

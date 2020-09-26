@@ -27,7 +27,9 @@ const AddCarInfo: React.FC = () => {
         <Text style={style.textHeader}>Twój samochód</Text>
       </View>
       <Card.Divider />
-      <Text style={{ marginBottom: 10 }}>Dodaj swój pojazd i zacznij śledzić spalanie!</Text>
+      <Text style={{ marginBottom: 10, fontSize: 16 }}>
+        Dodaj swój pojazd i zacznij śledzić spalanie!
+      </Text>
       <Card.Divider />
       <Button
         icon={<Icon name="add" color="#ffffff" />}
