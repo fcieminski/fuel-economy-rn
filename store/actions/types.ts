@@ -15,6 +15,7 @@ export const EDIT_NOTE = 'EDIT_NOTE';
 export const ADD_FIXELEMENT = 'ADD_FIXELEMENT';
 export const REMOVE_FIXELEMENT = 'REMOVE_FIXELEMENT';
 export const UPDATE_FIXELEMENT = 'UPDATE_FIXELEMENT';
+export const DECREASE_FIXELEMENT_DISTANCE = 'DECREASE_FIXELEMENT_DISTANCE';
 
 export type FuellingState = {
   fuellingList: Fuelling[];
@@ -49,12 +50,12 @@ interface RemoveCarAction {
   type: typeof REMOVE_CAR;
 }
 
-interface IncreaseCarMileageActions {
+interface IncreaseCarMileageAction {
   type: typeof INCREASE_CAR_MILEAGE;
   payload: number;
 }
 
-interface DecreaseCarMileageActions {
+interface DecreaseCarMileageAction {
   type: typeof DECREASE_CAR_MILEAGE;
   payload: number;
 }
@@ -62,8 +63,8 @@ interface DecreaseCarMileageActions {
 export type CarTypes =
   | AddCarAction
   | RemoveCarAction
-  | IncreaseCarMileageActions
-  | DecreaseCarMileageActions;
+  | IncreaseCarMileageAction
+  | DecreaseCarMileageAction;
 
 export type NoteState = {
   notes: Note[];
@@ -111,7 +112,16 @@ interface UpdateFixListElementAction {
   };
 }
 
+interface DecreaseFixListElementDistanceAction {
+  type: typeof DECREASE_FIXELEMENT_DISTANCE;
+  payload: {
+    index: number;
+    distance: number;
+  };
+}
+
 export type FixListTypes =
   | AddFixListElementAction
   | RemoveFixListElementAction
-  | UpdateFixListElementAction;
+  | UpdateFixListElementAction
+  | DecreaseFixListElementDistanceAction;
