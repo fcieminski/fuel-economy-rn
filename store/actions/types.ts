@@ -2,10 +2,11 @@ import { Car, FixElement, Fuelling, Note } from '../../types/allTypes';
 export const ADD_FUELING = 'ADD_FUELING';
 export const REMOVE_FUELING = 'REMOVE_FUELING';
 export const CLEAR_FUELING = 'CLEAR_FUELING';
-export const OPEN_MODAL = 'OPEN_MODAL';
 
 export const ADD_CAR = 'ADD_CAR';
 export const REMOVE_CAR = 'REMOVE_CAR';
+export const INCREASE_CAR_MILEAGE = 'INCREASE_CAR_MILEAGE';
+export const DECREASE_CAR_MILEAGE = 'DECREASE_CAR_MILEAGE';
 
 export const ADD_NOTE = 'ADD_NOTE';
 export const REMOVE_NOTE = 'REMOVE_NOTE';
@@ -34,16 +35,7 @@ interface ClearFuellingAction {
   type: typeof CLEAR_FUELING;
 }
 
-interface OpenModal {
-  type: typeof OPEN_MODAL;
-  payload: boolean;
-}
-
-export type FuellingTypes =
-  | AddFuellingAction
-  | OpenModal
-  | RemoveFuellingAction
-  | ClearFuellingAction;
+export type FuellingTypes = AddFuellingAction | RemoveFuellingAction | ClearFuellingAction;
 
 export type CarState = {
   car: Car | null;
@@ -57,7 +49,21 @@ interface RemoveCarAction {
   type: typeof REMOVE_CAR;
 }
 
-export type CarTypes = AddCarAction | RemoveCarAction;
+interface IncreaseCarMileageActions {
+  type: typeof INCREASE_CAR_MILEAGE;
+  payload: number;
+}
+
+interface DecreaseCarMileageActions {
+  type: typeof DECREASE_CAR_MILEAGE;
+  payload: number;
+}
+
+export type CarTypes =
+  | AddCarAction
+  | RemoveCarAction
+  | IncreaseCarMileageActions
+  | DecreaseCarMileageActions;
 
 export type NoteState = {
   notes: Note[];

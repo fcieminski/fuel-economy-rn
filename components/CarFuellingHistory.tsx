@@ -6,9 +6,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { removeFuelling } from '../store/actions/fuelling';
 import { RootState } from '../store/store';
 import { Fuelling } from '../types/allTypes';
-import { removeOneFromManyElements } from './utils/storageUtils';
+import { readStorage, removeOneFromManyElements, saveToStorage } from './utils/storageUtils';
 import CarFuellingHistoryElement from './CarFuellingHistoryElement';
 import EmptyData from './EmptyData';
+import { decreaseCarMileage, updateMileage } from '../store/actions/car';
 
 interface Props {
   filterBy?: string | number;
@@ -27,7 +28,17 @@ const CarFuellingHistory: React.FC<Props> = ({ filterBy }) => {
 
   const deleteFuellingRecord = async (index: number) => {
     await removeOneFromManyElements('@fuelling', index);
+    await updateCarMileage(fuelling[index].distance);
     dispatch(removeFuelling(index));
+  };
+
+  const updateCarMileage = async (mileage: number) => {
+    const carData = await readStorage('@car');
+    if (carData) {
+      carData.mileage -= mileage;
+      await saveToStorage('@car', carData);
+      dispatch(decreaseCarMileage(mileage));
+    }
   };
 
   const keyExtractor = useCallback((_: Fuelling, index: number) => index.toString(), []);

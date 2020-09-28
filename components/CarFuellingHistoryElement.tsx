@@ -19,6 +19,7 @@ const CarFuellingHistoryElement: React.FC<Props> = ({ item, index, deleteElement
 
   const handleYes = () => {
     deleteElement(index);
+    toggleModal();
   };
 
   const handleNo = () => {

@@ -6,6 +6,7 @@ import { readStorage, saveToStorage } from './utils/storageUtils';
 import AddFuellingInputs from './inputs/AddFuellingInputs';
 import Modal from './Modal';
 import { RootState } from '../store/store';
+import { increaseCarMileage, updateMileage } from '../store/actions/car';
 
 interface Props {
   visible: boolean;
@@ -21,8 +22,18 @@ const AddFuelling: React.FC<Props> = ({ visible, toggleModal }) => {
     const storageData = await readStorage('@fuelling');
     const mergedData = storageData ? [...storageData, parsedFuelling] : [parsedFuelling];
     await saveToStorage('@fuelling', mergedData);
+    await updateCarMileage(parsedFuelling.distance);
     dispatch(addFuelling(parsedFuelling));
     toggleModal();
+  };
+
+  const updateCarMileage = async (mileage: number) => {
+    const carData = await readStorage('@car');
+    if (carData) {
+      carData.mileage += mileage;
+      await saveToStorage('@car', carData);
+      dispatch(increaseCarMileage(mileage));
+    }
   };
 
   const parseFuellingElement = (fuelling: Record<string, string>): Fuelling => {
