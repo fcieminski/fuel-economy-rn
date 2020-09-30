@@ -1,6 +1,5 @@
 import {
   ADD_FUELING,
-  OPEN_MODAL,
   FuellingTypes,
   FuellingState,
   REMOVE_FUELING,
@@ -18,11 +17,6 @@ const fuellingReducer = (state = initialState, action: FuellingTypes): FuellingS
       return {
         ...state,
         fuellingList: state.fuellingList.concat(action.payload),
-      };
-    case OPEN_MODAL:
-      return {
-        ...state,
-        modal: action.payload,
       };
     case REMOVE_FUELING:
       return {

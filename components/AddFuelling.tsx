@@ -1,12 +1,13 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addFuelling } from '../store/actions/fuelling';
-import { Car, Fuelling } from '../types/allTypes';
+import { Car, FixElement, Fuelling } from '../types/allTypes';
 import { readStorage, saveToStorage } from './utils/storageUtils';
 import AddFuellingInputs from './inputs/AddFuellingInputs';
 import Modal from './Modal';
 import { RootState } from '../store/store';
 import { increaseCarMileage, updateMileage } from '../store/actions/car';
+import { decreaseFixListElementDistance } from '../store/actions/fixList';
 
 interface Props {
   visible: boolean;
@@ -23,6 +24,7 @@ const AddFuelling: React.FC<Props> = ({ visible, toggleModal }) => {
     const mergedData = storageData ? [...storageData, parsedFuelling] : [parsedFuelling];
     await saveToStorage('@fuelling', mergedData);
     await updateCarMileage(parsedFuelling.distance);
+    await updateFixListElements(parsedFuelling.distance);
     dispatch(addFuelling(parsedFuelling));
     toggleModal();
   };
@@ -33,6 +35,20 @@ const AddFuelling: React.FC<Props> = ({ visible, toggleModal }) => {
       carData.mileage += mileage;
       await saveToStorage('@car', carData);
       dispatch(increaseCarMileage(mileage));
+    }
+  };
+
+  const updateFixListElements = async (kilometers: number) => {
+    const fixList = await readStorage('@fixList');
+    if (fixList) {
+      const updatedFixList: FixElement[] = fixList.map((fixElement: FixElement) => {
+        return {
+          ...fixElement,
+          kmRemaining: fixElement.kmRemaining -= kilometers,
+        };
+      });
+      await saveToStorage('@fixList', updatedFixList);
+      dispatch(decreaseFixListElementDistance(updatedFixList));
     }
   };
 

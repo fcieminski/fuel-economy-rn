@@ -5,7 +5,7 @@ import { FlatList } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
 import { removeFuelling } from '../store/actions/fuelling';
 import { RootState } from '../store/store';
-import { Fuelling } from '../types/allTypes';
+import { FixElement, Fuelling } from '../types/allTypes';
 import { readStorage, removeOneFromManyElements, saveToStorage } from './utils/storageUtils';
 import CarFuellingHistoryElement from './CarFuellingHistoryElement';
 import EmptyData from './EmptyData';

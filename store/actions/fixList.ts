@@ -5,6 +5,7 @@ import {
   UPDATE_FIXELEMENT,
   FixListTypes,
   DECREASE_FIXELEMENT_DISTANCE,
+  INCREASE_FIXELEMENT_DISTANCE,
 } from './types';
 
 export const addFixListElement = (fixElement: FixElement): FixListTypes => {
@@ -31,12 +32,16 @@ export const updateFixListElement = (index: number, element: FixElement): FixLis
   };
 };
 
-export const decreaseFixListElementDistance = (index: number, distance: number): FixListTypes => {
+export const decreaseFixListElementDistance = (fixList: FixElement[]): FixListTypes => {
   return {
     type: DECREASE_FIXELEMENT_DISTANCE,
-    payload: {
-      index,
-      distance,
-    },
+    payload: fixList,
+  };
+};
+
+export const increaseFixListElementDistance = (fixList: FixElement[]): FixListTypes => {
+  return {
+    type: INCREASE_FIXELEMENT_DISTANCE,
+    payload: fixList,
   };
 };

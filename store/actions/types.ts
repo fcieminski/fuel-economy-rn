@@ -16,6 +16,7 @@ export const ADD_FIXELEMENT = 'ADD_FIXELEMENT';
 export const REMOVE_FIXELEMENT = 'REMOVE_FIXELEMENT';
 export const UPDATE_FIXELEMENT = 'UPDATE_FIXELEMENT';
 export const DECREASE_FIXELEMENT_DISTANCE = 'DECREASE_FIXELEMENT_DISTANCE';
+export const INCREASE_FIXELEMENT_DISTANCE = 'INCREASE_FIXELEMENT_DISTANCE';
 
 export type FuellingState = {
   fuellingList: Fuelling[];
@@ -114,14 +115,17 @@ interface UpdateFixListElementAction {
 
 interface DecreaseFixListElementDistanceAction {
   type: typeof DECREASE_FIXELEMENT_DISTANCE;
-  payload: {
-    index: number;
-    distance: number;
-  };
+  payload: FixElement[];
+}
+
+interface IncreaseFixListElementDistanceAction {
+  type: typeof INCREASE_FIXELEMENT_DISTANCE;
+  payload: FixElement[];
 }
 
 export type FixListTypes =
   | AddFixListElementAction
   | RemoveFixListElementAction
   | UpdateFixListElementAction
-  | DecreaseFixListElementDistanceAction;
+  | DecreaseFixListElementDistanceAction
+  | IncreaseFixListElementDistanceAction;

@@ -5,6 +5,7 @@ import {
   FixListTypes,
   REMOVE_FIXELEMENT,
   DECREASE_FIXELEMENT_DISTANCE,
+  INCREASE_FIXELEMENT_DISTANCE,
 } from '../actions/types';
 
 const initialState: FixListState = {
@@ -36,10 +37,12 @@ const fixListReducer = (state = initialState, action: FixListTypes): FixListStat
     case DECREASE_FIXELEMENT_DISTANCE:
       return {
         ...state,
-        fixList: [
-          ...state.fixList,
-          (state.fixList[action.payload.index].kmRemaining -= action.payload.distance),
-        ],
+        fixList: action.payload,
+      };
+    case INCREASE_FIXELEMENT_DISTANCE:
+      return {
+        ...state,
+        fixList: action.payload,
       };
     default:
       return state;
