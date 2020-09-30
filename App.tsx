@@ -6,15 +6,30 @@ import { ThemeProvider } from 'react-native-elements';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
 import { addFuelling } from './store/actions/fuelling';
-import { multiReadStorage } from './components/utils/storageUtils';
+import { multiReadStorage, saveToStorage } from './components/utils/storageUtils';
 import { addCar } from './store/actions/car';
-import TabNavigation from './navigation/TabNavigation';
-import LoadingApp from './components/LoadingApp';
 import { addNote } from './store/actions/notes';
 import { addFixListElement } from './store/actions/fixList';
+import TabNavigation from './navigation/TabNavigation';
+import LoadingApp from './components/LoadingApp';
+import * as Permissions from 'expo-permissions';
+import { Notifications } from 'expo';
 
 const App: React.FC = () => {
   const [loading, setLoading] = useState(false);
+
+  const askPermissions = async () => {
+    const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+    let finalStatus = existingStatus;
+    if (existingStatus !== 'granted') {
+      const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+      finalStatus = status;
+    }
+    if (finalStatus !== 'granted') {
+      return false;
+    }
+    return true;
+  };
 
   useEffect(() => {
     async function getMainAppData() {
@@ -31,6 +46,7 @@ const App: React.FC = () => {
           store.dispatch(addNote(notesData ? JSON.parse(notesData) : []));
           store.dispatch(addFixListElement(fixListData ? JSON.parse(fixListData) : []));
         }
+        await askPermissions();
       } catch (e) {
         console.log(e);
       } finally {

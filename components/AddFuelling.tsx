@@ -8,6 +8,7 @@ import Modal from './Modal';
 import { RootState } from '../store/store';
 import { increaseCarMileage, updateMileage } from '../store/actions/car';
 import { decreaseFixListElementDistance } from '../store/actions/fixList';
+import { Notifications } from 'expo';
 
 interface Props {
   visible: boolean;
@@ -49,7 +50,24 @@ const AddFuelling: React.FC<Props> = ({ visible, toggleModal }) => {
       });
       await saveToStorage('@fixList', updatedFixList);
       dispatch(decreaseFixListElementDistance(updatedFixList));
+      await sendNotification(updatedFixList);
     }
+  };
+
+  const sendNotification = (fixList: FixElement[]) => {
+    const elementsToNotificate: FixElement[] = fixList.filter(
+      (fixElement: FixElement): boolean => fixElement.kmRemaining <= 0,
+    );
+    elementsToNotificate.forEach(async (fixElement: FixElement) => {
+      await sendNotificationImmediately(fixElement);
+    });
+  };
+
+  const sendNotificationImmediately = async (element: FixElement) => {
+    await Notifications.presentLocalNotificationAsync({
+      title: 'Uwaga, zbliża się wymiana!',
+      body: `To już pora wymienić ${element.item}! Umów się do mechanika i przygotuj ${element.cost} zł`,
+    });
   };
 
   const parseFuellingElement = (fuelling: Record<string, string>): Fuelling => {
