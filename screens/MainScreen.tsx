@@ -1,28 +1,17 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Car } from '../types/allTypes';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
-import { Card } from 'react-native-elements';
-import AddCarInfo from '../components/AddCarInfo';
-import CarInfo from '../components/CarInfo';
-import CarFuellingHistory from '../components/CarFuellingHistory';
+import MainScreenInformations from '../components/MainScreenInformations';
+import MainScreenNoData from '../components/MainScreenNoData';
 
 const MainScreen: React.FC = () => {
   const car = useSelector<RootState, Car | null>((state: RootState) => state.carInfo.car);
 
   return (
     <View style={style.mainContainer}>
-      {car ? <CarInfo car={car} /> : <AddCarInfo />}
-      {car ? (
-        <CarFuellingHistory />
-      ) : (
-        <Card>
-          <Text style={style.textNormal}>
-            Aby dodać nowe tankowanie, najpierw dodaj informacje o swoim aucie
-          </Text>
-        </Card>
-      )}
+      {car ? <MainScreenInformations car={car} /> : <MainScreenNoData />}
     </View>
   );
 };
