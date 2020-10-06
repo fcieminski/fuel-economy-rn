@@ -21,7 +21,7 @@ const noteReducer = (state = initialState, action: NoteTypes): NoteState => {
         ...state,
         notes: state.notes.map((note, index) => {
           if (index === action.payload.index) {
-            return { ...note, text: action.payload.text, timestamp: Date.now() };
+            return { ...note, text: action.payload.element.text, timestamp: Date.now() };
           }
           return note;
         }),

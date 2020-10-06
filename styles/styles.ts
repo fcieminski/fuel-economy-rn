@@ -218,12 +218,7 @@ export const notesStyles = StyleSheet.create({
   },
   textImportant: {
     fontWeight: 'bold',
-    fontSize: 16,
-  },
-  galleryImage: {
-    width: 100,
-    height: 100,
-    marginRight: 5,
+    ...fontRegular,
   },
   modalImage: {
     maxWidth: '100%',
@@ -231,7 +226,7 @@ export const notesStyles = StyleSheet.create({
     height: '100%',
   },
   content: {
-    fontSize: 18,
+    ...fontRegular,
     marginBottom: 20,
   },
   editNoteContainer: {
