@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 
 const fontRegular = {
   fontSize: 16,
@@ -12,6 +12,8 @@ const fontBig = {
 const fontGray = {
   color: '#919191',
 };
+
+const deviceWidth = Dimensions.get('window').width;
 
 export const mainScreenStyles = StyleSheet.create({
   mainContainer: {
@@ -150,22 +152,11 @@ export const fixListStyles = StyleSheet.create({
   marginBottom: {
     marginBottom: 5,
   },
-  row: {
-    alignItems: 'center',
-    flexDirection: 'row',
-  },
-  rowSpace: {
-    width: '100%',
-    flex: 1,
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  fontRegular,
-  fontMedium,
-  marginRight: {
+  textMediumMargin: {
+    ...fontMedium,
     marginRight: 10,
   },
+  fontRegular,
   textLabel: {
     ...fontRegular,
     ...fontGray,
@@ -192,4 +183,96 @@ export const listStyles = StyleSheet.create({
   marginRight: {
     marginRight: 10,
   },
+});
+
+export const modalStyles = StyleSheet.create({
+  modal: {
+    width: deviceWidth * 0.8,
+  },
+  modalHeader: {
+    flexDirection: 'row',
+    marginBottom: 20,
+    marginLeft: 10,
+    alignItems: 'center',
+  },
+  closeIcon: {
+    alignSelf: 'flex-end',
+  },
+  icon: {
+    marginRight: 10,
+  },
+  modalHeaderText: {
+    fontSize: 24,
+  },
+});
+
+export const notesStyles = StyleSheet.create({
+  noteHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  row: {
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  textImportant: {
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  galleryImage: {
+    width: 100,
+    height: 100,
+    marginRight: 5,
+  },
+  modalImage: {
+    maxWidth: '100%',
+    width: '100%',
+    height: '100%',
+  },
+  content: {
+    fontSize: 18,
+    marginBottom: 20,
+  },
+  editNoteContainer: {
+    width: deviceWidth * 0.8,
+  },
+  actions: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    marginTop: 10,
+    marginLeft: -10,
+    marginRight: -10,
+  },
+  button: {
+    width: 100,
+    marginLeft: 10,
+    marginRight: 10,
+    backgroundColor: '#32a899',
+  },
+  text: {
+    ...fontGray,
+    ...fontRegular,
+  },
+});
+
+export const warningModalStyles = StyleSheet.create({
+  actions: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    marginTop: 10,
+    marginLeft: -10,
+    marginRight: -10,
+  },
+  button: {
+    width: 100,
+    marginLeft: 10,
+    marginRight: 10,
+  },
+  content: {
+    marginLeft: 10,
+    marginRight: 20,
+    marginBottom: 20,
+  },
+  fontMedium,
 });

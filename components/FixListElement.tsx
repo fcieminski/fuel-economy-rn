@@ -55,16 +55,14 @@ const FixListElement: React.FC<Props> = ({ fixElement, index, deleteElement, upd
         />
       </ListItem>
       <View style={fixListStyles.marginBottom} />
-      <ListElement description="zł" text="Koszt" icon="currency-usd">
-        <Text style={[fixListStyles.fontMedium, fixListStyles.marginRight]}>{fixElement.cost}</Text>
-      </ListElement>
-      <View style={fixListStyles.marginBottom} />
       {fixElement.description && <ListElement text={fixElement.description} icon="wrench" />}
       <View style={fixListStyles.marginBottom} />
+      <ListElement description="zł" text="Koszt" icon="currency-usd">
+        <Text style={fixListStyles.textMediumMargin}>{fixElement.cost}</Text>
+      </ListElement>
+      <View style={fixListStyles.marginBottom} />
       <ListElement description="km" text="Pozostało kilometrów" icon="map-marker-distance">
-        <Text style={[fixListStyles.fontMedium, fixListStyles.marginRight]}>
-          {fixElement.kmRemaining}
-        </Text>
+        <Text style={fixListStyles.textMediumMargin}>{fixElement.kmRemaining}</Text>
       </ListElement>
       <CheckBox
         center

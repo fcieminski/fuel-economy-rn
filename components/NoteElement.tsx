@@ -1,10 +1,10 @@
 import React, { memo, useState } from 'react';
-import { Dimensions, StyleSheet, Text, View } from 'react-native';
-import { Button, Card, Icon, Image, Input, Overlay } from 'react-native-elements';
+import { Text, View } from 'react-native';
+import { Button, Card, Icon, Input } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Note } from '../types/allTypes';
 import { dateFormat } from './utils/dateUtils';
-import ImageAutoSize from './ImageAutoSize';
+import { notesStyles } from '../styles/styles';
 import Modal from './Modal';
 import WarningModal from './WarningModal';
 
@@ -16,21 +16,9 @@ interface Props {
 }
 
 const NoteElement: React.FC<Props> = ({ note, deleteNote, updateNote, index }) => {
-  const [visible, setVisible] = useState(false);
   const [editModal, setEditModal] = useState(false);
   const [noteNewContent, setNoteNewContent] = useState('');
   const [warningModal, setWarningModal] = useState(false);
-  const [focusedImage, setFocusedImage] = useState('');
-
-  const showImage = (uri: string) => {
-    setFocusedImage(uri);
-    setVisible(true);
-  };
-
-  const closeImageModal = () => {
-    setVisible(false);
-    setFocusedImage('');
-  };
 
   const toggleWarningModal = () => {
     setWarningModal(!warningModal);
@@ -64,21 +52,21 @@ const NoteElement: React.FC<Props> = ({ note, deleteNote, updateNote, index }) =
 
   return (
     <Card>
-      <View style={style.noteHeader}>
+      <View style={notesStyles.noteHeader}>
         {note.isImportant ? (
-          <View style={style.row}>
+          <View style={notesStyles.row}>
             <Icon
               color="#ffb726"
               style={{ marginRight: 10 }}
               type="material-community"
               name="alert"
             />
-            <Text style={style.textImportant}>Ważne</Text>
+            <Text style={notesStyles.textImportant}>Ważne</Text>
           </View>
         ) : (
           <View />
         )}
-        <View style={style.row}>
+        <View style={notesStyles.row}>
           <Icon
             onPress={toggleEditModal}
             color="black"
@@ -95,8 +83,8 @@ const NoteElement: React.FC<Props> = ({ note, deleteNote, updateNote, index }) =
         </View>
       </View>
       <Card.Divider />
-      <Text style={style.content}>{note.text}</Text>
-      <Text style={{ color: '#919191', fontSize: 16 }}>{dateFormat(note.timestamp)}</Text>
+      <Text style={notesStyles.content}>{note.text}</Text>
+      <Text style={notesStyles.text}>{dateFormat(note.timestamp)}</Text>
       <WarningModal
         toggle={toggleWarningModal}
         visible={warningModal}
@@ -110,72 +98,19 @@ const NoteElement: React.FC<Props> = ({ note, deleteNote, updateNote, index }) =
       />
       {editModal && (
         <Modal toggle={toggleEditModal} visible={editModal} title="Edytuj notatkę">
-          <View style={style.editNoteContainer}>
+          <View style={notesStyles.editNoteContainer}>
             <ScrollView>
               <Input multiline value={noteNewContent} onChangeText={handleUpdate} />
             </ScrollView>
           </View>
-          <View style={style.actions}>
-            <Button
-              buttonStyle={[style.button, { backgroundColor: '#32a899' }]}
-              onPress={toggleEditModal}
-              title="Anuluj"
-            />
-            <Button
-              buttonStyle={[style.button, { backgroundColor: '#32a899' }]}
-              onPress={updateNoteText}
-              title="Zapisz"
-            />
+          <View style={notesStyles.actions}>
+            <Button buttonStyle={notesStyles.button} onPress={toggleEditModal} title="Anuluj" />
+            <Button buttonStyle={notesStyles.button} onPress={updateNoteText} title="Zapisz" />
           </View>
         </Modal>
       )}
     </Card>
   );
 };
-
-const style = StyleSheet.create({
-  noteHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  row: {
-    alignItems: 'center',
-    flexDirection: 'row',
-  },
-  textImportant: {
-    fontWeight: 'bold',
-    fontSize: 16,
-  },
-  galleryImage: {
-    width: 100,
-    height: 100,
-    marginRight: 5,
-  },
-  modalImage: {
-    maxWidth: '100%',
-    width: '100%',
-    height: '100%',
-  },
-  content: {
-    fontSize: 18,
-    marginBottom: 20,
-  },
-  editNoteContainer: {
-    width: Dimensions.get('window').width * 0.8,
-  },
-  actions: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    marginTop: 10,
-    marginLeft: -10,
-    marginRight: -10,
-  },
-  button: {
-    width: 100,
-    marginLeft: 10,
-    marginRight: 10,
-  },
-});
 
 export default memo(NoteElement);

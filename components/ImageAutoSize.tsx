@@ -1,6 +1,5 @@
 import React, { memo, useCallback, useEffect } from 'react';
 import { useState } from 'react';
-import { StyleSheet } from 'react-native';
 import { Image } from 'react-native-elements';
 
 const ImageAutoSize = ({ uri, onPress }) => {
