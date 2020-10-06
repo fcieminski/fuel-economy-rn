@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { Card, Icon, Button } from 'react-native-elements';
 import { useDispatch } from 'react-redux';
 import { addCar } from '../store/actions/car';
+import { carStyles } from '../styles/styles';
 import { Car } from '../types/allTypes';
+import { saveToStorage } from './utils/storageUtils';
 import AddCarInfoInputs from './inputs/AddCarInfoInputs';
 import Modal from './Modal';
-import { saveToStorage } from './utils/storageUtils';
 
 const AddCarInfo: React.FC = () => {
   const dispatch = useDispatch();
@@ -23,17 +24,15 @@ const AddCarInfo: React.FC = () => {
   };
   return (
     <Card>
-      <View style={style.cardTitle}>
-        <Text style={style.textHeader}>Twój samochód</Text>
+      <View style={carStyles.cardTitle}>
+        <Text style={carStyles.textHeader}>Twój samochód</Text>
       </View>
       <Card.Divider />
-      <Text style={{ marginBottom: 10, fontSize: 16 }}>
-        Dodaj swój pojazd i zacznij śledzić spalanie!
-      </Text>
+      <Text style={carStyles.text}>Dodaj swój pojazd i zacznij śledzić spalanie!</Text>
       <Card.Divider />
       <Button
         icon={<Icon name="add" color="#ffffff" />}
-        buttonStyle={style.button}
+        buttonStyle={carStyles.button}
         onPress={toggleDialog}
       />
       <Modal visible={visible} title="Dodaj samochód" toggle={toggleDialog}>
@@ -42,23 +41,5 @@ const AddCarInfo: React.FC = () => {
     </Card>
   );
 };
-
-const style = StyleSheet.create({
-  cardTitle: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  textHeader: {
-    fontWeight: 'bold',
-    fontSize: 20,
-  },
-  textNormal: {
-    fontSize: 16,
-  },
-  button: {
-    backgroundColor: '#32a899',
-  },
-});
 
 export default AddCarInfo;

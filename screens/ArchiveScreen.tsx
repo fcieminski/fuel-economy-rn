@@ -4,6 +4,7 @@ import { View, ScrollView, GestureResponderEvent, Text } from 'react-native';
 import { Card } from 'react-native-elements';
 import ArchiveButton from '../components/ArchiveButton';
 import CarFuellingHistory from '../components/CarFuellingHistory';
+import { historyScreenStyles } from '../styles/styles';
 
 const months = [
   { title: 'Styczeń', id: 0 },
@@ -42,9 +43,9 @@ const ArchiveScreen: React.FC = () => {
   const monthName = months.find((ele) => ele.id === date);
 
   return (
-    <View style={{ flex: 1 }}>
-      <View style={{ marginTop: 10 }}>
-        <ScrollView ref={scroll} horizontal style={{ flexDirection: 'row' }}>
+    <View style={historyScreenStyles.container}>
+      <View style={historyScreenStyles.marginTop}>
+        <ScrollView ref={scroll} horizontal style={historyScreenStyles.row}>
           {months.map((month, index) => {
             return (
               <ArchiveButton
@@ -58,7 +59,7 @@ const ArchiveScreen: React.FC = () => {
         </ScrollView>
       </View>
       <Card>
-        <Text style={{ fontSize: 16 }}>{monthName?.title}</Text>
+        <Text style={historyScreenStyles.fontRegular}>{monthName?.title}</Text>
       </Card>
       <CarFuellingHistory filterBy={date} />
     </View>

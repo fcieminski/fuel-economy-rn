@@ -3,9 +3,9 @@ import { Car } from '../types/allTypes';
 import CarFuellingHistory from './CarFuellingHistory';
 import CarInfo from './CarInfo';
 
-type Props = {
+interface Props {
   car: Car;
-};
+}
 
 const MainScreenInformations: React.FC<Props> = ({ car }) => {
   return (

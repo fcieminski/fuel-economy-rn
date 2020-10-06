@@ -1,11 +1,10 @@
-import AsyncStorage from '@react-native-community/async-storage';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { addNote } from '../store/actions/notes';
 import { Note } from '../types/allTypes';
+import { readStorage, saveToStorage } from './utils/storageUtils';
 import AddNoteInputs from './inputs/AddNoteInputs';
 import Modal from './Modal';
-import { readStorage, saveToStorage } from './utils/storageUtils';
 
 interface Props {
   visible: boolean;

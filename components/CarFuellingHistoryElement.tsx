@@ -1,6 +1,7 @@
 import React, { memo, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Divider, Icon } from 'react-native-elements';
+import { historyScreenStyles } from '../styles/styles';
 import { Fuelling } from '../types/allTypes';
 import WarningModal from './WarningModal';
 
@@ -9,6 +10,59 @@ interface Props {
   index: number;
   deleteElement: (index: number) => void;
 }
+
+interface List {
+  children: React.ReactNode;
+  text: string;
+  description: string;
+  icon: string;
+}
+
+const ListHeader: React.FC<List> = ({ children, text, description, icon }) => {
+  return (
+    <View style={[historyScreenStyles.row, historyScreenStyles.alignCenter]}>
+      <Icon
+        color="#32a899"
+        type="material-community"
+        name={icon}
+        size={30}
+        style={historyScreenStyles.marginRight}
+      />
+      <View style={historyScreenStyles.rowSpace}>
+        <Text style={historyScreenStyles.fontRegular}>{text}</Text>
+        <View style={[historyScreenStyles.row, historyScreenStyles.alignCenter]}>
+          {children}
+          <Text style={[historyScreenStyles.fontGray, historyScreenStyles.fontRegular]}>
+            {description}
+          </Text>
+        </View>
+      </View>
+    </View>
+  );
+};
+
+const ListElement: React.FC<List> = ({ children, text, description, icon }) => {
+  return (
+    <View style={[historyScreenStyles.row, historyScreenStyles.alignCenter]}>
+      <Icon
+        color="#32a899"
+        type="material-community"
+        name={icon}
+        size={20}
+        style={historyScreenStyles.marginRight}
+      />
+      <View style={historyScreenStyles.rowSpace}>
+        <Text style={historyScreenStyles.fontRegular}>{text}</Text>
+        <View style={[historyScreenStyles.row, historyScreenStyles.alignCenter]}>
+          {children}
+          <Text style={[historyScreenStyles.fontGray, historyScreenStyles.fontMedium]}>
+            {description}
+          </Text>
+        </View>
+      </View>
+    </View>
+  );
+};
 
 const CarFuellingHistoryElement: React.FC<Props> = ({ item, index, deleteElement }) => {
   const [warningModal, setWarningModal] = useState(false);
@@ -27,79 +81,36 @@ const CarFuellingHistoryElement: React.FC<Props> = ({ item, index, deleteElement
   };
 
   return (
-    <View style={{ padding: 10 }}>
-      <View style={style.row}>
-        <Icon
-          color="#32a899"
-          type="material-community"
-          name="gas-station"
-          size={30}
-          style={{ marginRight: 10 }}
-        />
-        <View style={style.rowSpace}>
-          <Text style={{ fontSize: 16 }}>Średnie spalanie</Text>
-          <View style={style.row}>
-            <Text style={{ fontSize: 18, marginRight: 10 }}>
-              {(item.distance / item.fuelAmount).toFixed(2)}
-            </Text>
-            <Text style={{ color: '#919191', fontSize: 16 }}>l/100km</Text>
-          </View>
-        </View>
-      </View>
-      <Divider style={{ marginBottom: 10, marginTop: 5, paddingTop: 1 }} />
-      <View style={style.row}>
-        <Icon
-          color="#32a899"
-          type="material-community"
-          name="map-marker-distance"
-          size={20}
-          style={{ marginRight: 10 }}
-        />
-        <View style={style.rowSpace}>
-          <Text style={{ fontSize: 16 }}>Dystans</Text>
-          <View style={style.row}>
-            <Text style={{ fontSize: 18, marginRight: 10 }}>{item.distance}</Text>
-            <Text style={{ color: '#919191', fontSize: 16 }}>km</Text>
-          </View>
-        </View>
-      </View>
-      <View style={{ marginBottom: 5 }} />
-      <View style={style.row}>
-        <Icon
-          color="#32a899"
-          type="material-community"
-          name="currency-usd"
-          size={20}
-          style={{ marginRight: 10 }}
-        />
-        <View style={style.rowSpace}>
-          <Text style={{ fontSize: 16 }}>Koszt</Text>
-          <View style={style.row}>
-            <Text style={{ fontSize: 18, marginRight: 10 }}>{item.cost}</Text>
-            <Text style={{ color: '#919191', fontSize: 16 }}>zł</Text>
-          </View>
-        </View>
-      </View>
-      <View style={{ marginBottom: 5 }} />
-      <View style={style.row}>
-        <Icon
-          color="#32a899"
-          type="material-community"
-          name="water"
-          size={20}
-          style={{ marginRight: 10 }}
-        />
-        <View style={style.rowSpace}>
-          <Text style={{ fontSize: 16 }}>Litry</Text>
-          <View style={style.row}>
-            <Text style={{ fontSize: 18, marginRight: 10 }}>{item.fuelAmount}</Text>
-            <Text style={{ color: '#919191', fontSize: 16 }}>l</Text>
-          </View>
-        </View>
-      </View>
-      <View style={{ marginBottom: 5 }} />
-      <View style={style.rowSpace}>
-        <Text style={{ alignSelf: 'flex-end', color: '#919191', fontSize: 16 }}>{item.date}</Text>
+    <View style={historyScreenStyles.padding}>
+      <ListHeader icon="gas-station" text="Średnie spalanie" description="l/100km">
+        <Text style={[historyScreenStyles.marginRight, historyScreenStyles.fontMedium]}>
+          {(item.distance / item.fuelAmount).toFixed(2)}
+        </Text>
+      </ListHeader>
+      <Divider style={historyScreenStyles.divider} />
+      <ListElement icon="map-marker-distance" text="Dystans" description="km">
+        <Text style={[historyScreenStyles.fontMedium, historyScreenStyles.marginRight]}>
+          {item.distance}
+        </Text>
+      </ListElement>
+      <ListElement icon="currency-usd" text="Koszt" description="zł">
+        <Text style={[historyScreenStyles.fontMedium, historyScreenStyles.marginRight]}>
+          {item.cost}
+        </Text>
+      </ListElement>
+      <ListElement icon="water" text="Litry" description="l">
+        <Text style={[historyScreenStyles.fontMedium, historyScreenStyles.marginRight]}>
+          {item.fuelAmount}
+        </Text>
+      </ListElement>
+      <ListElement icon="fuel" text="Cena litra" description="zł">
+        <Text style={[historyScreenStyles.fontMedium, historyScreenStyles.marginRight]}>
+          {item.cost / item.fuelAmount}
+        </Text>
+      </ListElement>
+      <View style={historyScreenStyles.marginBottom} />
+      <View style={historyScreenStyles.rowSpace}>
+        <Text style={historyScreenStyles.dateHighlight}>{item.date}</Text>
         <Icon onPress={toggleModal} type="material-community" name="delete" />
       </View>
       <WarningModal
@@ -114,22 +125,5 @@ const CarFuellingHistoryElement: React.FC<Props> = ({ item, index, deleteElement
     </View>
   );
 };
-
-const style = StyleSheet.create({
-  rowSpace: {
-    width: '100%',
-    flex: 1,
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  row: {
-    alignItems: 'center',
-    flexDirection: 'row',
-  },
-  column: {
-    flex: 1,
-  },
-});
 
 export default memo(CarFuellingHistoryElement);

@@ -1,6 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { Icon } from 'react-native-elements';
+import { carStyles } from '../styles/styles';
 
 interface Props {
   name: string;
@@ -10,8 +11,8 @@ interface Props {
 
 const CarElement: React.FC<Props> = ({ name, value, icon }) => {
   return (
-    <View style={style.column}>
-      <View style={style.row}>
+    <View style={carStyles.column}>
+      <View style={carStyles.row}>
         <Icon
           size={30}
           iconStyle={{ marginRight: 10 }}
@@ -19,25 +20,11 @@ const CarElement: React.FC<Props> = ({ name, value, icon }) => {
           color="#32a899"
           name={icon}
         />
-        <Text style={style.textNormal}>{name}</Text>
+        <Text style={carStyles.fontRegular}>{name}</Text>
       </View>
-      <Text style={style.textNormal}>{value}</Text>
+      <Text style={carStyles.fontRegular}>{value}</Text>
     </View>
   );
 };
-
-const style = StyleSheet.create({
-  row: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    marginBottom: 10,
-  },
-  column: {
-    flex: 1,
-  },
-  textNormal: {
-    fontSize: 16,
-  },
-});
 
 export default CarElement;

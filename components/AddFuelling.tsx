@@ -6,7 +6,7 @@ import { readStorage, saveToStorage } from './utils/storageUtils';
 import AddFuellingInputs from './inputs/AddFuellingInputs';
 import Modal from './Modal';
 import { RootState } from '../store/store';
-import { increaseCarMileage, updateMileage } from '../store/actions/car';
+import { increaseCarMileage } from '../store/actions/car';
 import { decreaseFixListElementDistance } from '../store/actions/fixList';
 import { Notifications } from 'expo';
 

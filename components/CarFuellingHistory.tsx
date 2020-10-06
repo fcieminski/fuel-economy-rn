@@ -1,15 +1,16 @@
 import React, { useCallback, useMemo } from 'react';
-import { ListRenderItem, StyleSheet } from 'react-native';
+import { ListRenderItem } from 'react-native';
 import { Card } from 'react-native-elements';
 import { FlatList } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
 import { removeFuelling } from '../store/actions/fuelling';
 import { RootState } from '../store/store';
-import { FixElement, Fuelling } from '../types/allTypes';
+import { Fuelling } from '../types/allTypes';
 import { readStorage, removeOneFromManyElements, saveToStorage } from './utils/storageUtils';
+import { decreaseCarMileage } from '../store/actions/car';
+import { historyScreenStyles } from '../styles/styles';
 import CarFuellingHistoryElement from './CarFuellingHistoryElement';
 import EmptyData from './EmptyData';
-import { decreaseCarMileage, updateMileage } from '../store/actions/car';
 
 interface Props {
   filterBy?: string | number;
@@ -50,7 +51,7 @@ const CarFuellingHistory: React.FC<Props> = ({ filterBy }) => {
   }, []);
 
   return (
-    <Card containerStyle={style.listContainer}>
+    <Card containerStyle={historyScreenStyles.listContainer}>
       <FlatList
         scrollEnabled={true}
         keyExtractor={keyExtractor}
@@ -62,19 +63,5 @@ const CarFuellingHistory: React.FC<Props> = ({ filterBy }) => {
     </Card>
   );
 };
-
-const style = StyleSheet.create({
-  rowSpace: {
-    justifyContent: 'space-between',
-    width: '100%',
-    alignItems: 'center',
-    flexDirection: 'row',
-    marginBottom: 10,
-  },
-  listContainer: {
-    marginBottom: 10,
-    flex: 1,
-  },
-});
 
 export default CarFuellingHistory;
