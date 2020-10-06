@@ -38,7 +38,6 @@ const CarInfo: React.FC<Props> = ({ car }) => {
           size={25}
           iconStyle={{ marginLeft: 10 }}
           type="material-community"
-          color="#32a899"
           name="delete"
           onPress={toggleModal}
         />
