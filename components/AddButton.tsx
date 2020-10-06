@@ -2,7 +2,7 @@ import { useNavigationState } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { Icon } from 'react-native-elements';
-import { addButtonsStyle } from '../styles/styles';
+import { addButtonsStyles } from '../styles/styles';
 import AddFixElement from './AddFixElement';
 import AddFuelling from './AddFuelling';
 import AddNote from './AddNote';
@@ -31,9 +31,9 @@ const AddButton: React.FC = () => {
       <AddComponent toggleModal={toggleModal} visible={visible} />
       <TouchableOpacity
         activeOpacity={0.8}
-        style={addButtonsStyle.buttonContainer}
+        style={addButtonsStyles.buttonContainer}
         onPress={toggleModal}>
-        <View style={addButtonsStyle.btn}>
+        <View style={addButtonsStyles.btn}>
           <Icon size={35} type="material-community" name="plus" color="white" />
         </View>
       </TouchableOpacity>

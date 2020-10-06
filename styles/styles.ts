@@ -44,9 +44,6 @@ export const historyScreenStyles = StyleSheet.create({
   padding: {
     padding: 10,
   },
-  marginRight: {
-    marginRight: 10,
-  },
   alignCenter: {
     alignItems: 'center',
   },
@@ -63,7 +60,10 @@ export const historyScreenStyles = StyleSheet.create({
     marginTop: 5,
     paddingTop: 1,
   },
-  fontMedium,
+  textMediumMargin: {
+    ...fontMedium,
+    marginRight: 10,
+  },
   dateHighlight: {
     alignSelf: 'flex-end',
     ...fontGray,
@@ -74,7 +74,7 @@ export const historyScreenStyles = StyleSheet.create({
   },
 });
 
-export const addButtonsStyle = StyleSheet.create({
+export const addButtonsStyles = StyleSheet.create({
   buttonContainer: {
     height: 60,
     bottom: 30,
@@ -133,5 +133,63 @@ export const carStyles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     marginBottom: 10,
+  },
+  marginLeft: {
+    marginLeft: 10,
+  },
+  alignCenter: {
+    alignItems: 'center',
+  },
+});
+
+export const fixListStyles = StyleSheet.create({
+  textHeader: {
+    fontWeight: 'bold',
+    ...fontBig,
+  },
+  marginBottom: {
+    marginBottom: 5,
+  },
+  row: {
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  rowSpace: {
+    width: '100%',
+    flex: 1,
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  fontRegular,
+  fontMedium,
+  marginRight: {
+    marginRight: 10,
+  },
+  textLabel: {
+    ...fontRegular,
+    ...fontGray,
+  },
+});
+
+export const listStyles = StyleSheet.create({
+  rowContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  description: {
+    ...fontMedium,
+    ...fontGray,
+  },
+  fontRegular,
+  rowSpace: {
+    width: '100%',
+    flex: 1,
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  marginRight: {
+    marginRight: 10,
   },
 });

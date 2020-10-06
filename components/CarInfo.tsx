@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { Card, Icon } from 'react-native-elements';
 import { useDispatch } from 'react-redux';
 import { removeCar } from '../store/actions/car';
-import { addFuelling, clearFuelling } from '../store/actions/fuelling';
+import { clearFuelling } from '../store/actions/fuelling';
+import { carStyles } from '../styles/styles';
 import { Car } from '../types/allTypes';
 import CarElement from './CarElement';
 import WarningModal from './WarningModal';
@@ -32,23 +33,23 @@ const CarInfo: React.FC<Props> = ({ car }) => {
 
   return (
     <Card>
-      <View style={style.cardTitle}>
-        <Text style={style.textHeader}>{`${car.brand} ${car.model}`}</Text>
+      <View style={carStyles.cardTitle}>
+        <Text style={carStyles.textHeader}>{`${car.brand} ${car.model}`}</Text>
         <Icon
           size={25}
-          iconStyle={{ marginLeft: 10 }}
+          iconStyle={carStyles.marginLeft}
           type="material-community"
           name="delete"
           onPress={toggleModal}
         />
       </View>
       <Card.Divider />
-      <View style={style.container}>
-        <View style={style.row}>
+      <View style={carStyles.alignCenter}>
+        <View style={carStyles.row}>
           <CarElement name="Marka" value={car.brand} icon="factory" />
           <CarElement name="Model" value={car.model} icon="car" />
         </View>
-        <View style={style.row}>
+        <View style={carStyles.row}>
           <CarElement name="Silnik" value={car.engine} icon="engine-outline" />
           <CarElement name="Przebieg" value={car.mileage} icon="map-marker-radius" />
         </View>
@@ -65,31 +66,5 @@ const CarInfo: React.FC<Props> = ({ car }) => {
     </Card>
   );
 };
-
-const style = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-  },
-  row: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    marginBottom: 10,
-  },
-  column: {
-    flex: 1,
-  },
-  cardTitle: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  textHeader: {
-    fontWeight: 'bold',
-    fontSize: 20,
-  },
-  textNormal: {
-    fontSize: 16,
-  },
-});
 
 export default CarInfo;

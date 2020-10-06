@@ -1,8 +1,9 @@
 import React, { memo, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { Divider, Icon } from 'react-native-elements';
 import { historyScreenStyles } from '../styles/styles';
 import { Fuelling } from '../types/allTypes';
+import ListElement from './lists/ListElement';
 import WarningModal from './WarningModal';
 
 interface Props {
@@ -10,59 +11,6 @@ interface Props {
   index: number;
   deleteElement: (index: number) => void;
 }
-
-interface List {
-  children: React.ReactNode;
-  text: string;
-  description: string;
-  icon: string;
-}
-
-const ListHeader: React.FC<List> = ({ children, text, description, icon }) => {
-  return (
-    <View style={[historyScreenStyles.row, historyScreenStyles.alignCenter]}>
-      <Icon
-        color="#32a899"
-        type="material-community"
-        name={icon}
-        size={30}
-        style={historyScreenStyles.marginRight}
-      />
-      <View style={historyScreenStyles.rowSpace}>
-        <Text style={historyScreenStyles.fontRegular}>{text}</Text>
-        <View style={[historyScreenStyles.row, historyScreenStyles.alignCenter]}>
-          {children}
-          <Text style={[historyScreenStyles.fontGray, historyScreenStyles.fontRegular]}>
-            {description}
-          </Text>
-        </View>
-      </View>
-    </View>
-  );
-};
-
-const ListElement: React.FC<List> = ({ children, text, description, icon }) => {
-  return (
-    <View style={[historyScreenStyles.row, historyScreenStyles.alignCenter]}>
-      <Icon
-        color="#32a899"
-        type="material-community"
-        name={icon}
-        size={20}
-        style={historyScreenStyles.marginRight}
-      />
-      <View style={historyScreenStyles.rowSpace}>
-        <Text style={historyScreenStyles.fontRegular}>{text}</Text>
-        <View style={[historyScreenStyles.row, historyScreenStyles.alignCenter]}>
-          {children}
-          <Text style={[historyScreenStyles.fontGray, historyScreenStyles.fontMedium]}>
-            {description}
-          </Text>
-        </View>
-      </View>
-    </View>
-  );
-};
 
 const CarFuellingHistoryElement: React.FC<Props> = ({ item, index, deleteElement }) => {
   const [warningModal, setWarningModal] = useState(false);
@@ -82,31 +30,23 @@ const CarFuellingHistoryElement: React.FC<Props> = ({ item, index, deleteElement
 
   return (
     <View style={historyScreenStyles.padding}>
-      <ListHeader icon="gas-station" text="Średnie spalanie" description="l/100km">
-        <Text style={[historyScreenStyles.marginRight, historyScreenStyles.fontMedium]}>
+      <ListElement icon="gas-station" text="Średnie spalanie" description="l/100km" iconSize={30}>
+        <Text style={historyScreenStyles.textMediumMargin}>
           {(item.distance / item.fuelAmount).toFixed(2)}
         </Text>
-      </ListHeader>
+      </ListElement>
       <Divider style={historyScreenStyles.divider} />
       <ListElement icon="map-marker-distance" text="Dystans" description="km">
-        <Text style={[historyScreenStyles.fontMedium, historyScreenStyles.marginRight]}>
-          {item.distance}
-        </Text>
+        <Text style={historyScreenStyles.textMediumMargin}>{item.distance}</Text>
       </ListElement>
       <ListElement icon="currency-usd" text="Koszt" description="zł">
-        <Text style={[historyScreenStyles.fontMedium, historyScreenStyles.marginRight]}>
-          {item.cost}
-        </Text>
+        <Text style={historyScreenStyles.textMediumMargin}>{item.cost}</Text>
       </ListElement>
       <ListElement icon="water" text="Litry" description="l">
-        <Text style={[historyScreenStyles.fontMedium, historyScreenStyles.marginRight]}>
-          {item.fuelAmount}
-        </Text>
+        <Text style={historyScreenStyles.textMediumMargin}>{item.fuelAmount}</Text>
       </ListElement>
       <ListElement icon="fuel" text="Cena litra" description="zł">
-        <Text style={[historyScreenStyles.fontMedium, historyScreenStyles.marginRight]}>
-          {item.cost / item.fuelAmount}
-        </Text>
+        <Text style={historyScreenStyles.textMediumMargin}>{item.cost / item.fuelAmount}</Text>
       </ListElement>
       <View style={historyScreenStyles.marginBottom} />
       <View style={historyScreenStyles.rowSpace}>
