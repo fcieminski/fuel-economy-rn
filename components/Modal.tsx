@@ -10,9 +10,14 @@ const Modal: React.FC<ModalDialog> = ({ visible, toggle, children, title, type }
     <Overlay isVisible={visible}>
       <KeyboardAvoidingView behavior="padding">
         <View style={modalStyles.modal}>
-          <View style={modalStyles.closeIcon}>
-            <Icon type="material-community" onPress={toggle} color="#32a899" name="close" />
-          </View>
+          <Icon
+            type="material-community"
+            onPress={toggle}
+            color="#32a899"
+            name="close"
+            size={35}
+            containerStyle={modalStyles.closeIcon}
+          />
           <View style={modalStyles.modalHeader}>
             {type && <Icon name="warning" style={modalStyles.icon} color={iconColor} />}
             <Text style={modalStyles.modalHeaderText}>{title}</Text>

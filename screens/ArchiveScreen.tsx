@@ -33,7 +33,7 @@ const ArchiveScreen: React.FC = () => {
       if (scroll) {
         scroll.current.scrollTo({ x: (date - 1) * 110 });
       }
-    }, [scroll, date]),
+    }, []),
   );
 
   const handlePress = (month: number) => {

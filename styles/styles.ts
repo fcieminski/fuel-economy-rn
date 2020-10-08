@@ -83,7 +83,7 @@ export const historyScreenStyles = StyleSheet.create({
 export const addButtonsStyles = StyleSheet.create({
   buttonContainer: {
     height: 60,
-    bottom: 30,
+    bottom: 25,
     width: 60,
     borderRadius: 58,
     backgroundColor: '#32a899',
@@ -219,6 +219,10 @@ export const modalStyles = StyleSheet.create({
   },
   closeIcon: {
     alignSelf: 'flex-end',
+    borderRadius: 100,
+    height: 40,
+    width: 40,
+    marginBottom: -10,
   },
   icon: {
     marginRight: 10,
