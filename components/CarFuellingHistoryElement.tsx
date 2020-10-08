@@ -46,7 +46,9 @@ const CarFuellingHistoryElement: React.FC<Props> = ({ item, index, deleteElement
         <Text style={historyScreenStyles.textMediumMargin}>{item.fuelAmount}</Text>
       </ListElement>
       <ListElement icon="fuel" text="Cena litra" description="zł">
-        <Text style={historyScreenStyles.textMediumMargin}>{item.cost / item.fuelAmount}</Text>
+        <Text style={historyScreenStyles.textMediumMargin}>
+          {(item.cost / item.fuelAmount).toFixed(2)}
+        </Text>
       </ListElement>
       <View style={historyScreenStyles.marginBottom} />
       <View style={historyScreenStyles.rowSpace}>

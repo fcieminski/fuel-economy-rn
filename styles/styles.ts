@@ -145,9 +145,14 @@ export const carStyles = StyleSheet.create({
 });
 
 export const fixListStyles = StyleSheet.create({
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
   textHeader: {
     fontWeight: 'bold',
-    ...fontBig,
+    ...fontRegular,
   },
   marginBottom: {
     marginBottom: 5,
@@ -160,6 +165,15 @@ export const fixListStyles = StyleSheet.create({
   textLabel: {
     ...fontRegular,
     ...fontGray,
+  },
+  checkboxContainer: {
+    backgroundColor: 'transparent',
+    borderColor: 'white',
+    marginBottom: 0,
+    paddingBottom: 0,
+    alignSelf: 'flex-start',
+    marginLeft: 0,
+    paddingLeft: 0,
   },
 });
 

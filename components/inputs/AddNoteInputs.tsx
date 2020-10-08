@@ -45,6 +45,7 @@ const AddNoteInputs: React.FC<Props> = ({ handleSubmit }) => {
             onPress={() => setFieldValue('isImportant', !values.isImportant)}
             checked={values.isImportant}
             checkedColor="#32a899"
+            containerStyle={{ backgroundColor: 'transparent', borderColor: 'white' }}
           />
           <Button title="Zapisz" buttonStyle={style.button} onPress={handleSubmit} />
         </>

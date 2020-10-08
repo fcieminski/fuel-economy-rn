@@ -38,22 +38,14 @@ const FixListElement: React.FC<Props> = ({ fixElement, index, deleteElement, upd
       containerStyle={{
         borderTopWidth: 3,
         borderTopColor: fixElement.isDone ? '#32a899' : 'white',
-        paddingTop: -3,
         borderTopLeftRadius: 10,
         borderTopRightRadius: 10,
       }}>
-      <ListItem>
-        <ListItem.Content>
-          <ListItem.Title style={fixListStyles.textHeader}>{fixElement.item}</ListItem.Title>
-        </ListItem.Content>
-        <Icon
-          size={25}
-          type="material-community"
-          color="black"
-          name="delete"
-          onPress={toggleWarningModal}
-        />
-      </ListItem>
+      <View style={fixListStyles.header}>
+        <Text style={fixListStyles.textHeader}> {fixElement.item}</Text>
+        <Icon type="material-community" color="black" name="delete" onPress={toggleWarningModal} />
+      </View>
+      <Card.Divider style={{ marginTop: 10 }} />
       <View style={fixListStyles.marginBottom} />
       {fixElement.description && <ListElement text={fixElement.description} icon="wrench" />}
       <View style={fixListStyles.marginBottom} />
@@ -70,6 +62,7 @@ const FixListElement: React.FC<Props> = ({ fixElement, index, deleteElement, upd
         onPress={handlePress}
         checked={fixElement.isDone}
         checkedColor="#32a899"
+        containerStyle={fixListStyles.checkboxContainer}
       />
       <WarningModal
         toggle={toggleWarningModal}

@@ -51,7 +51,13 @@ const NoteElement: React.FC<Props> = ({ note, deleteNote, updateNote, index }) =
   };
 
   return (
-    <Card>
+    <Card
+      containerStyle={{
+        borderTopWidth: 3,
+        borderTopColor: note.isImportant ? '#ffb726' : 'white',
+        borderTopLeftRadius: 10,
+        borderTopRightRadius: 10,
+      }}>
       <View style={notesStyles.noteHeader}>
         {note.isImportant ? (
           <View style={notesStyles.row}>
@@ -82,7 +88,7 @@ const NoteElement: React.FC<Props> = ({ note, deleteNote, updateNote, index }) =
           />
         </View>
       </View>
-      <Card.Divider />
+      <Card.Divider style={{ marginTop: 10 }} />
       <Text style={notesStyles.content}>{note.text}</Text>
       <Text style={notesStyles.text}>{dateFormat(note.timestamp)}</Text>
       <WarningModal
