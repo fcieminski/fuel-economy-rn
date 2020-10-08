@@ -1,36 +1,24 @@
 import React from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Icon } from 'react-native-elements';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import MainScreen from '../screens/MainScreen';
-import AddButton from '../components/AddButton';
 import ArchiveScreen from '../screens/ArchiveScreen';
 import FixListScreen from '../screens/FixListScreen';
 import NotesScreen from '../screens/NotesScreen';
+import TabNavigationComponent from './TabNavigationComponent';
 
-const Tab = createBottomTabNavigator();
+const Tab = createMaterialTopTabNavigator();
 
 const TabNavigation: React.FC = () => {
   return (
     <>
       <Tab.Navigator
-        tabBarOptions={{
-          activeTintColor: 'white',
-          activeBackgroundColor: '#32a899',
-          inactiveTintColor: '#346358',
-          labelStyle: { fontSize: 14 },
-          style: {
-            backgroundColor: '#e3e3e3',
-            zIndex: 10,
-          },
-        }}
+        tabBarPosition="bottom"
+        tabBar={(props) => <TabNavigationComponent {...props} />}
         initialRouteName="Main">
         <Tab.Screen
           name="Main"
           options={{
             tabBarLabel: 'Spalanie',
-            tabBarIcon({ color }) {
-              return <Icon color={color} type="material-community" name="gas-station" />;
-            },
           }}
           component={MainScreen}
         />
@@ -38,26 +26,13 @@ const TabNavigation: React.FC = () => {
           name="Archive"
           options={{
             tabBarLabel: 'Archiwum',
-            tabBarIcon({ color }) {
-              return <Icon color={color} type="material-community" name="archive" />;
-            },
           }}
           component={ArchiveScreen}
-        />
-        <Tab.Screen
-          name="Add"
-          component={AddButton}
-          options={{
-            tabBarButton: () => <AddButton />,
-          }}
         />
         <Tab.Screen
           name="Notes"
           options={{
             tabBarLabel: 'Notatki',
-            tabBarIcon({ color }) {
-              return <Icon color={color} type="material-community" name="note-text" />;
-            },
           }}
           component={NotesScreen}
         />
@@ -67,7 +42,7 @@ const TabNavigation: React.FC = () => {
         options={{
           tabBarLabel: 'Przeglądy',
           tabBarIcon({ color }) {
-            return <Icon color={color} type="material-community" name="checkbox-marked-circle" />;
+            return <Icon color="#32a899" type="material-community" name="checkbox-marked-circle" />;
           },
         }}
         component={MainScreen}
@@ -76,9 +51,6 @@ const TabNavigation: React.FC = () => {
           name="FixList"
           options={{
             tabBarLabel: 'Wymiany',
-            tabBarIcon({ color }) {
-              return <Icon color={color} type="material-community" name="wrench" />;
-            },
           }}
           component={FixListScreen}
         />

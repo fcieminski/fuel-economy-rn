@@ -1,4 +1,5 @@
-import { useNavigationState } from '@react-navigation/native';
+import { MaterialTopTabBarProps } from '@react-navigation/material-top-tabs';
+import { TabNavigationState, useNavigationState } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { Icon } from 'react-native-elements';
@@ -7,21 +8,25 @@ import AddFixElement from './AddFixElement';
 import AddFuelling from './AddFuelling';
 import AddNote from './AddNote';
 
-const AddButton: React.FC = () => {
-  const [visible, setVisible] = useState(false);
+interface Props {
+  state: TabNavigationState;
+}
 
+const AddButton: React.FC<Props> = ({ state }) => {
+  const [visible, setVisible] = useState(false);
   const toggleModal = () => {
     setVisible(!visible);
   };
-  const currentNavIndex = useNavigationState((state) => state.index);
+
+  const currentNavIndex = state.index;
 
   const mappedComponents: {
     [key: number]: React.FC<{ toggleModal: () => void; visible: boolean }>;
   } = {
     0: AddFuelling,
     1: AddFuelling,
-    3: AddNote,
-    4: AddFixElement,
+    2: AddNote,
+    3: AddFixElement,
   };
 
   const AddComponent = mappedComponents[currentNavIndex];

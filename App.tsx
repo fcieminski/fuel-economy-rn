@@ -15,7 +15,7 @@ import LoadingApp from './components/LoadingApp';
 import * as Permissions from 'expo-permissions';
 
 const App: React.FC = () => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const askPermissions = async () => {
     const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
@@ -32,7 +32,6 @@ const App: React.FC = () => {
 
   useEffect(() => {
     async function getMainAppData() {
-      setLoading(true);
       try {
         const data = await multiReadStorage(['@car', '@fuelling', '@notes', '@fixList']);
         if (data) {
