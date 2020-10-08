@@ -271,3 +271,17 @@ export const warningModalStyles = StyleSheet.create({
   },
   fontMedium,
 });
+
+export const bottomNavigationStyles = StyleSheet.create({
+  navigationButton: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100%',
+  },
+  navigationContainer: {
+    flexDirection: 'row',
+    height: 60,
+    borderTopWidth: 2,
+    borderTopColor: '#32a899',
+  },
+});

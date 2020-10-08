@@ -3,6 +3,7 @@ import { MaterialTopTabBarProps } from '@react-navigation/material-top-tabs';
 import { Text, View, TouchableOpacity } from 'react-native';
 import AddButton from '../components/AddButton';
 import { Icon } from 'react-native-elements';
+import { bottomNavigationStyles } from '../styles/styles';
 
 const TabNavigationComponent: React.FC<MaterialTopTabBarProps> = ({
   state,
@@ -67,12 +68,12 @@ const TabNavigationComponent: React.FC<MaterialTopTabBarProps> = ({
                   onLongPress={onLongPress}
                   style={{ flex: 1 }}>
                   <View
-                    style={{
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      backgroundColor: isFocused ? 'gray' : 'white',
-                      height: '100%',
-                    }}>
+                    style={[
+                      bottomNavigationStyles.navigationButton,
+                      {
+                        backgroundColor: isFocused ? '#ebebeb' : 'white',
+                      },
+                    ]}>
                     <Icon color="#32a899" type="material-community" name={icons[index]} />
                     <Text>{label}</Text>
                   </View>
@@ -86,7 +87,7 @@ const TabNavigationComponent: React.FC<MaterialTopTabBarProps> = ({
   }, [state.index]);
 
   return (
-    <View style={{ flexDirection: 'row', height: 50 }}>
+    <View style={bottomNavigationStyles.navigationContainer}>
       <GenerateButtons />
     </View>
   );
