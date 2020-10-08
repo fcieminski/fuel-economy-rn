@@ -9,9 +9,10 @@ interface List {
   description?: string;
   icon: string;
   iconSize?: number;
+  header?: boolean;
 }
 
-const ListElement: React.FC<List> = ({ children, text, description, icon, iconSize }) => {
+const ListElement: React.FC<List> = ({ children, text, description, icon, iconSize, header }) => {
   return (
     <View style={listStyles.rowContainer}>
       <Icon
@@ -22,7 +23,7 @@ const ListElement: React.FC<List> = ({ children, text, description, icon, iconSi
         style={listStyles.marginRight}
       />
       <View style={listStyles.rowSpace}>
-        <Text style={listStyles.fontRegular}>{text}</Text>
+        <Text style={header ? listStyles.headerText : listStyles.fontRegular}>{text}</Text>
         <View style={listStyles.rowContainer}>
           {children}
           <Text style={listStyles.description}>{description}</Text>

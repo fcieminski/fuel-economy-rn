@@ -22,6 +22,10 @@ export const mainScreenStyles = StyleSheet.create({
 });
 
 export const historyScreenStyles = StyleSheet.create({
+  headerText: {
+    fontWeight: 'bold',
+    ...fontMedium,
+  },
   container: {
     flex: 1,
   },
@@ -106,12 +110,12 @@ export const addButtonsStyles = StyleSheet.create({
 export const carStyles = StyleSheet.create({
   cardTitle: {
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'center',
   },
   textHeader: {
     fontWeight: 'bold',
-    ...fontBig,
+    ...fontMedium,
   },
   text: {
     marginBottom: 10,
@@ -152,7 +156,7 @@ export const fixListStyles = StyleSheet.create({
   },
   textHeader: {
     fontWeight: 'bold',
-    ...fontRegular,
+    ...fontMedium,
   },
   marginBottom: {
     marginBottom: 5,
@@ -185,6 +189,10 @@ export const listStyles = StyleSheet.create({
   description: {
     ...fontMedium,
     ...fontGray,
+  },
+  headerText: {
+    fontWeight: 'bold',
+    ...fontMedium,
   },
   fontRegular,
   rowSpace: {
@@ -232,7 +240,7 @@ export const notesStyles = StyleSheet.create({
   },
   textImportant: {
     fontWeight: 'bold',
-    ...fontRegular,
+    ...fontMedium,
   },
   modalImage: {
     maxWidth: '100%',

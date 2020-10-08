@@ -43,7 +43,7 @@ const CarInfo: React.FC<Props> = ({ car }) => {
           onPress={toggleModal}
         />
       </View>
-      <Card.Divider />
+      <Card.Divider style={{ marginTop: 10 }} />
       <View style={carStyles.alignCenter}>
         <View style={carStyles.row}>
           <CarElement name="Marka" value={car.brand} icon="factory" />

@@ -30,7 +30,12 @@ const CarFuellingHistoryElement: React.FC<Props> = ({ item, index, deleteElement
 
   return (
     <View style={historyScreenStyles.padding}>
-      <ListElement icon="gas-station" text="Średnie spalanie" description="l/100km" iconSize={30}>
+      <ListElement
+        header
+        icon="gas-station"
+        text="Średnie spalanie"
+        description="l/100km"
+        iconSize={30}>
         <Text style={historyScreenStyles.textMediumMargin}>
           {(item.distance / item.fuelAmount).toFixed(2)}
         </Text>

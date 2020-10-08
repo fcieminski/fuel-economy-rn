@@ -59,7 +59,7 @@ const ArchiveScreen: React.FC = () => {
         </ScrollView>
       </View>
       <Card>
-        <Text style={historyScreenStyles.fontRegular}>{monthName?.title}</Text>
+        <Text style={historyScreenStyles.headerText}>{monthName?.title}</Text>
       </Card>
       <CarFuellingHistory filterBy={date} />
     </View>
