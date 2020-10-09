@@ -1,11 +1,10 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { addFuelling } from '../store/actions/fuelling';
-import { Car, FixElement, Fuelling } from '../types/allTypes';
+import { FixElement, Fuelling } from '../types/allTypes';
 import { readStorage, saveToStorage } from './utils/storageUtils';
 import AddFuellingInputs from './inputs/AddFuellingInputs';
 import Modal from './Modal';
-import { RootState } from '../store/store';
 import { increaseCarMileage } from '../store/actions/car';
 import { decreaseFixListElementDistance } from '../store/actions/fixList';
 import { Notifications } from 'expo';
@@ -16,7 +15,6 @@ interface Props {
 }
 
 const AddFuelling: React.FC<Props> = ({ visible, toggleModal }) => {
-  const car = useSelector<RootState, Car | null>((state: RootState) => state.carInfo.car);
   const dispatch = useDispatch();
 
   const saveFuellingElement = async (fuelling: Record<string, string>) => {
@@ -43,10 +41,14 @@ const AddFuelling: React.FC<Props> = ({ visible, toggleModal }) => {
     const fixList = await readStorage('@fixList');
     if (fixList) {
       const updatedFixList: FixElement[] = fixList.map((fixElement: FixElement) => {
-        return {
-          ...fixElement,
-          kmRemaining: fixElement.kmRemaining -= kilometers,
-        };
+        if (fixElement.isDone) {
+          return fixElement;
+        } else {
+          return {
+            ...fixElement,
+            kmRemaining: fixElement.kmRemaining -= kilometers,
+          };
+        }
       });
       await saveToStorage('@fixList', updatedFixList);
       dispatch(decreaseFixListElementDistance(updatedFixList));
@@ -86,11 +88,9 @@ const AddFuelling: React.FC<Props> = ({ visible, toggleModal }) => {
 
   return (
     <>
-      {car && (
-        <Modal visible={visible} toggle={toggleModal} title="Dodaj ostatnie tankowanie">
-          <AddFuellingInputs handleSubmit={saveFuellingElement} />
-        </Modal>
-      )}
+      <Modal visible={visible} toggle={toggleModal} title="Dodaj ostatnie tankowanie">
+        <AddFuellingInputs handleSubmit={saveFuellingElement} />
+      </Modal>
     </>
   );
 };

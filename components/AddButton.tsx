@@ -1,9 +1,11 @@
-import { MaterialTopTabBarProps } from '@react-navigation/material-top-tabs';
-import { TabNavigationState, useNavigationState } from '@react-navigation/native';
+import { TabNavigationState } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { Icon } from 'react-native-elements';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store/store';
 import { addButtonsStyles } from '../styles/styles';
+import { Car } from '../types/allTypes';
 import AddFixElement from './AddFixElement';
 import AddFuelling from './AddFuelling';
 import AddNote from './AddNote';
@@ -13,12 +15,17 @@ interface Props {
 }
 
 const AddButton: React.FC<Props> = ({ state }) => {
+  const car = useSelector<RootState, Car | null>((state: RootState) => state.carInfo.car);
   const [visible, setVisible] = useState(false);
-  const toggleModal = () => {
-    setVisible(!visible);
-  };
 
   const currentNavIndex = state.index;
+
+  const toggleModal = () => {
+    if ((currentNavIndex === 0 || currentNavIndex === 1) && !car) {
+      return;
+    }
+    setVisible(!visible);
+  };
 
   const mappedComponents: {
     [key: number]: React.FC<{ toggleModal: () => void; visible: boolean }>;

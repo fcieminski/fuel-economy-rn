@@ -1,6 +1,6 @@
-import React, { memo, useState } from 'react';
+import React, { memo, useMemo, useState } from 'react';
 import { Text, View } from 'react-native';
-import { Card, CheckBox, Icon, ListItem } from 'react-native-elements';
+import { Card, CheckBox, Icon } from 'react-native-elements';
 import { FixElement } from '../types/allTypes';
 import { fixListStyles } from '../styles/styles';
 import WarningModal from './WarningModal';
@@ -15,6 +15,12 @@ interface Props {
 
 const FixListElement: React.FC<Props> = ({ fixElement, index, deleteElement, updateElement }) => {
   const [warningModal, setWarningModal] = useState(false);
+  const color = useMemo(() => {
+    return fixElement.kmRemaining < 0 && !fixElement.isDone ? '#ffb726' : 'black';
+  }, [fixElement.kmRemaining, fixElement.isDone]);
+  const kmRemaning = useMemo(() => {
+    return fixElement.kmRemaining < 0 ? 0 : fixElement.kmRemaining;
+  }, [fixElement.kmRemaining]);
 
   const toggleWarningModal = () => {
     setWarningModal(!warningModal);
@@ -54,7 +60,7 @@ const FixListElement: React.FC<Props> = ({ fixElement, index, deleteElement, upd
       </ListElement>
       <View style={fixListStyles.marginBottom} />
       <ListElement description="km" text="Pozostało kilometrów" icon="map-marker-distance">
-        <Text style={fixListStyles.textMediumMargin}>{fixElement.kmRemaining}</Text>
+        <Text style={[fixListStyles.textMediumMargin, { color }]}>{kmRemaning}</Text>
       </ListElement>
       <CheckBox
         center

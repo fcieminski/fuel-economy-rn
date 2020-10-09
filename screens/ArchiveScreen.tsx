@@ -1,6 +1,6 @@
 import { useFocusEffect } from '@react-navigation/native';
 import React, { RefObject, useCallback, useEffect, useRef, useState } from 'react';
-import { View, ScrollView, GestureResponderEvent, Text } from 'react-native';
+import { View, ScrollView, Text } from 'react-native';
 import { Card } from 'react-native-elements';
 import ArchiveButton from '../components/ArchiveButton';
 import CarFuellingHistory from '../components/CarFuellingHistory';
@@ -25,15 +25,18 @@ const ArchiveScreen: React.FC = () => {
   const [date, setDate] = useState<number>(0);
   const scroll = useRef<RefObject<ScrollView>>(null);
 
+  useEffect(() => {
+    const today = new Date();
+    const currentMonth = today.getMonth();
+    setDate(currentMonth);
+  }, []);
+
   useFocusEffect(
     useCallback(() => {
-      const today = new Date();
-      const currentMonth = today.getMonth();
-      setDate(currentMonth);
       if (scroll) {
         scroll.current.scrollTo({ x: (date - 1) * 110 });
       }
-    }, []),
+    }, [date]),
   );
 
   const handlePress = (month: number) => {
