@@ -10,8 +10,8 @@ import { multiReadStorage } from './components/utils/storageUtils';
 import { addCar } from './store/actions/car';
 import { addNote } from './store/actions/notes';
 import { addFixListElement } from './store/actions/fixList';
+import { AppLoading } from 'expo';
 import TabNavigation from './navigation/TabNavigation';
-import LoadingApp from './components/LoadingApp';
 import * as Permissions from 'expo-permissions';
 
 const App: React.FC = () => {
@@ -60,7 +60,7 @@ const App: React.FC = () => {
         <NavigationContainer>
           <StatusBar style="auto" />
           {loading ? (
-            <LoadingApp />
+            <AppLoading />
           ) : (
             <ThemeProvider>
               <TabNavigation />

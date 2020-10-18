@@ -24,7 +24,7 @@ Like eariel version in Flutter, most of the features have been implemented in th
 - [ ] Adding images and voice records in notes.
 - [ ] Adding reminders about car technical review.
 - [ ] Graph with all car speding.
-- [ ] Add icon and splash screen.
+- [x] Add icon and splash screen.
       That's for now, maybe I will figure out something more in the nearest future.
 
 ## Known issues
