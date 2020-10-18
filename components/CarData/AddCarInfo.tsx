@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { Text, View } from 'react-native';
 import { Card, Icon, Button } from 'react-native-elements';
 import { useDispatch } from 'react-redux';
-import { addCar } from '../store/actions/car';
-import { carStyles } from '../styles/styles';
-import { Car } from '../types/allTypes';
-import { saveToStorage } from './utils/storageUtils';
-import AddCarInfoInputs from './inputs/AddCarInfoInputs';
-import Modal from './Modal';
+import { addCar } from '../../store/actions/car';
+import { carStyles } from '../../styles/styles';
+import { Car } from '../../types/allTypes';
+import { saveToStorage } from '../utils/storageUtils';
+import AddCarInfoInputs from '../Inputs/AddCarInfoInputs';
+import Modal from '../Modal';
 
 const AddCarInfo: React.FC = () => {
   const dispatch = useDispatch();

@@ -3,14 +3,14 @@ import { ListRenderItem } from 'react-native';
 import { Card } from 'react-native-elements';
 import { FlatList } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
-import { removeFuelling } from '../store/actions/fuelling';
-import { RootState } from '../store/store';
-import { Fuelling } from '../types/allTypes';
-import { readStorage, removeOneFromManyElements, saveToStorage } from './utils/storageUtils';
-import { decreaseCarMileage } from '../store/actions/car';
-import { historyScreenStyles } from '../styles/styles';
-import CarFuellingHistoryElement from './CarFuellingHistoryElement';
-import EmptyData from './EmptyData';
+import { removeFuelling } from '../../store/actions/fuelling';
+import { RootState } from '../../store/store';
+import { Fuelling } from '../../types/allTypes';
+import { readStorage, removeOneFromManyElements, saveToStorage } from '../utils/storageUtils';
+import { decreaseCarMileage } from '../../store/actions/car';
+import { historyScreenStyles } from '../../styles/styles';
+import FuellingHistoryElement from './FuellingHistoryElement';
+import EmptyData from '../EmptyData';
 
 interface Props {
   filterBy?: string | number;
@@ -18,7 +18,7 @@ interface Props {
 
 const getMonth = (date: number) => new Date(date).getMonth();
 
-const CarFuellingHistory: React.FC<Props> = ({ filterBy }) => {
+const FuellingHistory: React.FC<Props> = ({ filterBy }) => {
   const fuelling = useSelector<RootState, Fuelling[]>(
     (state: RootState) => state.fuelling.fuellingList,
   );
@@ -46,7 +46,7 @@ const CarFuellingHistory: React.FC<Props> = ({ filterBy }) => {
 
   const renderItem: ListRenderItem<Fuelling> = useCallback(({ item, index }) => {
     return (
-      <CarFuellingHistoryElement deleteElement={deleteFuellingRecord} item={item} index={index} />
+      <FuellingHistoryElement deleteElement={deleteFuellingRecord} item={item} index={index} />
     );
   }, []);
 
@@ -64,4 +64,4 @@ const CarFuellingHistory: React.FC<Props> = ({ filterBy }) => {
   );
 };
 
-export default CarFuellingHistory;
+export default FuellingHistory;

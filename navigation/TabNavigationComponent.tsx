@@ -1,7 +1,7 @@
 import React, { Fragment, useCallback } from 'react';
 import { MaterialTopTabBarProps } from '@react-navigation/material-top-tabs';
 import { Text, View, TouchableOpacity } from 'react-native';
-import AddButton from '../components/AddButton';
+import AddButton from '../components/AddButtons';
 import { Icon } from 'react-native-elements';
 import { bottomNavigationStyles } from '../styles/styles';
 

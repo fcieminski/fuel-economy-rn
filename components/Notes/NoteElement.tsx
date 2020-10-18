@@ -2,11 +2,11 @@ import React, { memo, useState } from 'react';
 import { Text, View } from 'react-native';
 import { Button, Card, Icon, Input } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
-import { Note } from '../types/allTypes';
-import { dateFormat } from './utils/dateUtils';
-import { notesStyles } from '../styles/styles';
-import Modal from './Modal';
-import WarningModal from './WarningModal';
+import { Note } from '../../types/allTypes';
+import { dateFormat } from '../utils/dateUtils';
+import { notesStyles } from '../../styles/styles';
+import Modal from '../Modal';
+import WarningModal from '../WarningModal';
 
 interface Props {
   note: Note;

@@ -4,7 +4,7 @@ import { Card } from 'react-native-elements';
 import { FlatList } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
 import EmptyData from '../components/EmptyData';
-import FixListElement from '../components/FixListElement';
+import FixListElement from '../components/FixList/FixListElement';
 import {
   readStorage,
   removeOneFromManyElements,

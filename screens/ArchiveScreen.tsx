@@ -2,8 +2,8 @@ import { useFocusEffect } from '@react-navigation/native';
 import React, { RefObject, useCallback, useEffect, useRef, useState } from 'react';
 import { View, ScrollView, Text } from 'react-native';
 import { Card } from 'react-native-elements';
-import ArchiveButton from '../components/ArchiveButton';
-import CarFuellingHistory from '../components/CarFuellingHistory';
+import ArchiveButton from '../components/ArchiveButtons';
+import FuellingHistory from '../components/Fuelling/FuellingHistory';
 import { historyScreenStyles } from '../styles/styles';
 
 const months = [
@@ -64,7 +64,7 @@ const ArchiveScreen: React.FC = () => {
       <Card>
         <Text style={historyScreenStyles.headerText}>{monthName?.title}</Text>
       </Card>
-      <CarFuellingHistory filterBy={date} />
+      <FuellingHistory filterBy={date} />
     </View>
   );
 };

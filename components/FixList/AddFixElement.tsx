@@ -1,9 +1,9 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { addFixListElement } from '../store/actions/fixList';
-import AddFixElementInputs from './inputs/AddFixElementInputs';
-import { readStorage, saveToStorage } from './utils/storageUtils';
-import Modal from './Modal';
+import { addFixListElement } from '../../store/actions/fixList';
+import AddFixElementInputs from '../Inputs/AddFixElementInputs';
+import { readStorage, saveToStorage } from '../utils/storageUtils';
+import Modal from '../Modal';
 
 interface Props {
   visible: boolean;

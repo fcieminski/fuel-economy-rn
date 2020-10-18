@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 import { Icon } from 'react-native-elements';
-import { carStyles } from '../styles/styles';
+import { carStyles } from '../../styles/styles';
 
 interface Props {
   name: string;

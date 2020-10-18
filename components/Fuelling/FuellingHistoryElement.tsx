@@ -1,10 +1,10 @@
 import React, { memo, useState } from 'react';
 import { Text, View } from 'react-native';
 import { Divider, Icon } from 'react-native-elements';
-import { historyScreenStyles } from '../styles/styles';
-import { Fuelling } from '../types/allTypes';
-import ListElement from './lists/ListElement';
-import WarningModal from './WarningModal';
+import { historyScreenStyles } from '../../styles/styles';
+import { Fuelling } from '../../types/allTypes';
+import ListElement from '../Lists/ListElement';
+import WarningModal from '../WarningModal';
 
 interface Props {
   item: Fuelling;
@@ -12,7 +12,7 @@ interface Props {
   deleteElement: (index: number) => void;
 }
 
-const CarFuellingHistoryElement: React.FC<Props> = ({ item, index, deleteElement }) => {
+const FuellingHistoryElement: React.FC<Props> = ({ item, index, deleteElement }) => {
   const [warningModal, setWarningModal] = useState(false);
 
   const toggleModal = () => {
@@ -37,7 +37,7 @@ const CarFuellingHistoryElement: React.FC<Props> = ({ item, index, deleteElement
         description="l/100km"
         iconSize={30}>
         <Text style={historyScreenStyles.textMediumMargin}>
-          {(item.distance / item.fuelAmount).toFixed(2)}
+          {((item.fuelAmount * 100) / item.distance).toFixed(2)}
         </Text>
       </ListElement>
       <Divider style={historyScreenStyles.divider} />
@@ -73,4 +73,4 @@ const CarFuellingHistoryElement: React.FC<Props> = ({ item, index, deleteElement
   );
 };
 
-export default memo(CarFuellingHistoryElement);
+export default memo(FuellingHistoryElement);

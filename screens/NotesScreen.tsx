@@ -8,7 +8,7 @@ import {
   removeOneFromManyElements,
   updateOneFromManyElementsById,
 } from '../components/utils/storageUtils';
-import NoteElement from '../components/NoteElement';
+import NoteElement from '../components/Notes/NoteElement';
 import EmptyData from '../components/EmptyData';
 
 const NotesScreen: React.FC = () => {

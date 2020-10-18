@@ -1,7 +1,7 @@
 import React from 'react';
 import { Car } from '../types/allTypes';
-import CarFuellingHistory from './CarFuellingHistory';
-import CarInfo from './CarInfo';
+import FuellingHistory from './Fuelling/FuellingHistory';
+import CarInfo from './CarData/CarInfo';
 
 interface Props {
   car: Car;
@@ -11,7 +11,7 @@ const MainScreenInformations: React.FC<Props> = ({ car }) => {
   return (
     <>
       <CarInfo car={car} />
-      <CarFuellingHistory />
+      <FuellingHistory />
     </>
   );
 };

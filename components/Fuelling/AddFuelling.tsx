@@ -1,12 +1,12 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { addFuelling } from '../store/actions/fuelling';
-import { FixElement, Fuelling } from '../types/allTypes';
-import { readStorage, saveToStorage } from './utils/storageUtils';
-import AddFuellingInputs from './inputs/AddFuellingInputs';
-import Modal from './Modal';
-import { increaseCarMileage } from '../store/actions/car';
-import { decreaseFixListElementDistance } from '../store/actions/fixList';
+import { addFuelling } from '../../store/actions/fuelling';
+import { FixElement, Fuelling } from '../../types/allTypes';
+import { readStorage, saveToStorage } from '../utils/storageUtils';
+import AddFuellingInputs from '../Inputs/AddFuellingInputs';
+import Modal from '../Modal';
+import { increaseCarMileage } from '../../store/actions/car';
+import { decreaseFixListElementDistance } from '../../store/actions/fixList';
 import { Notifications } from 'expo';
 
 interface Props {

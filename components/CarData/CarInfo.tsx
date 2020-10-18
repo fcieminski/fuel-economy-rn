@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { Text, View } from 'react-native';
 import { Card, Icon } from 'react-native-elements';
 import { useDispatch } from 'react-redux';
-import { removeCar } from '../store/actions/car';
-import { clearFuelling } from '../store/actions/fuelling';
-import { carStyles } from '../styles/styles';
-import { Car } from '../types/allTypes';
+import { removeCar } from '../../store/actions/car';
+import { clearFuelling } from '../../store/actions/fuelling';
+import { carStyles } from '../../styles/styles';
+import { Car } from '../../types/allTypes';
 import CarElement from './CarElement';
-import WarningModal from './WarningModal';
+import WarningModal from '../WarningModal';
 
 interface Props {
   car: Car;

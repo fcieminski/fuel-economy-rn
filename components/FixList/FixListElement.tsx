@@ -1,10 +1,10 @@
 import React, { memo, useMemo, useState } from 'react';
 import { Text, View } from 'react-native';
 import { Card, CheckBox, Icon } from 'react-native-elements';
-import { FixElement } from '../types/allTypes';
-import { fixListStyles } from '../styles/styles';
-import WarningModal from './WarningModal';
-import ListElement from './lists/ListElement';
+import { FixElement } from '../../types/allTypes';
+import { fixListStyles } from '../../styles/styles';
+import WarningModal from '../WarningModal';
+import ListElement from '../Lists/ListElement';
 
 interface Props {
   fixElement: FixElement;

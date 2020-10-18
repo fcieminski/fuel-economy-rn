@@ -1,10 +1,10 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { addNote } from '../store/actions/notes';
-import { Note } from '../types/allTypes';
-import { readStorage, saveToStorage } from './utils/storageUtils';
-import AddNoteInputs from './inputs/AddNoteInputs';
-import Modal from './Modal';
+import { addNote } from '../../store/actions/notes';
+import { Note } from '../../types/allTypes';
+import { readStorage, saveToStorage } from '../utils/storageUtils';
+import AddNoteInputs from '../Inputs/AddNoteInputs';
+import Modal from '../Modal';
 
 interface Props {
   visible: boolean;

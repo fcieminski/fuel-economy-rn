@@ -6,9 +6,9 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 import { addButtonsStyles } from '../styles/styles';
 import { Car } from '../types/allTypes';
-import AddFixElement from './AddFixElement';
-import AddFuelling from './AddFuelling';
-import AddNote from './AddNote';
+import AddFixElement from './FixList/AddFixElement';
+import AddFuelling from './Fuelling/AddFuelling';
+import AddNote from './Notes/AddNote';
 
 interface Props {
   state: TabNavigationState;
