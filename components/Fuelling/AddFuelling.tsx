@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { addFuelling } from '../../store/actions/fuelling';
 import { FixElement, Fuelling } from '../../types/allTypes';
 import { readStorage, saveToStorage } from '../utils/storageUtils';
-import AddFuellingInputs from '../Inputs/AddFuellingInputs';
+import AddFuellingInputs from '../inputs/AddFuellingInputs';
 import Modal from '../Modal';
 import { increaseCarMileage } from '../../store/actions/car';
 import { decreaseFixListElementDistance } from '../../store/actions/fixList';

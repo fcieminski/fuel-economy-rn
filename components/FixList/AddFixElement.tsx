@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { addFixListElement } from '../../store/actions/fixList';
-import AddFixElementInputs from '../Inputs/AddFixElementInputs';
+import AddFixElementInputs from '../inputs/AddFixElementInputs';
 import { readStorage, saveToStorage } from '../utils/storageUtils';
 import Modal from '../Modal';
 

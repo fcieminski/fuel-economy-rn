@@ -3,7 +3,7 @@ import { Text, View } from 'react-native';
 import { Divider, Icon } from 'react-native-elements';
 import { historyScreenStyles } from '../../styles/styles';
 import { Fuelling } from '../../types/allTypes';
-import ListElement from '../Lists/ListElement';
+import ListElement from '../lists/ListElement';
 import WarningModal from '../WarningModal';
 
 interface Props {

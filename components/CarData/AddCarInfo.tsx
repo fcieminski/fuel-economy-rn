@@ -6,7 +6,7 @@ import { addCar } from '../../store/actions/car';
 import { carStyles } from '../../styles/styles';
 import { Car } from '../../types/allTypes';
 import { saveToStorage } from '../utils/storageUtils';
-import AddCarInfoInputs from '../Inputs/AddCarInfoInputs';
+import AddCarInfoInputs from '../inputs/AddCarInfoInputs';
 import Modal from '../Modal';
 
 const AddCarInfo: React.FC = () => {
