@@ -1,4 +1,5 @@
-import { Alert, AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Alert } from 'react-native';
 
 export const saveToStorage = async (
   storage: string,
@@ -12,16 +13,12 @@ export const saveToStorage = async (
   }
 };
 
-export const readStorage = async (
-  storage: string,
-): Promise<Record<string, unknown> | Array<Record<string, unknown>> | null | undefined> => {
+export const readStorage = async <T>(storage: string): Promise<T | undefined> => {
   try {
     const data: string | null = await AsyncStorage.getItem(storage);
     if (data) {
-      const jsonValue: Record<string, unknown> | Array<Record<string, unknown>> = JSON.parse(data);
-      return jsonValue;
+      return JSON.parse(data) as T;
     }
-    return null;
   } catch {
     Alert.alert('Błąd!', 'Nie udało się wczytań danych');
   }
@@ -37,9 +34,12 @@ export const multiReadStorage = async (
   }
 };
 
-export const removeOneFromManyElements = async (key: string, index: number): Promise<void> => {
+export const removeOneFromManyElements = async <T extends Array<string>>(
+  key: string,
+  index: number,
+): Promise<void> => {
   try {
-    const initialData = await readStorage(key);
+    const initialData = await readStorage<T>(key);
     if (initialData) {
       initialData.splice(index, 1);
       await AsyncStorage.setItem(key, JSON.stringify(initialData));
@@ -49,11 +49,14 @@ export const removeOneFromManyElements = async (key: string, index: number): Pro
   }
 };
 
-export const updateOneFromManyElementsById = async (key: string, newValue: {}): Promise<void> => {
+export const updateOneFromManyElementsById = async <T extends { id: string }>(
+  key: string,
+  newValue: T,
+): Promise<void> => {
   try {
-    const currentData = await readStorage(key);
+    const currentData = await readStorage<T>(key);
     if (currentData) {
-      const updatedElements = currentData.map((element) => {
+      const updatedElements: Array<T> = currentData.map((element: T) => {
         if (element.id === newValue.id) {
           return newValue;
         }

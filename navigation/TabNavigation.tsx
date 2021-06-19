@@ -36,17 +36,6 @@ const TabNavigation: React.FC = () => {
           }}
           component={NotesScreen}
         />
-
-        {/* <Tab.Screen
-        name="CarChecks"
-        options={{
-          tabBarLabel: 'Przeglądy',
-          tabBarIcon({ color }) {
-            return <Icon color="#32a899" type="material-community" name="checkbox-marked-circle" />;
-          },
-        }}
-        component={MainScreen}
-      /> */}
         <Tab.Screen
           name="FixList"
           options={{

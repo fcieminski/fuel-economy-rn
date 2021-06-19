@@ -1,13 +1,13 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { addFuelling } from '../../store/actions/fuelling';
-import { FixElement, Fuelling } from '../../types/allTypes';
+import { Car, FixElement, Fuelling } from '../../types/allTypes';
 import { readStorage, saveToStorage } from '../utils/storageUtils';
 import AddFuellingInputs from '../inputs/AddFuellingInputs';
 import Modal from '../Modal';
 import { increaseCarMileage } from '../../store/actions/car';
 import { decreaseFixListElementDistance } from '../../store/actions/fixList';
-import { Notifications } from 'expo';
+import * as Notifications from 'expo-notifications';
 
 interface Props {
   visible: boolean;
@@ -19,7 +19,7 @@ const AddFuelling: React.FC<Props> = ({ visible, toggleModal }) => {
 
   const saveFuellingElement = async (fuelling: Record<string, string>) => {
     const parsedFuelling: Fuelling = parseFuellingElement(fuelling);
-    const storageData = await readStorage('@fuelling');
+    const storageData = await readStorage<Fuelling>('@fuelling');
     const mergedData = storageData ? [...storageData, parsedFuelling] : [parsedFuelling];
     await saveToStorage('@fuelling', mergedData);
     await updateCarMileage(parsedFuelling.distance);
@@ -29,7 +29,7 @@ const AddFuelling: React.FC<Props> = ({ visible, toggleModal }) => {
   };
 
   const updateCarMileage = async (mileage: number) => {
-    const carData = await readStorage('@car');
+    const carData = await readStorage<Car>('@car');
     if (carData) {
       carData.mileage += mileage;
       await saveToStorage('@car', carData);
@@ -38,9 +38,9 @@ const AddFuelling: React.FC<Props> = ({ visible, toggleModal }) => {
   };
 
   const updateFixListElements = async (kilometers: number) => {
-    const fixList = await readStorage('@fixList');
+    const fixList = await readStorage<FixElement[]>('@fixList');
     if (fixList) {
-      const updatedFixList: FixElement[] = fixList.map((fixElement: FixElement) => {
+      const updatedFixList = fixList.map((fixElement) => {
         if (fixElement.isDone) {
           return fixElement;
         } else {
@@ -52,7 +52,7 @@ const AddFuelling: React.FC<Props> = ({ visible, toggleModal }) => {
       });
       await saveToStorage('@fixList', updatedFixList);
       dispatch(decreaseFixListElementDistance(updatedFixList));
-      await sendNotification(updatedFixList);
+      sendNotification(updatedFixList);
     }
   };
 
@@ -60,15 +60,20 @@ const AddFuelling: React.FC<Props> = ({ visible, toggleModal }) => {
     const elementsToNotificate: FixElement[] = fixList.filter(
       (fixElement: FixElement): boolean => fixElement.kmRemaining <= 0,
     );
-    elementsToNotificate.forEach(async (fixElement: FixElement) => {
-      await sendNotificationImmediately(fixElement);
+    elementsToNotificate.forEach((fixElement: FixElement) => {
+      void sendNotificationImmediately(fixElement);
     });
   };
 
   const sendNotificationImmediately = async (element: FixElement) => {
-    await Notifications.presentLocalNotificationAsync({
-      title: 'Uwaga, zbliża się wymiana!',
-      body: `To już pora wymienić ${element.item}! Umów się do mechanika i przygotuj ${element.cost} zł`,
+    await Notifications.scheduleNotificationAsync({
+      content: {
+        title: 'Uwaga, zbliża się wymiana!',
+        body: `To już pora wymienić ${element.item}! Umów się do mechanika i przygotuj ${element.cost} zł`,
+      },
+      trigger: {
+        seconds: 10,
+      },
     });
   };
 

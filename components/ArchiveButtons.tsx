@@ -1,11 +1,10 @@
 import React from 'react';
-import { GestureResponderEvent } from 'react-native';
 import { Button } from 'react-native-elements';
 import { historyScreenStyles } from '../styles/styles';
 
 interface Props {
   title: string;
-  onPress: (event: GestureResponderEvent) => void;
+  onPress: (id: number | undefined) => void;
   id?: number;
 }
 

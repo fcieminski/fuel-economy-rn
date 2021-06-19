@@ -5,7 +5,7 @@ import { FlatList } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
 import { removeFuelling } from '../../store/actions/fuelling';
 import { RootState } from '../../store/store';
-import { Fuelling } from '../../types/allTypes';
+import { Car, Fuelling } from '../../types/allTypes';
 import { readStorage, removeOneFromManyElements, saveToStorage } from '../utils/storageUtils';
 import { decreaseCarMileage } from '../../store/actions/car';
 import { historyScreenStyles } from '../../styles/styles';
@@ -34,7 +34,7 @@ const FuellingHistory: React.FC<Props> = ({ filterBy }) => {
   };
 
   const updateCarMileage = async (mileage: number) => {
-    const carData = await readStorage('@car');
+    const carData = await readStorage<Car>('@car');
     if (carData) {
       carData.mileage -= mileage;
       await saveToStorage('@car', carData);

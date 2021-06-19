@@ -1,12 +1,10 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { ListRenderItem, Text, View } from 'react-native';
-import { Card } from 'react-native-elements';
+import React, { useCallback } from 'react';
+import { ListRenderItem, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
 import EmptyData from '../components/EmptyData';
 import FixListElement from '../components/FixList/FixListElement';
 import {
-  readStorage,
   removeOneFromManyElements,
   updateOneFromManyElementsById,
 } from '../components/utils/storageUtils';

@@ -2,7 +2,6 @@ import { useFocusEffect } from '@react-navigation/native';
 import React, { RefObject, useCallback, useEffect, useRef, useState } from 'react';
 import { View, ScrollView, Text, GestureResponderEvent } from 'react-native';
 import { Card } from 'react-native-elements';
-import { GestureHandlerGestureEvent } from 'react-native-gesture-handler';
 import ArchiveButton from '../components/ArchiveButtons';
 import FuellingHistory from '../components/Fuelling/FuellingHistory';
 import { historyScreenStyles } from '../styles/styles';
